@@ -74,7 +74,7 @@ const FreeResourcesPage: React.FC = () => {
                   After a meteoric rise as a Managing Partner and leader at the Associated Planners conglomerate, Bruce did the unthinkable: he liquidated his positions to build something the world had never seen. Driven by a request from senior aerospace leaders, he engineered a holistic, "in-the-trenches" system designed for tangible, massive results.
                 </p>
                 <p className="leading-relaxed">
-                  Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliore</span> for the world’s most discerning minds—from rocket scientists and celebrities to visionary entrepreneurs. As a pure client advocate, he operates a 100% win-win, conflict-free model. He doesn't just plan for the next quarter; he architects **100-year legacies**, turning complex chaos into elegant, synergistic written plans that activate the Law of Alignment.
+                  Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliore</span> for the world’s most discerning minds—from rocket scientists and celebrities to visionary entrepreneurs. As a pure client advocate, he operates a 100% win-win, conflict-free model. He doesn't just plan for the next quarter; he architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans that activate the Law of Alignment.
                 </p>
               </div>
 
