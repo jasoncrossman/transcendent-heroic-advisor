@@ -53,8 +53,8 @@ const LandingPage: React.FC = () => {
             </p>
           </div>
           
-          {/* Restored text with the requested 60% amber background */}
-          <div className="bg-amber-500/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-amber-500/20 shadow-xl text-left transform hover:scale-[1.01] transition-all duration-300">
+          {/* Final Version: Full Opacity Amber with Slate-900 (Blue-Dark) Text */}
+          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300">
             <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
             <div className="space-y-6">
               <p className="text-slate-900 font-medium text-lg leading-relaxed">
