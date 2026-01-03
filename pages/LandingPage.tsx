@@ -58,10 +58,10 @@ const LandingPage: React.FC = () => {
       <h3 className="text-2xl font-black text-slate-900 mb-6 font-serif uppercase tracking-tight">Quantum Alignment</h3>
       <div className="space-y-6">
         <p className="text-slate-900 font-semibold text-lg leading-relaxed">
-          Use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
+          Use Quantum Physics to achieve more of what you want. We don’t get what we want; we get what we are aligned with. If you desire a greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
         </p>
         <p className="text-slate-900 font-bold text-lg leading-relaxed border-t border-slate-900/20 pt-6">
-          Quantum thinking and doing elevates you into BEING above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
+          Quantum thinking and doing elevate you into BEING above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
         </p>
       </div>
     </div>
