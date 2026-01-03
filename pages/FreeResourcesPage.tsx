@@ -11,6 +11,11 @@ import {
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
+  // Navigation handler to your Vercel purchase page
+  const goToReservePage = () => {
+    window.location.href = 'https://transcendent-heroic-advisor.vercel.app/#/purchase';
+  };
+
   const books = [
     {
       title: "The Wright Exit Strategy",
@@ -65,7 +70,7 @@ const FreeResourcesPage: React.FC = () => {
                 <p className="font-semibold text-white text-xl">Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.</p>
                 <p>Decades ago, Bruce realized the financial world was built on "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span></p>
                 <p>After a meteoric rise at Associated Planners, Bruce liquidated his positions to build a holistic, "in-the-trenches" system designed for tangible, massive results.</p>
-                <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliere</span> for discerning minds. He architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans.</p>
+                <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">Consigliere</span> for discerning minds. He architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans.</p>
               </div>
 
               <div className="flex flex-wrap gap-4 mt-12">
@@ -90,8 +95,11 @@ const FreeResourcesPage: React.FC = () => {
             <h2 className="text-2xl md:text-3xl font-bold font-serif mb-6 text-slate-900 leading-tight">
               When you join the waitlist for the Transcendent Heroic Advisor Mastery Course, you will receive immediate access to the following complimentary resources:
             </h2>
-            <button className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-all shadow-md text-sm uppercase tracking-wide">
-              Get my Free resources
+            <button 
+              onClick={goToReservePage}
+              className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-all shadow-md text-sm uppercase tracking-wide"
+            >
+              Get My Free Resources
             </button>
           </div>
 
@@ -191,8 +199,11 @@ const FreeResourcesPage: React.FC = () => {
           <p className="text-amber-500 text-2xl font-bold mb-10">Tuition: $997.97</p>
           
           <div className="space-y-6">
-            <button className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl">
-              Get my Free resources
+            <button 
+              onClick={goToReservePage}
+              className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl"
+            >
+              Get My Free Resources
             </button>
             <p className="text-slate-400 text-xs italic">
               * Immediate access includes the Professional Library, Strategy Calls, and Video Modules.
