@@ -41,6 +41,8 @@ const FreeResourcesPage: React.FC = () => {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Left Column: Image */}
             <div className="lg:col-span-5 relative group">
               <div className="absolute inset-0 bg-amber-500/20 blur-3xl group-hover:bg-amber-500/30 transition-all rounded-full"></div>
               <div className="relative aspect-[3/4] max-w-sm mx-auto bg-slate-800 rounded-3xl overflow-hidden border-2 border-slate-700 shadow-2xl">
@@ -55,6 +57,7 @@ const FreeResourcesPage: React.FC = () => {
               </div>
             </div>
             
+            {/* Right Column: Text Content */}
             <div className="lg:col-span-7 space-y-8">
               <div className="space-y-4">
                 <span className="flex items-center gap-2 text-amber-500 font-bold tracking-widest uppercase text-sm">
@@ -67,28 +70,32 @@ const FreeResourcesPage: React.FC = () => {
                 <p className="leading-relaxed font-semibold text-white text-xl">
                   Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.
                 </p>
+
                 <p className="leading-relaxed">
                   Decades ago, Bruce realized that the financial world was built on a foundation of "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span>
                 </p>
+
                 <p className="leading-relaxed">
                   After a meteoric rise as a Managing Partner and leader at the Associated Planners conglomerate, Bruce did the unthinkable: he liquidated his positions to build something the world had never seen. Driven by a request from senior aerospace leaders, he engineered a holistic, "in-the-trenches" system designed for tangible, massive results.
                 </p>
+
                 <p className="leading-relaxed">
                   Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliore</span> for the world’s most discerning minds—from rocket scientists and celebrities to visionary entrepreneurs. As a pure client advocate, he operates a 100% win-win, conflict-free model. He doesn't just plan for the next quarter; he architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans that activate the Law of Alignment.
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-4">
-                 <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3 shadow-lg">
-                   <Star className="text-amber-500 w-5 h-5 fill-current" />
-                   <span className="text-sm font-semibold tracking-tight uppercase text-white">100-Year Legacy Architect</span>
-                 </div>
-                 <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3 shadow-lg">
-                   <Zap className="text-amber-500 w-5 h-5" />
-                   <span className="text-sm font-semibold tracking-tight uppercase text-white">Conflict-Free Innovator</span>
-                 </div>
+                <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3 shadow-lg">
+                  <Star className="text-amber-500 w-5 h-5 fill-current" />
+                  <span className="text-sm font-semibold tracking-tight uppercase text-white">100-Year Legacy Architect</span>
+                </div>
+                <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3 shadow-lg">
+                  <Zap className="text-amber-500 w-5 h-5" />
+                  <span className="text-sm font-semibold tracking-tight uppercase text-white">Conflict-Free Innovator</span>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
