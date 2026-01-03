@@ -43,30 +43,30 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Philosophy Section */}
-<section id="about" className="py-20 bg-white">
-  <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <div className="mb-12">
-      <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
-      <p className="text-lg text-slate-600 leading-relaxed italic">
-        "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as DOING."
-      </p>
-    </div>
-    
-    {/* Updated block to match the "Beyond Compliance" style */}
-    <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-xl text-left transform hover:scale-[1.01] transition-transform duration-300">
-      <h3 className="text-2xl font-black text-slate-900 mb-6 font-serif uppercase tracking-tight">Quantum Alignment</h3>
-      <div className="space-y-6">
-        <p className="text-slate-900 font-semibold text-lg leading-relaxed">
-          Use Quantum Physics to achieve more of what you want. We don’t get what we want; we get what we are aligned with. If you desire a greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
-        </p>
-        <p className="text-slate-900 font-bold text-lg leading-relaxed border-t border-slate-900/20 pt-6">
-          Quantum thinking and doing elevate you into BEING above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+     {/* Philosophy Section */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
+            <p className="text-lg text-slate-600 leading-relaxed italic">
+              "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as DOING."
+            </p>
+          </div>
+          
+          {/* Restored text with the requested 60% amber background */}
+          <div className="bg-amber-500/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-amber-500/20 shadow-xl text-left transform hover:scale-[1.01] transition-all duration-300">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
+            <div className="space-y-6">
+              <p className="text-slate-900 font-medium text-lg leading-relaxed">
+                Use Quantum Physics to achieve more of what you want. We don’t get what we want; we get what we are aligned with. If you desire a greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
+              </p>
+              <p className="text-slate-900 leading-relaxed">
+                Quantum thinking and doing elevate you into BEING above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Systems Section */}
       <section className="py-20 bg-slate-900 text-white">
