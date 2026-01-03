@@ -57,7 +57,7 @@ const FreeResourcesPage: React.FC = () => {
             
             <div className="lg:col-span-7">
               <span className="flex items-center gap-2 text-amber-500 font-bold uppercase text-sm mb-4">
-                <Award className="w-5 h-5" /> Visionary • Inventor • Consigliore
+                <Award className="w-5 h-5" /> Visionary • Inventor • Consigliere
               </span>
               <h1 className="text-4xl md:text-5xl font-bold font-serif mb-8">About Bruce Raymond Wright</h1>
               
@@ -65,7 +65,7 @@ const FreeResourcesPage: React.FC = () => {
                 <p className="font-semibold text-white text-xl">Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.</p>
                 <p>Decades ago, Bruce realized the financial world was built on "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span></p>
                 <p>After a meteoric rise at Associated Planners, Bruce liquidated his positions to build a holistic, "in-the-trenches" system designed for tangible, massive results.</p>
-                <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliore</span> for discerning minds. He architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans.</p>
+                <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliere</span> for discerning minds. He architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans.</p>
               </div>
 
               <div className="flex flex-wrap gap-4 mt-12">
