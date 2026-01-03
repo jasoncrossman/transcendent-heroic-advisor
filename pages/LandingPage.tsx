@@ -112,7 +112,7 @@ const LandingPage: React.FC = () => {
           <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
             <iframe 
               className="w-full h-full"
-              src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+              src="https://www.youtube.com/embed/WS1ccYNZJtU"
               title="Welcome Video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
