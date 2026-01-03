@@ -26,12 +26,11 @@ const FreeResourcesPage: React.FC = () => {
 
   const bruceImage = "/assets/images/bruce.jpg";
 
-  // Replace these with your actual GlobalSparks embed links
   const globalSparksVideos = [
-    { title: "Create an Ecosystem for Uncommon Results", url: "https://globalsparks.com/embed/video1" },
-    { title: "Do Not Claim You Care, Show You Care", url: "https://globalsparks.com/embed/video2" },
-    { title: "Using the Quantum Mind", url: "https://globalsparks.com/embed/video3" },
-    { title: "Think, Do, and BE as the Elephant", url: "https://globalsparks.com/embed/video4" }
+    { title: "Create an Ecosystem for Uncommon Results", url: "https://www.youtube.com/embed/WS1ccYNZJtU" },
+    { title: "Do Not Claim You Care, Show You Care", url: "https://www.youtube.com/embed/WS1ccYNZJtU" },
+    { title: "Using the Quantum Mind", url: "https://www.youtube.com/embed/WS1ccYNZJtU" },
+    { title: "Think, Do, and BE as the Elephant", url: "https://www.youtube.com/embed/WS1ccYNZJtU" }
   ];
 
   return (
@@ -102,73 +101,7 @@ const FreeResourcesPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, idx) => (
               <div key={idx} className="group flex flex-col items-center text-center">
-                <div className="relative aspect-[3/4] w-full max-w-[280px] bg-slate-100 rounded-lg overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 mb-8 border-r-4 border-slate-200">
-                  <img src={book.image} alt={book.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2 font-serif px-4 leading-tight">{book.title}</h3>
-                <p className="text-slate-500 text-sm px-4 leading-relaxed">{book.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Video Mastery Section - REWRITTEN FOR 4 VIDEOS */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Video</h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              Experience selected video lessons from <span className="font-bold text-slate-900">"The Wright Exit Strategy"</span>. 
-              These are direct demonstrations of the Transcendent Heroic Advisor framework.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {globalSparksVideos.map((video, idx) => (
-              <div key={idx} className="space-y-4">
-                <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-xl border border-slate-200">
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src={video.url}
-                    title={video.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-                <h4 className="text-lg font-bold text-slate-800 text-center">{video.title}</h4>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 p-8 bg-amber-50 rounded-3xl border border-amber-100 italic text-amber-900 text-center text-lg">
-            "Teaching by telling isn’t as effective as DOING. These videos show you the 'how' behind the 'what'."
-          </div>
-        </div>
-      </section>
-
-      {/* Reserve Place CTA Section */}
-      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500 via-transparent to-transparent"></div>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 font-serif">Reserve Your Place</h2>
-          <p className="text-xl text-slate-300 mb-10 leading-relaxed">
-            The Transcendent Heroic Advisor Mastery Course will be available in the Spring of 2026.
-            <br/>
-            <span className="font-bold text-amber-500 mt-2 block italic underline">Secure Early Riser pricing of $997.97 now.</span>
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="https://your-purchase-server.com/january-cohort" className="w-full sm:w-auto px-12 py-5 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all shadow-xl flex items-center justify-center group">
-              Join the January Cohort <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-export default FreeResourcesPage;
+                <div className="relative aspect-[3/4] w-full max-w-[280px] bg-slate-50 rounded-lg overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 mb-8 border-r-4 border-slate-200 p-4 flex items-center justify-center">
+                  <img 
+                    src={book.image} 
+                    alt={book.title}
