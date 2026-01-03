@@ -7,24 +7,24 @@ const FreeResourcesPage: React.FC = () => {
     {
       title: "The Wright Exit Strategy",
       subtitle: "Wealth; How to Create It, Keep It, and Use It",
-      image: "assets/images/book1.jpeg",
+      image: "/assets/images/book1.jpeg",
       description: "Wealth: How to Create It, Keep It, and Use It. A masterwork on fiduciary excellence."
     },
     {
       title: "Transcendent Thought and Market Leadership 1.0",
       subtitle: "How to Lead Any Profession, Anywhere in the World",
-      image: "assets/images/book2.jpeg",
+      image: "/assets/images/book2.jpeg",
       description: "How to Lead Any Profession, Anywhere in the World. The definitive guide to professional dominance."
     },
     {
       title: "Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message",
       subtitle: "Graphic Resource Guide",
-      image: "assets/images/book3.jpeg",
+      image: "/assets/images/book3.jpeg",
       description: "Transform your industry presence with this magnetic communication framework."
     }
   ];
 
-  const bruceImage = "assets/images/bruce.jpeg";
+  const bruceImage = "/assets/images/bruce.jpeg";
 
   // Replace these with your actual GlobalSparks embed links
   const globalSparksVideos = [
