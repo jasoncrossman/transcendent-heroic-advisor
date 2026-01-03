@@ -46,6 +46,8 @@ const LandingPage: React.FC = () => {
      {/* Philosophy Section */}
       <section id="about" className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          
+          {/* Top of Sandwich: The Philosophy */}
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
             <p className="text-lg text-slate-600 leading-relaxed italic">
@@ -53,18 +55,21 @@ const LandingPage: React.FC = () => {
             </p>
           </div>
           
-          {/* Final Version: Full Opacity Amber with Slate-900 (Blue-Dark) Text */}
-          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300">
+          {/* Middle of Sandwich: The Mechanism Box */}
+          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
             <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
-            <div className="space-y-6">
-              <p className="text-slate-900 font-medium text-lg leading-relaxed">
-                Use Quantum Physics to achieve more of what you want. We don’t get what we want; we get what we are aligned with. If you desire a greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
-              </p>
-              <p className="text-slate-900 leading-relaxed">
-                Quantum thinking and doing elevate you into BEING above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
-              </p>
-            </div>
+            <p className="text-slate-900 font-medium text-lg leading-relaxed">
+              Use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
+            </p>
           </div>
+
+          {/* Bottom of Sandwich: The Resulting Transformation */}
+          <div className="max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 leading-relaxed font-medium">
+              Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
+            </p>
+          </div>
+
         </div>
       </section>
 
