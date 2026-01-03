@@ -59,7 +59,7 @@ const LandingPage: React.FC = () => {
           <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
             <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
             <p className="text-slate-900 font-medium text-lg leading-relaxed">
-              Use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
+              Quantum Physics dictates that we don’t get what we want; we get what we are aligned with. To attract loyal, high-level clients, you must first evolve into the person they are currently missing in their lives.
             </p>
           </div>
 
