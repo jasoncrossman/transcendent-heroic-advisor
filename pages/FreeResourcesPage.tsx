@@ -35,7 +35,7 @@ const FreeResourcesPage: React.FC = () => {
 
   return (
     <div className="bg-white animate-in fade-in duration-700">
-      {/* Bruce Wright Bio Section */}
+     {/* Bruce Wright Bio Section */}
       <section className="bg-slate-900 py-20 lg:py-32 text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full opacity-5 pointer-events-none">
           <Sparkles className="w-full h-full text-amber-400" />
@@ -51,10 +51,48 @@ const FreeResourcesPage: React.FC = () => {
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 p-6 text-center">
-                   <p className="text-amber-500 font-bold text-lg uppercase tracking-widest italic">Bruce Raymond Wright</p>
+                   <p className="text-amber-500 font-bold text-lg uppercase tracking-widest italic">The Architect of Transcendence</p>
                 </div>
               </div>
             </div>
+            
+            <div className="lg:col-span-7 space-y-8">
+              <div className="space-y-4">
+                <span className="flex items-center gap-2 text-amber-500 font-bold tracking-widest uppercase text-sm">
+                  <Award className="w-5 h-5" /> Visionary • Inventor • Consigliore
+                </span>
+                <h1 className="text-4xl md:text-5xl font-bold font-serif leading-tight text-white">About Bruce Raymond Wright</h1>
+              </div>
+              
+              <div className="prose prose-invert prose-lg text-slate-300">
+                <p className="leading-relaxed font-semibold text-white text-xl">
+                  Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.
+                </p>
+                <p className="leading-relaxed">
+                  Decades ago, Bruce realized that the financial world was built on a foundation of "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span>
+                </p>
+                <p className="leading-relaxed">
+                  After a meteoric rise as a Managing Partner and leader at the Associated Planners conglomerate, Bruce did the unthinkable: he liquidated his positions to build something the world had never seen. Driven by a request from senior aerospace leaders, he engineered a holistic, "in-the-trenches" system designed for tangible, massive results.
+                </p>
+                <p className="leading-relaxed">
+                  Bruce is the ultimate <span className="italic text-amber-500 font-bold">consigliore</span> for the world’s most discerning minds—from rocket scientists and celebrities to visionary entrepreneurs. As a pure client advocate, he operates a 100% win-win, conflict-free model. He doesn't just plan for the next quarter; he architects **100-year legacies**, turning complex chaos into elegant, synergistic written plans that activate the Law of Alignment.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-4">
+                 <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3 shadow-lg">
+                   <Star className="text-amber-500 w-5 h-5 fill-current" />
+                   <span className="text-sm font-semibold tracking-tight uppercase">100-Year Legacy Architect</span>
+                 </div>
+                 <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3 shadow-lg">
+                   <Zap className="text-amber-500 w-5 h-5" />
+                   <span className="text-sm font-semibold tracking-tight uppercase">Conflict-Free Innovator</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
             
             <div className="lg:col-span-7 space-y-8">
               <div className="space-y-4">
