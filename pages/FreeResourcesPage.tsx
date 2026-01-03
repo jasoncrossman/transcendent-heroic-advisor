@@ -7,7 +7,6 @@ import {
   BookOpen, 
   Phone, 
   Video, 
-  Clock, 
   CheckCircle2 
 } from 'lucide-react';
 
@@ -84,66 +83,58 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Introductory Principles & Immediate Resources Section */}
-      <section className="py-24 bg-slate-50 border-y border-slate-200 px-4">
+      {/* 2. Simplified Waitlist Resources Section */}
+      <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4">
-              <Clock className="w-4 h-4" /> Your Fast-Action Starter Kit
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold font-serif mb-4 text-slate-900">Experience the Principles by Doing them with Bruce</h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              When you join the waitlist for the <span className="text-slate-900 font-bold">Transcendent Heroic Advisor Mastery Course</span>, you will receive <span className="text-amber-600 font-bold italic underline">immediate access</span> to these foundational resources:
-            </p>
+          <div className="max-w-4xl mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold font-serif mb-6 text-slate-900 leading-tight">
+              When you join the waitlist for the Transcendent Heroic Advisor Mastery Course, you will receive immediate access to the following complimentary resources:
+            </h2>
+            <button className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-all shadow-md text-sm uppercase tracking-wide">
+              Get my Free resources
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {/* Resource 1 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border-2 border-transparent hover:border-amber-500 transition-all relative group">
-              <div className="absolute top-4 right-4 bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3" /> Instant Download
-              </div>
-              <BookOpen className="w-10 h-10 text-amber-500 mb-6" />
-              <h3 className="text-xl font-bold mb-4">Marketing Framework</h3>
-              <p className="text-slate-600 mb-6">“Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message”</p>
-              <div className="bg-slate-100 aspect-[4/3] rounded-lg flex items-center justify-center text-slate-400 text-sm italic group-hover:bg-slate-200 transition-colors">
-                [Graphic Available]
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {/* Resource 1: The Library */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+              <BookOpen className="w-8 h-8 text-amber-600 mb-4" />
+              <h3 className="font-bold text-lg mb-2">The Professional Library</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                A complete digital copy of all books in the library, including the magnetic 30-second marketing framework.
+              </p>
             </div>
 
-            {/* Resource 2 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border-2 border-transparent hover:border-amber-500 transition-all relative group">
-              <div className="absolute top-4 right-4 bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3" /> Schedule Now
-              </div>
-              <Phone className="w-10 h-10 text-amber-500 mb-6" />
-              <h3 className="text-xl font-bold mb-4">Private Strategic Calls</h3>
-              <p className="text-slate-600">Two highly confidential 45-minute calls with Bruce to demonstrate Quantum Thinking applied to your specific practice.</p>
+            {/* Resource 2: Private Calls */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+              <Phone className="w-8 h-8 text-amber-600 mb-4" />
+              <h3 className="font-bold text-lg mb-2">Private Strategic Access</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Two highly confidential 45-minute calls with Bruce to explore the application of these principles.
+              </p>
             </div>
 
-            {/* Resource 3 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border-2 border-transparent hover:border-amber-500 transition-all relative group">
-              <div className="absolute top-4 right-4 bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3" /> Instant Stream
-              </div>
-              <Video className="w-10 h-10 text-amber-500 mb-6" />
-              <h3 className="text-xl font-bold mb-4">Core Video Lessons</h3>
-              <p className="text-slate-600 mb-4 text-sm font-semibold italic">From "The Wright Exit Strategy"</p>
-              <ul className="space-y-2 text-sm text-slate-600">
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-amber-500 shrink-0 mt-1" /> Create an Ecosystem for Uncommon Results</li>
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-amber-500 shrink-0 mt-1" /> Do Not Claim You Care, Show You Care</li>
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-amber-500 shrink-0 mt-1" /> Using the Quantum Mind</li>
-                <li className="flex items-start gap-2"><ArrowRight className="w-4 h-4 text-amber-500 shrink-0 mt-1" /> Think, Do, and BE the Elephant</li>
+            {/* Resource 3: Supplementary Videos */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+              <Video className="w-8 h-8 text-amber-600 mb-4" />
+              <h3 className="font-bold text-lg mb-2">Core Video Lessons</h3>
+              <p className="text-slate-500 text-[10px] font-bold uppercase mb-3 tracking-widest">From The Wright Exit Strategy</p>
+              <ul className="space-y-2">
+                {globalSparksVideos.map((v, i) => (
+                  <li key={i} className="flex items-center gap-2 text-xs text-slate-600 font-medium">
+                    <CheckCircle2 className="w-3 h-3 text-amber-600 shrink-0" /> {v.title}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-lg text-slate-700 leading-relaxed mb-8">
-              These lessons are a direct demonstration of the <span className="font-bold">Quantum Thinking</span> and ways of doing and <span className="font-bold italic">BEING</span> that deliver the <span className="text-amber-600 font-bold uppercase tracking-tight">Transcendent Heroic Advisor</span> framework.
+          <div className="flex flex-col md:flex-row items-center gap-8 border-t border-slate-200 pt-10">
+            <p className="flex-1 text-slate-700 leading-relaxed italic text-sm md:text-base">
+              These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.
             </p>
-            <div className="inline-block bg-slate-900 text-white px-8 py-3 rounded-full font-bold text-sm uppercase tracking-widest shadow-lg">
-              Full Mastery Course Launching Spring 2026
+            <div className="bg-amber-100 text-amber-900 px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-widest text-center border border-amber-200">
+              Mastery Course Available Spring 2026
             </div>
           </div>
         </div>
@@ -200,11 +191,11 @@ const FreeResourcesPage: React.FC = () => {
           <p className="text-amber-500 text-2xl font-bold mb-10">Tuition: $997.97</p>
           
           <div className="space-y-6">
-            <button className="px-12 py-5 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl hover:scale-105 transform active:scale-95">
-              Join the Waitlist & Get My Free Resources
+            <button className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl">
+              Get my Free resources
             </button>
-            <p className="text-slate-400 text-sm italic">
-              * By joining the waitlist today, you receive immediate access to the Marketing Framework, Strategy Calls, and Video Modules.
+            <p className="text-slate-400 text-xs italic">
+              * Immediate access includes the Professional Library, Strategy Calls, and Video Modules.
             </p>
           </div>
         </div>
