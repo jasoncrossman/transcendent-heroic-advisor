@@ -51,7 +51,7 @@ const LandingPage: React.FC = () => {
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
             <p className="text-lg text-slate-600 leading-relaxed italic">
-              "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as DOING."
+              "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as actually APPLYING the details directly with the inventor."
             </p>
           </div>
           
@@ -59,14 +59,14 @@ const LandingPage: React.FC = () => {
           <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
             <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
             <p className="text-slate-900 font-medium text-lg leading-relaxed">
-              Quantum Physics dictates that we don’t get what we want; we get what we are aligned with. To attract loyal, high-level clients, you must first evolve into the person they are currently missing in their lives.
+              Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
             </p>
           </div>
 
           {/* Bottom of Sandwich: The Resulting Transformation */}
           <div className="max-w-3xl mx-auto">
             <p className="text-xl text-slate-600 leading-relaxed font-medium">
-              Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions.
+              Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others.
             </p>
           </div>
 
@@ -80,7 +80,7 @@ const LandingPage: React.FC = () => {
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps in Performance</h2>
               <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-                This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Fiduciary Standards of Care beyond federal and state regulations. While many advisors struggle to COMPLY with those standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACTS them to become your loyal long-term clients.
+                This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
               </p>
               
               <div className="space-y-4">
