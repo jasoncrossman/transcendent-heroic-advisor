@@ -1,130 +1,198 @@
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChevronRight, CheckCircle2, Mail, ArrowRight } from 'lucide-react';
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ShieldCheck, CreditCard, ChevronLeft, ArrowRight, Star } from 'lucide-react';
+const LandingPage: React.FC = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
 
-const PurchasePage: React.FC = () => {
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Subscriber email:", email);
+    navigate('/purchase');
+  };
+
+  const benefits = [
+    "Demonstrate how you are extraordinary, priceless, and irreplaceable.",
+    "Become far more attractive to A-level referrals… without asking for them.",
+    "Transcend fiduciary regulations in ways that matter most to clients.",
+    "Consistently deliver dazzling multidimensional wisdom that your competitors do not offer… and cannot even imagine.",
+    "Create an entire ecosystem of like-minded transcendent advisors that bring dynamic execution of details to clients. Helping YOU to bring clients into alignment with who, what, and where they would rather be now and next."
+  ];
+
   return (
-    <div className="bg-slate-50 min-h-screen py-16 animate-in slide-in-from-bottom-4 duration-500">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="inline-flex items-center text-slate-500 hover:text-slate-900 mb-8 font-medium group transition-colors">
-          <ChevronLeft className="mr-1 w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Course Details
-        </Link>
+    <div className="animate-in fade-in duration-700 min-h-screen bg-slate-50">
+      {/* Hero Section */}
+      <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920" 
+            alt="Quantum Vision Background" 
+            className="w-full h-full object-cover opacity-20 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900 to-slate-900"></div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Order Summary */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-              <h1 className="text-3xl font-bold text-slate-900 mb-6 font-serif">Secure Your Place in the Mastery Course</h1>
-              
-              <div className="space-y-6">
-                <div className="flex justify-between items-start pb-6 border-b border-slate-100">
-                  <div className="flex gap-4">
-                    <div className="w-20 h-20 bg-slate-900 rounded-xl flex items-center justify-center text-white shrink-0">
-                      <Star className="w-8 h-8 text-amber-500" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 text-lg">Transcendent Heroic Advisor Mastery Course</h3>
-                      <p className="text-slate-500 text-sm">Quantum Mind Mastery for Professionals</p>
-                      <span className="inline-block mt-2 px-2 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded uppercase tracking-wider">Early Riser Special</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-2xl font-bold text-slate-900">$997.97</span>
-                    <span className="block text-sm text-slate-400 line-through">$1,497.97</span>
-                  </div>
-                </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/10 backdrop-blur-sm">
+            Cohort Launching January 2026
+          </span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tight">
+            The Transcendent <span className="text-amber-500">Heroic Advisor</span>
+          </h1>
+          <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
+            Welcome to our Quantum Mind Mastery Course. We don't just teach theory; we <span className="text-white font-semibold">SHOW</span> you how to implement Quantum Mind solutions that transform your practice.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link 
+              to="/purchase" 
+              className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center group"
+            >
+              Reserve Your Place <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
-                <div className="space-y-4 pt-4">
-                  <h4 className="font-bold text-slate-900">Your Enrollment Includes:</h4>
-                  <ul className="space-y-3 text-sm text-slate-600">
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>2x Confidential 45min Calls with Bruce</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>30-Sec Marketing Message Book</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Wright Exit Strategy Lessons</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Transcendent Thought and Market Leadership 1.0 Book</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Access link to the Transcendent Heroic Advisor Cohort (Launching late January 2026)</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-              <p className="text-amber-900 font-medium text-sm">
-                <strong>Waitlist Note:</strong> This cohort is intentionally limited to ensure personalized attention during the Quantum implementation sessions. Registration is first-come, first-served.
-              </p>
-            </div>
+      {/* Philosophy Section ("The Sandwich") */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
+            <p className="text-lg text-slate-600 leading-relaxed italic border-l-4 border-amber-500 pl-6 text-left inline-block">
+              "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you."
+            </p>
+          </div>
+          
+          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif underline decoration-slate-900/20 underline-offset-8">Quantum Alignment</h3>
+            <p className="text-slate-900 font-medium text-lg leading-relaxed">
+              Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are <strong>aligned</strong> with. To attract loyal, high-level clients, you must evolve into the person they are currently missing in their lives.
+            </p>
           </div>
 
-          {/* Checkout Form Sidebar */}
-          <div className="lg:col-span-5">
-            <div className="bg-white p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 sticky top-24">
-              <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                <CreditCard className="w-5 h-5 text-amber-600" /> Payment Details
-              </h2>
-              
-              <div className="space-y-5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email Address</label>
-                  <input 
-                    type="email" 
-                    placeholder="you@example.com" 
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none text-slate-900 bg-white placeholder:text-slate-400" 
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
-                  <input 
-                    type="text" 
-                    placeholder="John Doe" 
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none text-slate-900 bg-white placeholder:text-slate-400" 
-                  />
-                </div>
+          <div className="max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 leading-relaxed font-medium">
+              Quantum thinking elevates you into <span className="text-slate-900 font-extrabold uppercase tracking-tight">BEING</span> above and beyond the reach of the ordinary. There is no competitive advantage in being ordinary.
+            </p>
+          </div>
+        </div>
+      </section>
 
-                <div className="pt-4 border-t border-slate-100">
-                   <div className="flex justify-between items-center mb-2">
-                     <span className="text-slate-600">Subtotal</span>
-                     <span className="font-bold text-slate-900">$997.97</span>
-                   </div>
-                   <div className="flex justify-between items-center mb-6">
-                     <span className="text-slate-600">Early Riser Discount</span>
-                     <span className="text-green-600 font-bold">-$500.00</span>
-                   </div>
-                   <div className="flex justify-between items-center text-xl font-bold text-slate-900 mb-8 pt-4 border-t border-slate-100">
-                     <span>Total Due</span>
-                     <span>$997.97</span>
-                   </div>
-                </div>
-
-                <button className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-900/20">
-                  Complete Enrollment <ArrowRight className="w-5 h-5" />
-                </button>
-                
-                <p className="text-center text-xs text-slate-400 mt-4">
-                  Secure 256-bit encrypted checkout. No hidden fees.
-                </p>
+      {/* Systems Intro Section */}
+      <section className="py-20 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif text-amber-500">Quantum Systems Produce Quantum Leaps in Performance</h2>
+              <p className="text-slate-300 text-lg leading-relaxed">
+                This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.
+              </p>
+            </div>
+            <div className="relative">
+              <img 
+                src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
+                alt="System Performance" 
+                className="rounded-2xl shadow-2xl shadow-amber-500/10 border border-slate-800"
+              />
+              <div className="absolute -bottom-6 -right-6 bg-amber-500 p-6 rounded-2xl hidden md:block shadow-xl">
+                <p className="text-slate-900 font-bold text-xl leading-tight text-center">Beyond Compliance.<br/>Into Transcendence.</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Transformation/Results Section */}
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-xl text-slate-700 leading-relaxed font-medium">
+              The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don’t know how to ask for… YET.
+            </p>
+            <p className="text-lg text-amber-600 font-bold mt-4 uppercase tracking-wide">
+              As you learn our methods, ways, and means by DOING them properly, you will:
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
+            {benefits.map((item, idx) => (
+              <div key={idx} className="flex items-start gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:border-amber-200 transition-colors">
+                <div className="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center border border-amber-200">
+                  <CheckCircle2 className="w-5 h-5 text-amber-600" />
+                </div>
+                <p className="text-slate-700 text-lg leading-snug">{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="py-20 bg-white border-t border-slate-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">A Welcome from Bruce Wright and Jason Crossman</h2>
+          <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
+            <iframe 
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/WS1ccYNZJtU"
+              title="Welcome Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className="max-w-3xl mx-auto text-left bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-inner">
+            <p className="text-slate-600 text-lg leading-relaxed mb-6">
+              In this brief orientation video, Jason Crossman and Bruce Wright discuss four essential questions:
+            </p>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-800 font-semibold">
+              <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-amber-500"></div> Bruce's unique work and legacy.</li>
+              <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-amber-500"></div> Why advisors get stuck with mid-level clients.</li>
+              <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-amber-500"></div> Differentiating through transcendent thinking.</li>
+              <li className="flex items-center gap-3"><div className="w-2 h-2 rounded-full bg-amber-500"></div> Why Bruce is the leader for this transformation.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Reserve Place CTA Section */}
+      <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 font-serif text-white">Reserve Your Place</h2>
+          <p className="text-xl text-slate-300 mb-10">
+            The Mastery Course will be available to the public in Spring 2026.
+            <br/>
+            <span className="font-bold text-amber-400 mt-2 block italic text-2xl">Secure Early Riser pricing of $997.97 now.</span>
+          </p>
+          
+          <div className="max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="space-y-4">
+              <div className="relative">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
+                <input 
+                  type="email" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email address"
+                  className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-700 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all shadow-inner"
+                />
+              </div>
+              <button 
+                type="submit"
+                className="w-full py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg flex items-center justify-center gap-2 group"
+              >
+                Secure My Seat <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <p className="text-xs text-slate-500 pt-2">
+                Limited cohort availability. By signing up, you agree to receive course updates.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
 
-export default PurchasePage;
+export default LandingPage;
