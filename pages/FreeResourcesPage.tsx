@@ -7,7 +7,8 @@ import {
   BookOpen, 
   Phone, 
   Video, 
-  CheckCircle2 
+  CheckCircle2,
+  Calendar
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
@@ -104,7 +105,6 @@ const FreeResourcesPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {/* Resource 1: The Library */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
               <BookOpen className="w-8 h-8 text-amber-600 mb-4" />
               <h3 className="font-bold text-lg mb-2">The Professional Library</h3>
@@ -113,7 +113,6 @@ const FreeResourcesPage: React.FC = () => {
               </p>
             </div>
 
-            {/* Resource 2: Private Calls */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
               <Phone className="w-8 h-8 text-amber-600 mb-4" />
               <h3 className="font-bold text-lg mb-2">Private Strategic Access</h3>
@@ -122,7 +121,6 @@ const FreeResourcesPage: React.FC = () => {
               </p>
             </div>
 
-            {/* Resource 3: Supplementary Videos */}
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
               <Video className="w-8 h-8 text-amber-600 mb-4" />
               <h3 className="font-bold text-lg mb-2">Core Video Lessons</h3>
@@ -148,7 +146,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Books Section (Professional Library) */}
+      {/* 3. Books Section */}
       <section className="py-24 bg-white px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16 font-serif">The Professional Library</h2>
@@ -166,7 +164,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Mastery Section (Original Videos) */}
+      {/* 4. Mastery Section */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-16 font-serif">Mastery Through Video</h2>
@@ -189,7 +187,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Final CTA Section */}
+      {/* 5. Final CTA Section with Due Diligence Add-on */}
       <section className="py-24 bg-slate-900 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-6 font-serif">Reserve Your Place</h2>
@@ -198,16 +196,43 @@ const FreeResourcesPage: React.FC = () => {
           </p>
           <p className="text-amber-500 text-2xl font-bold mb-10">Tuition: $997.97</p>
           
-          <div className="space-y-6">
+          <div className="flex flex-col items-center gap-8">
             <button 
               onClick={goToReservePage}
-              className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl"
+              className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl active:scale-95"
             >
               Get My Free Resources
             </button>
-            <p className="text-slate-400 text-xs italic">
-              * Immediate access includes the Professional Library, Strategy Calls, and Video Modules.
-            </p>
+            
+            <div className="space-y-4">
+              <p className="text-slate-400 text-xs italic">
+                * Immediate access includes the Professional Library, Strategy Calls, and Video Modules.
+              </p>
+              <p className="text-slate-500 text-sm">
+                This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
+              </p>
+            </div>
+
+            {/* Due Diligence Sub-section */}
+            <div className="mt-8 bg-slate-800/50 p-8 rounded-3xl border border-slate-700 max-w-2xl w-full">
+              <h4 className="text-amber-500 font-bold mb-3 flex items-center justify-center gap-2">
+                <Calendar className="w-5 h-5" /> WANT TO LEARN MORE?
+              </h4>
+              <p className="text-slate-200 mb-4">
+                To arrange a confidential “Due Diligence” call with Bruce Raymond Wright, click{' '}
+                <a 
+                  href="YOUR_CALENDAR_LINK_HERE" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-amber-400 font-bold underline hover:text-amber-300 transition-colors"
+                >
+                  HERE
+                </a>
+              </p>
+              <p className="text-slate-400 text-xs uppercase tracking-widest font-bold">
+                Zooms beginning at 1:00 p.m. Pacific Mon - Fri
+              </p>
+            </div>
           </div>
         </div>
       </section>
