@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, CheckCircle2, Mail } from 'lucide-react';
+import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -76,12 +76,10 @@ const LandingPage: React.FC = () => {
                 This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
               </p>
               
-              {/* Descriptive Text Section */}
               <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
                 The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don’t know how to ask for… YET.
               </p>
 
-              {/* Your New Transition Line */}
               <p className="text-white font-bold text-lg mb-6 leading-relaxed">
                 As you learn our methods, ways, and means by DOING them properly, you will:
               </p>
@@ -104,7 +102,6 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Elongated Photo Column */}
             <div className="relative min-h-[500px] lg:min-h-full">
               <img 
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
@@ -122,7 +119,9 @@ const LandingPage: React.FC = () => {
       {/* Video Section */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">A Welcome Video from Bruce Wright and Jason Crossman</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
+            Experience the Introductory Principles by Doing them with Bruce
+          </h2>
           <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
             <iframe 
               className="w-full h-full"
@@ -132,16 +131,49 @@ const LandingPage: React.FC = () => {
               allowFullScreen
             ></iframe>
           </div>
-          <div className="max-w-3xl mx-auto text-left space-y-6">
-            <p className="text-slate-600 text-lg leading-relaxed">
-              In this brief orientation video, Jason Crossman introduces Bruce Wright and guides a focused conversation around four essential questions:
+          <div className="max-w-4xl mx-auto text-left space-y-8">
+            <p className="text-slate-700 text-xl font-medium leading-relaxed">
+              To demonstrate these ideas in action, you will receive immediate access to the following complimentary resources:
             </p>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-800 font-semibold">
-              <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Who Bruce is and what his work is truly about.</li>
-              <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Why most advisors remain stuck attracting mid level clients.</li>
-              <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> What differentiates advisors who transcend status quo thinking.</li>
-              <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Why Bruce is uniquely suited to lead this transformation.</li>
-            </ul>
+            
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                  <Gift className="w-6 h-6 text-amber-600" />
+                </div>
+                <p className="text-slate-600 text-lg">
+                  Free Download of <strong className="text-slate-900">“Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message”</strong>
+                </p>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                  <Phone className="w-6 h-6 text-amber-600" />
+                </div>
+                <p className="text-slate-600 text-lg">
+                  <strong className="text-slate-900">Two highly confidential 45-minute calls with Bruce</strong> to create your emotionally and intellectually captivating “Ideal Introduction” and 30-second messages.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                <p className="text-slate-900 font-bold text-lg mb-4 flex items-center gap-2">
+                  <PlayCircle className="w-5 h-5 text-amber-600" /> Plus, selected video lessons from "The Wright Exit Strategy; Wealth, How to Create It, Keep It, and Use It" including:
+                </p>
+                <ul className="space-y-3 pl-7">
+                  <li className="text-slate-600 list-disc">How to Create an Effective Ecosystem for Uncommon Results</li>
+                  <li className="text-slate-600 list-disc">Do Not Claim You Care, Show You Care</li>
+                  <li className="text-slate-600 list-disc">Using Quantum Mind to Achieve Exceptional Outcomes Unavailable Through Competitors</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-slate-600 text-lg leading-relaxed">
+              These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.
+            </p>
+            
+            <p className="text-slate-900 text-xl font-bold border-l-4 border-amber-500 pl-4">
+              Make your Quantum Leap ahead of competitors today before this course becomes available to advisors everywhere in the spring of 2026.
+            </p>
           </div>
         </div>
       </section>
@@ -164,18 +196,41 @@ const LandingPage: React.FC = () => {
                   type="email" 
                   required
                   placeholder="Enter your email address"
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all text-slate-900"
+                  className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all text-slate-900 shadow-sm"
                 />
               </div>
               <button 
                 type="submit"
-                className="w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg"
+                className="w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg active:scale-[0.98]"
               >
                 Get Free Resources & Secure My Seat
               </button>
-              <p className="text-xs text-slate-500 pt-2">
-                This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
-              </p>
+              
+              <div className="space-y-6 pt-6">
+                <p className="text-xs text-slate-500 italic">
+                  This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
+                </p>
+
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left">
+                  <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-amber-600" /> Want to learn more?
+                  </h4>
+                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                    To arrange a confidential “Due Diligence” call with Bruce Raymond Wright, click{' '}
+                    <a 
+                      href="YOUR_CALENDAR_LINK_HERE" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-amber-600 font-bold underline hover:text-amber-700"
+                    >
+                      HERE
+                    </a>
+                  </p>
+                  <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">
+                    Zooms available beginning at 1:00 p.m. Pacific Mon - Fri
+                  </p>
+                </div>
+              </div>
             </form>
           </div>
         </div>
