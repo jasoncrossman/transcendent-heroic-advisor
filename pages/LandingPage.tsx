@@ -66,7 +66,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Systems Section - Updated with your new text and bullet */}
+      {/* Systems Section */}
       <section className="py-24 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
@@ -76,9 +76,14 @@ const LandingPage: React.FC = () => {
                 This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
               </p>
               
-              {/* New Descriptive Text Section */}
-              <p className="text-amber-400 font-semibold text-lg mb-8 leading-relaxed italic">
+              {/* Descriptive Text Section */}
+              <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
                 The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don’t know how to ask for… YET.
+              </p>
+
+              {/* Your New Transition Line */}
+              <p className="text-white font-bold text-lg mb-6 leading-relaxed">
+                As you learn our methods, ways, and means by DOING them properly, you will:
               </p>
               
               <div className="space-y-4">
