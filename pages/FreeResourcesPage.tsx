@@ -221,7 +221,7 @@ const FreeResourcesPage: React.FC = () => {
               <p className="text-slate-200 mb-4">
                 To arrange a confidential “Due Diligence” call with Bruce Raymond Wright, click{' '}
                 <a 
-                  href="YOUR_CALENDAR_LINK_HERE" 
+                  href="https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-amber-400 font-bold underline hover:text-amber-300 transition-colors"
