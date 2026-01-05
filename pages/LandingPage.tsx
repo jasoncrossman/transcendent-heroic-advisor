@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, CheckCircle2, Mail } from 'lucide-react';
@@ -8,7 +7,6 @@ const LandingPage: React.FC = () => {
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    // Redirecting to purchase as per new goal
     navigate('/purchase');
   };
 
@@ -46,8 +44,6 @@ const LandingPage: React.FC = () => {
      {/* Philosophy Section */}
       <section id="about" className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          
-          {/* Top of Sandwich: The Philosophy */}
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
             <p className="text-lg text-slate-600 leading-relaxed italic">
@@ -55,7 +51,6 @@ const LandingPage: React.FC = () => {
             </p>
           </div>
           
-          {/* Middle of Sandwich: The Mechanism Box */}
           <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
             <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
             <p className="text-slate-900 font-medium text-lg leading-relaxed">
@@ -63,24 +58,27 @@ const LandingPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Bottom of Sandwich: The Resulting Transformation */}
           <div className="max-w-3xl mx-auto">
             <p className="text-xl text-slate-600 leading-relaxed font-medium">
               Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others.
             </p>
           </div>
-
         </div>
       </section>
 
-      {/* Systems Section */}
-      <section className="py-20 bg-slate-900 text-white">
+      {/* Systems Section - Updated with your new text and bullet */}
+      <section className="py-24 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+            <div className="flex flex-col justify-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps in Performance</h2>
-              <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+              <p className="text-slate-400 text-lg mb-6 leading-relaxed">
                 This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
+              </p>
+              
+              {/* New Descriptive Text Section */}
+              <p className="text-amber-400 font-semibold text-lg mb-8 leading-relaxed italic">
+                The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don’t know how to ask for… YET.
               </p>
               
               <div className="space-y-4">
@@ -88,7 +86,8 @@ const LandingPage: React.FC = () => {
                   "Demonstrate how you are extraordinary, priceless, and irreplaceable.",
                   "Become far more attractive to A-level referrals… without asking for them.",
                   "Transcend fiduciary regulations in ways that matter most to clients.",
-                  "Consistently deliver dazzling multidimensional wisdom that your competitors do not offer… and cannot even imagine."
+                  "Consistently deliver dazzling multidimensional wisdom that your competitors do not offer… and cannot even imagine.",
+                  "Create an entire ecosystem of like-minded transcendent advisors that bring dynamic execution of details to clients. Helping YOU to bring clients into alignment with who, what, and where they would rather be now and next."
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-4">
                     <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
@@ -99,13 +98,15 @@ const LandingPage: React.FC = () => {
                 ))}
               </div>
             </div>
-            <div className="relative">
+
+            {/* Elongated Photo Column */}
+            <div className="relative min-h-[500px] lg:min-h-full">
               <img 
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
                 alt="System Performance" 
-                className="rounded-2xl shadow-2xl shadow-amber-500/5 border border-slate-800"
+                className="w-full h-full object-cover rounded-2xl shadow-2xl shadow-amber-500/5 border border-slate-800"
               />
-              <div className="absolute -bottom-6 -left-6 bg-amber-500 p-6 rounded-2xl hidden md:block">
+              <div className="absolute -bottom-6 -left-6 bg-amber-500 p-6 rounded-2xl hidden md:block z-10">
                 <p className="text-slate-900 font-bold text-xl leading-tight">Beyond Compliance.<br/>Into Transcendence.</p>
               </div>
             </div>
@@ -122,7 +123,6 @@ const LandingPage: React.FC = () => {
               className="w-full h-full"
               src="https://www.youtube.com/embed/WS1ccYNZJtU"
               title="Welcome Video"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
             ></iframe>
@@ -132,7 +132,7 @@ const LandingPage: React.FC = () => {
               In this brief orientation video, Jason Crossman introduces Bruce Wright and guides a focused conversation around four essential questions:
             </p>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-800 font-semibold">
-              <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-50"></span> Who Bruce is and what his work is truly about.</li>
+              <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Who Bruce is and what his work is truly about.</li>
               <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Why most advisors remain stuck attracting mid level clients.</li>
               <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> What differentiates advisors who transcend status quo thinking.</li>
               <li className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500"></span> Why Bruce is uniquely suited to lead this transformation.</li>
