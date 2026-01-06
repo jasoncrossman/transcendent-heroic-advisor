@@ -25,7 +25,7 @@ const LandingPage: React.FC = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/5">
-            Cohort Launching January 2026
+            Launching Spring 2026
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tight">
             The Transcendent <span className="gradient-gold">Heroic Advisor</span>
