@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isVideoActive, setIsVideoActive] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +42,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-     {/* Philosophy Section */}
+      {/* Philosophy Section */}
       <section id="about" className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-12">
@@ -116,21 +117,35 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Video Section */}
+      {/* Video Section with Glass Overlay */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
             Experience the Introductory Principles by Doing them with Bruce
           </h2>
           <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
+            
             <iframe 
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/WS1ccYNZJtU"
+              className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-30'}`}
+              src={`https://www.youtube.com/embed/WS1ccYNZJtU?autoplay=${isVideoActive ? 1 : 0}&rel=0`}
               title="Welcome Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
             ></iframe>
+
+            {/* Gaussian Blur "Glass" Overlay */}
+            {!isVideoActive && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-md bg-slate-900/10">
+                <button 
+                  onClick={() => setIsVideoActive(true)}
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-8 py-3 rounded-full font-bold flex items-center gap-2 transition-all shadow-xl hover:scale-105 active:scale-95"
+                >
+                  <PlayCircle className="w-5 h-5" /> Watch Introduction
+                </button>
+              </div>
+            )}
           </div>
+
           <div className="max-w-4xl mx-auto text-left space-y-8">
             <p className="text-slate-700 text-xl font-medium leading-relaxed">
               To demonstrate these ideas in action, you will receive immediate access to the following complimentary resources:
