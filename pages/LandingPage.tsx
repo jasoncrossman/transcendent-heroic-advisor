@@ -6,11 +6,6 @@ const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [isVideoActive, setIsVideoActive] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate('/purchase');
-  };
-
   return (
     <div className="animate-in fade-in duration-700">
       {/* Hero Section */}
@@ -78,7 +73,7 @@ const LandingPage: React.FC = () => {
               </p>
               
               <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
-                The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don’t know how to ask for… YET.
+                The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don't know how to ask for… YET.
               </p>
 
               <p className="text-white font-bold text-lg mb-6 leading-relaxed">
@@ -133,7 +128,6 @@ const LandingPage: React.FC = () => {
               allowFullScreen
             ></iframe>
 
-            {/* Gaussian Blur "Glass" Overlay */}
             {!isVideoActive && (
               <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-md bg-slate-900/10">
                 <button 
@@ -204,28 +198,14 @@ const LandingPage: React.FC = () => {
           </p>
           
           <div className="max-w-md mx-auto">
-            <form onSubmit={handleSubscribe} className="space-y-4">
-              <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <input 
-                  type="email" 
-                  required
-                  placeholder="Enter your email address"
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all text-slate-900 shadow-sm"
-                />
-              </div>
-              <button 
-                type="submit"
-                className="w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg active:scale-[0.98]"
+              <Link 
+                to="/purchase"
+                className="block w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg active:scale-[0.98] text-center"
               >
                 Get Free Resources & Secure My Seat
-              </button>
+              </Link>
               
-              <div className="space-y-6 pt-6">
-                <p className="text-xs text-slate-500 italic">
-                  This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
-                </p>
-
+              <div className="space-y-6 pt-10">
                 <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left">
                   <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-amber-600" /> Want to learn more?
@@ -246,7 +226,6 @@ const LandingPage: React.FC = () => {
                   </p>
                 </div>
               </div>
-            </form>
           </div>
         </div>
       </section>
