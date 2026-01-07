@@ -49,6 +49,7 @@ const FreeResourcesPage: React.FC = () => {
     { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
   ];
 
+  // Logic to handle auto-pausing when a new video is selected
   const handleVideoSelection = (id: string) => {
     globalSparksVideos.forEach(video => {
       if (video.id !== id && !video.comingSoon) {
@@ -77,6 +78,7 @@ const FreeResourcesPage: React.FC = () => {
           const player = new (window as any).Vimeo.Player(iframe);
           
           player.on('play', () => {
+            // Stop other videos if this one starts playing
             globalSparksVideos.forEach(v => {
                if (v.id !== video.id) {
                  const otherIframe = document.getElementById(`vimeo-${v.id}`) as HTMLIFrameElement;
@@ -87,17 +89,15 @@ const FreeResourcesPage: React.FC = () => {
           });
 
           player.on('timeupdate', (data: { seconds: number }) => {
-            // Logic for the 30-second lock
             if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
               const hasSeenLockBefore = localStorage.getItem('tha_lock_encountered') === 'true';
               
+              player.pause();
               if (hasSeenLockBefore) {
-                // "Chicken Stacker" Logic: They returned/refreshed. Show secret passage instead of lock.
+                // Trigger the "Easter Egg"
                 setShowSecretPassage(true);
-                player.pause();
               } else {
-                // First time encounter: Standard Lock
-                player.pause();
+                // First encounter
                 setLockedVideoId(video.id);
                 localStorage.setItem('tha_lock_encountered', 'true');
               }
@@ -117,7 +117,11 @@ const FreeResourcesPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5 relative group">
               <div className="relative aspect-[3/4] max-w-sm mx-auto bg-slate-800 rounded-3xl overflow-hidden border-2 border-slate-700 shadow-2xl">
-                <img src="/assets/images/bruce.jpg" alt="Bruce Wright" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                <img 
+                  src="/assets/images/bruce.jpg" 
+                  alt="Bruce Wright" 
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 p-6 text-center">
                    <p className="text-amber-500 font-bold uppercase tracking-widest italic">The Architect of Transcendence</p>
                 </div>
@@ -150,9 +154,10 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Simplified Waitlist Resources Section */}
+      {/* 2. Resources Info Section */}
       <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
+          {/* Top Info Prompts */}
           <div className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
             <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
             <div>
@@ -192,8 +197,8 @@ const FreeResourcesPage: React.FC = () => {
 
       {/* 3. Books Section */}
       <section className="py-24 bg-white px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16 font-serif">The Professional Library</h2>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-16 font-serif">The Professional Library</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, i) => (
               <div key={i} className="text-center group">
@@ -237,7 +242,7 @@ const FreeResourcesPage: React.FC = () => {
                         ) : (
                           <button 
                             onClick={() => handleVideoSelection(v.id)}
-                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto"
+                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto shadow-lg"
                           >
                             <PlayCircle className="w-4 h-4" /> Play Lesson
                           </button>
@@ -267,20 +272,20 @@ const FreeResourcesPage: React.FC = () => {
                     </div>
                   )}
 
-                  {/* "Chicken Stacker" Secret Passage UI */}
+                  {/* Secret Passage UI */}
                   {showSecretPassage && activeVideo === v.id && (
                     <div className="absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8 border-2 border-amber-500/30 rounded-2xl animate-in zoom-in duration-500">
                       <Zap className="w-10 h-10 text-amber-500 mb-4 animate-pulse" />
                       <h3 className="text-white text-2xl font-bold mb-2 font-serif italic">Initiative Detected.</h3>
-                      <p className="text-slate-300 text-sm mb-6 max-w-xs mx-auto">
-                        You clearly aren't a "minimum standards" advisor. You found the secret passage. Enjoy the full lesson... <span className="text-amber-500 font-bold">but keep it between us.</span>
+                      <p className="text-slate-300 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
+                        Clearly, you are ready for <span className="text-amber-500 font-bold uppercase tracking-wide">Quantum levels of thinking</span>. Enjoy the full lesson... but let's keep this between us.
                       </p>
                       <button 
                         onClick={() => {
                           setShowSecretPassage(false);
                           setLockedVideoId(null);
                         }} 
-                        className="px-6 py-2 bg-transparent border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-900 font-bold rounded-full transition-all text-xs uppercase tracking-widest"
+                        className="px-8 py-2 bg-transparent border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-900 font-bold rounded-full transition-all text-xs uppercase tracking-widest"
                       >
                         Enter the Vault
                       </button>
