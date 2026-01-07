@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Award, 
   Star, 
-  ArrowRight, 
   Zap, 
   BookOpen, 
   Phone, 
   Video, 
   CheckCircle2,
-  Calendar
+  Calendar,
+  Lock,
+  PlayCircle,
+  Clock
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
-  // Navigation handler to your Vercel purchase page
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  const [lockedVideoId, setLockedVideoId] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
   const goToReservePage = () => {
     window.location.href = 'https://transcendent-heroic-advisor.vercel.app/#/purchase';
   };
@@ -36,11 +41,40 @@ const FreeResourcesPage: React.FC = () => {
   ];
 
   const globalSparksVideos = [
-    { title: "Create an Ecosystem for Uncommon Results", url: "https://www.youtube.com/embed/WS1ccYNZJtU" },
-    { title: "Do Not Claim You Care, Show You Care", url: "https://www.youtube.com/embed/WS1ccYNZJtU" },
-    { title: "Using the Quantum Mind", url: "https://www.youtube.com/embed/WS1ccYNZJtU" },
-    { title: "Think, Do, and BE as the Elephant", url: "https://www.youtube.com/embed/WS1ccYNZJtU" }
+    { id: '816394768', title: "Create an Ecosystem for Uncommon Results" },
+    { id: '816409798', title: "Do Not Claim You Care, Show You Care" },
+    { id: '816414705', title: "Using the Quantum Mind" },
+    { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
   ];
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://player.vimeo.com/api/player.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      globalSparksVideos.forEach(video => {
+        if (video.comingSoon) return;
+        const iframe = document.getElementById(`vimeo-${video.id}`) as HTMLIFrameElement;
+        if (iframe && (window as any).Vimeo) {
+          const player = new (window as any).Vimeo.Player(iframe);
+          
+          player.on('play', () => {
+            if (!selectedVideoId) setSelectedVideoId(video.id);
+          });
+
+          player.on('timeupdate', (data: { seconds: number }) => {
+            if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
+              player.pause();
+              setLockedVideoId(video.id);
+            }
+          });
+        }
+      });
+    };
+    return () => { if (document.body.contains(script)) document.body.removeChild(script); };
+  }, [selectedVideoId, activeVideo]);
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
@@ -66,14 +100,12 @@ const FreeResourcesPage: React.FC = () => {
                 <Award className="w-5 h-5" /> Visionary • Inventor • Consigliere
               </span>
               <h1 className="text-4xl md:text-5xl font-bold font-serif mb-8">About Bruce Raymond Wright</h1>
-              
               <div className="space-y-8 text-slate-300 text-lg leading-relaxed">
                 <p className="font-semibold text-white text-xl">Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.</p>
                 <p>Decades ago, Bruce realized the financial world was built on "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span></p>
                 <p>After a meteoric rise at Associated Planners, Bruce liquidated his positions to build a holistic, "in-the-trenches" system designed for tangible, massive results.</p>
-                <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">Consigliere</span> for discerning minds. He architects <span className="italic text-amber-500 font-bold">100-Year Legacies</span>, turning complex chaos into elegant, synergistic written plans.</p>
+                <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">Consigliere</span> for discerning minds.</p>
               </div>
-
               <div className="flex flex-wrap gap-4 mt-12">
                 <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3">
                   <Star className="text-amber-500 w-5 h-5 fill-current" />
@@ -94,53 +126,25 @@ const FreeResourcesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="max-w-4xl mb-12">
             <h2 className="text-2xl md:text-3xl font-bold font-serif mb-6 text-slate-900 leading-tight">
-              When you join the waitlist for the Transcendent Heroic Advisor Mastery Course, you will receive immediate access to the following complimentary resources:
+              When you join the waitlist, you receive immediate access to:
             </h2>
-            <button 
-              onClick={goToReservePage}
-              className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-all shadow-md text-sm uppercase tracking-wide"
-            >
+            <button onClick={goToReservePage} className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-all shadow-md text-sm uppercase tracking-wide">
               Get My Free Resources
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-              <BookOpen className="w-8 h-8 text-amber-600 mb-4" />
-              <h3 className="font-bold text-lg mb-2">The Professional Library</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                A complete digital copy of all books in the library, including the magnetic 30-second marketing framework.
-              </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center">
+              <BookOpen className="w-8 h-8 text-amber-600 mb-4 mx-auto" />
+              <h3 className="font-bold mb-2">The Professional Library</h3>
             </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-              <Phone className="w-8 h-8 text-amber-600 mb-4" />
-              <h3 className="font-bold text-lg mb-2">Private Strategic Access</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Two highly confidential 45-minute calls with Bruce to explore the application of these principles.
-              </p>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center">
+              <Phone className="w-8 h-8 text-amber-600 mb-4 mx-auto" />
+              <h3 className="font-bold mb-2">Private Strategic Access</h3>
             </div>
-
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-              <Video className="w-8 h-8 text-amber-600 mb-4" />
-              <h3 className="font-bold text-lg mb-2">Core Video Lessons</h3>
-              <p className="text-slate-500 text-[10px] font-bold uppercase mb-3 tracking-widest">From The Wright Exit Strategy</p>
-              <ul className="space-y-2">
-                {globalSparksVideos.map((v, i) => (
-                  <li key={i} className="flex items-center gap-2 text-xs text-slate-600 font-medium">
-                    <CheckCircle2 className="w-3 h-3 text-amber-600 shrink-0" /> {v.title}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-8 border-t border-slate-200 pt-10">
-            <p className="flex-1 text-slate-700 leading-relaxed italic text-sm md:text-base">
-              These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.
-            </p>
-            <div className="bg-amber-100 text-amber-900 px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-widest text-center border border-amber-200">
-              Mastery Course Available Spring 2026
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 text-center">
+              <Video className="w-8 h-8 text-amber-600 mb-4 mx-auto" />
+              <h3 className="font-bold mb-2">Core Video Lessons</h3>
             </div>
           </div>
         </div>
@@ -164,75 +168,94 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Mastery Section */}
+      {/* 4. Mastery Video Section - UPDATED WITH BLURRED COVERS */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-16 font-serif">Mastery Through Video</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
             {globalSparksVideos.map((v, i) => (
               <div key={i} className="space-y-4">
-                <div className="aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-lg border-4 border-white">
-                  <iframe 
-                    className="w-full h-full" 
-                    src={v.url} 
-                    title={v.title} 
-                    frameBorder="0" 
-                    allowFullScreen
-                  ></iframe>
+                <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
+                  {/* The Actual Video (Only shows if clicked or "active") */}
+                  {!v.comingSoon && (
+                    <iframe 
+                      id={`vimeo-${v.id}`}
+                      className={`w-full h-full transition-opacity duration-500 ${activeVideo === v.id ? 'opacity-100' : 'opacity-0'}`}
+                      src={`https://player.vimeo.com/video/${v.id}?badge=0&autopause=0&player_id=0&app_id=58479`}
+                      title={v.title} 
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  )}
+
+                  {/* Blurred Cover Overlay */}
+                  {activeVideo !== v.id && (
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center">
+                      <div className="absolute inset-0 bg-slate-800/40 backdrop-blur-xl"></div>
+                      <div className="relative z-20">
+                        <h4 className="text-white text-2xl font-bold mb-4 font-serif">{v.title}</h4>
+                        {v.comingSoon ? (
+                           <span className="text-amber-500 font-bold uppercase tracking-[0.3em] animate-pulse">Coming Soon</span>
+                        ) : (
+                          <button 
+                            onClick={() => setActiveVideo(v.id)}
+                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-2 rounded-full font-bold flex items-center gap-2 transition-all"
+                          >
+                            <PlayCircle className="w-5 h-5" /> Play Lesson
+                          </button>
+                        )}
+                      </div>
+                      {/* Status Tags */}
+                      {!v.comingSoon && (
+                        <div className="absolute top-4 right-4">
+                          {selectedVideoId === v.id ? (
+                            <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
+                          ) : selectedVideoId && (
+                            <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><Clock className="w-3 h-3"/> Preview</span>
+                          ) }
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* 30 Second Lock Overlay */}
+                  {lockedVideoId === v.id && (
+                    <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8 animate-in fade-in">
+                      <Lock className="w-12 h-12 text-amber-500 mb-4" />
+                      <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
+                      <p className="text-slate-400 text-sm mb-6">Reserve your place to unlock the full library.</p>
+                      <button onClick={goToReservePage} className="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
+                        Unlock Full Access
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <h4 className="font-bold text-slate-800">{v.title}</h4>
+                <h4 className="font-bold text-slate-800 px-2">{v.title}</h4>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5. Final CTA Section with Due Diligence Add-on */}
+      {/* 5. Final CTA Section */}
       <section className="py-24 bg-slate-900 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-6 font-serif">Reserve Your Place</h2>
-          <p className="text-xl text-slate-300 mb-4">
-            The Transcendent Heroic Advisor Mastery Course | <span className="text-white font-bold">Spring 2026</span>
-          </p>
-          <p className="text-amber-500 text-2xl font-bold mb-10">Tuition: $997.97</p>
-          
-          <div className="flex flex-col items-center gap-8">
-            <button 
-              onClick={goToReservePage}
-              className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl active:scale-95"
-            >
-              Get My Free Resources
-            </button>
-            
-            <div className="space-y-4">
-              <p className="text-slate-400 text-xs italic">
-                * Immediate access includes the Professional Library, Strategy Calls, and Video Modules.
-              </p>
-              <p className="text-slate-500 text-sm">
-                This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
-              </p>
-            </div>
+          <p className="text-xl text-slate-300 mb-10">Tuition: <span className="text-amber-500 font-bold">$997.97</span></p>
+          <button onClick={goToReservePage} className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl mb-12">
+            Get My Free Resources
+          </button>
 
-            {/* Due Diligence Sub-section */}
-            <div className="mt-8 bg-slate-800/50 p-8 rounded-3xl border border-slate-700 max-w-2xl w-full">
-              <h4 className="text-amber-500 font-bold mb-3 flex items-center justify-center gap-2">
-                <Calendar className="w-5 h-5" /> WANT TO LEARN MORE?
-              </h4>
-              <p className="text-slate-200 mb-4">
-                To arrange a confidential “Due Diligence” call with Bruce Raymond Wright, click{' '}
-                <a 
-                  href="https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-amber-400 font-bold underline hover:text-amber-300 transition-colors"
-                >
-                  HERE
-                </a>
-              </p>
-              <p className="text-slate-400 text-xs uppercase tracking-widest font-bold">
-                Zooms beginning at 1:00 p.m. Pacific Mon - Fri
-              </p>
-            </div>
+          <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700 max-w-2xl w-full mx-auto">
+            <h4 className="text-amber-500 font-bold mb-3 flex items-center justify-center gap-2 uppercase tracking-widest">
+              <Calendar className="w-5 h-5" /> Want to learn more?
+            </h4>
+            <p className="text-slate-200">
+              To arrange a confidential “Due Diligence” call with Bruce Wright, click{' '}
+              <a href="https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg" target="_blank" rel="noopener noreferrer" className="text-amber-400 font-bold underline hover:text-amber-300">
+                HERE
+              </a>
+            </p>
           </div>
         </div>
       </section>
