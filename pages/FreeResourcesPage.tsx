@@ -49,7 +49,6 @@ const FreeResourcesPage: React.FC = () => {
     { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
   ];
 
-  // Logic to handle auto-pausing when a new video is selected
   const handleVideoSelection = (id: string) => {
     globalSparksVideos.forEach(video => {
       if (video.id !== id && !video.comingSoon) {
@@ -78,7 +77,6 @@ const FreeResourcesPage: React.FC = () => {
           const player = new (window as any).Vimeo.Player(iframe);
           
           player.on('play', () => {
-            // Stop other videos if this one starts playing
             globalSparksVideos.forEach(v => {
                if (v.id !== video.id) {
                  const otherIframe = document.getElementById(`vimeo-${v.id}`) as HTMLIFrameElement;
@@ -90,16 +88,18 @@ const FreeResourcesPage: React.FC = () => {
 
           player.on('timeupdate', (data: { seconds: number }) => {
             if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
+              player.pause();
+              
               const hasSeenLockBefore = localStorage.getItem('tha_lock_encountered') === 'true';
               
-              player.pause();
-              if (hasSeenLockBefore) {
-                // Trigger the "Easter Egg"
+              // Only trigger Secret Passage if they've encountered it before AND refreshed
+              if (hasSeenLockBefore && !lockedVideoId) {
                 setShowSecretPassage(true);
-              } else {
-                // First encounter
+              } else if (!hasSeenLockBefore) {
                 setLockedVideoId(video.id);
                 localStorage.setItem('tha_lock_encountered', 'true');
+              } else {
+                setLockedVideoId(video.id);
               }
             }
           });
@@ -107,7 +107,7 @@ const FreeResourcesPage: React.FC = () => {
       });
     };
     return () => { if (document.body.contains(script)) document.body.removeChild(script); };
-  }, [selectedVideoId, activeVideo]);
+  }, [selectedVideoId, activeVideo, lockedVideoId]);
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
@@ -139,16 +139,6 @@ const FreeResourcesPage: React.FC = () => {
                 <p>After a meteoric rise at Associated Planners, Bruce liquidated his positions to build a holistic, "in-the-trenches" system designed for tangible, massive results.</p>
                 <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">Consigliere</span> for discerning minds.</p>
               </div>
-              <div className="flex flex-wrap gap-4 mt-12">
-                <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3">
-                  <Star className="text-amber-500 w-5 h-5 fill-current" />
-                  <span className="text-sm font-semibold uppercase tracking-tight">100-Year Legacy Architect</span>
-                </div>
-                <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3">
-                  <Zap className="text-amber-500 w-5 h-5" />
-                  <span className="text-sm font-semibold uppercase tracking-tight">Conflict-Free Innovator</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -157,7 +147,6 @@ const FreeResourcesPage: React.FC = () => {
       {/* 2. Resources Info Section */}
       <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Top Info Prompts */}
           <div className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
             <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
             <div>
@@ -195,18 +184,21 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Books Section */}
+      {/* 3. Books Section (Restored) */}
       <section className="py-24 bg-white px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16 font-serif">The Professional Library</h2>
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-16 font-serif">The Professional Library</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, i) => (
               <div key={i} className="text-center group">
-                <div className="relative aspect-[3/4] mb-6 bg-slate-50 rounded-lg shadow-lg group-hover:shadow-xl transition-all p-4">
-                  <img src={book.image} alt={book.title} className="max-h-full mx-auto object-contain" />
+                <div className="relative aspect-[3/4] mb-6 bg-slate-50 rounded-lg shadow-lg group-hover:shadow-xl transition-all p-4 flex items-center justify-center">
+                   <div className="w-full h-full bg-slate-200 rounded flex items-center justify-center text-slate-400 italic">
+                     {/* Placeholder for images if they are not yet uploaded */}
+                     Book Image
+                   </div>
                 </div>
                 <h3 className="font-bold text-lg mb-2">{book.title}</h3>
-                <p className="text-slate-500 text-sm">{book.description}</p>
+                <p className="text-slate-500 text-sm leading-relaxed">{book.description}</p>
               </div>
             ))}
           </div>
@@ -248,15 +240,6 @@ const FreeResourcesPage: React.FC = () => {
                           </button>
                         )}
                       </div>
-                      {!v.comingSoon && (
-                        <div className="absolute top-4 right-4">
-                          {selectedVideoId === v.id ? (
-                            <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
-                          ) : selectedVideoId && (
-                            <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><Clock className="w-3 h-3"/> Preview</span>
-                          ) }
-                        </div>
-                      )}
                     </div>
                   )}
 
@@ -306,7 +289,7 @@ const FreeResourcesPage: React.FC = () => {
           <button onClick={goToReservePage} className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl mb-12">
             Get My Free Resources
           </button>
-
+          
           <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700 max-w-2xl w-full mx-auto">
             <h4 className="text-amber-500 font-bold mb-3 flex items-center justify-center gap-2 uppercase tracking-widest">
               <Calendar className="w-5 h-5" /> Want to learn more?
