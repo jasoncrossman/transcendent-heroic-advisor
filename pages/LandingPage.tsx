@@ -1,50 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar, Lock, Clock } from 'lucide-react';
+import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
-  const [lockedVideoId, setLockedVideoId] = useState<string | null>(null);
-
-  const videoData = [
-    { id: '816394768', title: 'Create an Ecosystem for Uncommon Results' },
-    { id: '816409798', title: 'Do Not Claim You Care, Show You Care' },
-    { id: '816414705', title: 'Using the Quantum Mind' }
-  ];
-
-  useEffect(() => {
-    // Plan B: Load the Vimeo Script manually so we don't need npm install
-    const script = document.createElement('script');
-    script.src = "https://player.vimeo.com/api/player.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      videoData.forEach(video => {
-        const iframe = document.getElementById(`vimeo-${video.id}`) as HTMLIFrameElement;
-        if (iframe && window.Vimeo) {
-          const player = new window.Vimeo.Player(iframe);
-
-          player.on('play', () => {
-            if (!selectedVideoId) {
-              setSelectedVideoId(video.id);
-            }
-          });
-
-          player.on('timeupdate', (data: { seconds: number }) => {
-            // Logic: If a choice was made, and this isn't it, stop at 30 seconds
-            if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
-              player.pause();
-              setLockedVideoId(video.id);
-            }
-          });
-        }
-      });
-    };
-
-    return () => { document.body.removeChild(script); };
-  }, [selectedVideoId]);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,69 +31,37 @@ const LandingPage: React.FC = () => {
             The Transcendent <span className="gradient-gold">Heroic Advisor</span>
           </h1>
           <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
-            Welcome to our Quantum Mind Mastery Course for advisors and your associates.
+            Welcome to our Quantum Mind Mastery Course for advisors and your associates. Each of the lessons taught will actually SHOW you how to implement Quantum Mind solutions, methods, ways, and means.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/purchase" className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all shadow-lg flex items-center justify-center group">
+            <Link to="/purchase" className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center group">
               Reserve Your Place <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Video Hub Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Choose Your Free Mastery Lesson</h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Select one lesson to view in full. The remaining lessons will offer a 30-second preview.
+     {/* Philosophy Section */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
+            <p className="text-lg text-slate-600 leading-relaxed italic">
+              "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as actually APPLYING the details directly with the inventor."
+            </p>
+          </div>
+          
+          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
+            <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
+            <p className="text-slate-900 font-medium text-lg leading-relaxed">
+              Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {videoData.map((video) => (
-              <div key={video.id} className="relative bg-slate-900 rounded-3xl overflow-hidden shadow-xl aspect-video">
-                <iframe
-                  id={`vimeo-${video.id}`}
-                  src={`https://player.vimeo.com/video/${video.id}?badge=0&autopause=0&player_id=0&app_id=58479`}
-                  className="w-full h-full"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                ></iframe>
-                
-                {lockedVideoId === video.id && (
-                  <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-md flex flex-col items-center justify-center text-center p-6 animate-in fade-in">
-                    <Lock className="w-12 h-12 text-amber-500 mb-4" />
-                    <h3 className="text-white text-xl font-bold mb-2">Preview Ended</h3>
-                    <p className="text-slate-300 mb-6 text-sm">To view the full lesson, reserve your space today.</p>
-                    <Link to="/purchase" className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400">
-                      Unlock Full Access
-                    </Link>
-                  </div>
-                )}
-
-                <div className="absolute top-4 right-4 pointer-events-none">
-                  {selectedVideoId === video.id ? (
-                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" /> Full Access Unlocked
-                    </span>
-                  ) : selectedVideoId && (
-                    <span className="bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> 30s Preview
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-
-            {/* Elephant Placeholder */}
-            <div className="relative bg-slate-800 rounded-3xl overflow-hidden shadow-xl aspect-video flex items-center justify-center border-2 border-dashed border-slate-700">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&q=80&w=800')] opacity-20 grayscale blur-md"></div>
-              <div className="relative z-10 text-center px-6">
-                <h3 className="text-white text-2xl font-bold mb-2 font-serif">The Elephant in the Room</h3>
-                <p className="text-amber-400 font-bold text-sm uppercase tracking-widest animate-pulse">Coming Soon</p>
-              </div>
-            </div>
+          <div className="max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 leading-relaxed font-medium">
+              Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others.
+            </p>
           </div>
         </div>
       </section>
@@ -142,39 +69,125 @@ const LandingPage: React.FC = () => {
       {/* Systems Section */}
       <section className="py-24 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+            <div className="flex flex-col justify-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps in Performance</h2>
+              <p className="text-slate-400 text-lg mb-6 leading-relaxed">
+                This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
+              </p>
+              
+              <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
+                The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don’t know how to ask for… YET.
+              </p>
+
+              <p className="text-white font-bold text-lg mb-6 leading-relaxed">
+                As you learn our methods, ways, and means by DOING them properly, you will:
+              </p>
+              
               <div className="space-y-4">
                 {[
                   "Demonstrate how you are extraordinary, priceless, and irreplaceable.",
-                  "Become far more attractive to A-level referrals.",
-                  "Transcend fiduciary regulations.",
-                  "Deliver dazzling multidimensional wisdom.",
-                  "Create an ecosystem of like-minded advisors."
+                  "Become far more attractive to A-level referrals… without asking for them.",
+                  "Transcend fiduciary regulations in ways that matter most to clients.",
+                  "Consistently deliver dazzling multidimensional wisdom that your competitors do not offer… and cannot even imagine.",
+                  "Create an entire ecosystem of like-minded transcendent advisors that bring dynamic execution of details to clients. Helping YOU to bring clients into alignment with who, what, and where they would rather be now and next."
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-4">
-                    <CheckCircle2 className="w-5 h-5 text-amber-500 shrink-0 mt-1" />
-                    <p className="text-slate-300">{item}</p>
+                    <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500" />
+                    </div>
+                    <p className="text-slate-300 font-medium">{item}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="relative h-64 lg:h-auto">
+
+            <div className="relative min-h-[500px] lg:min-h-full">
               <img 
                 src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
-                alt="Performance" 
-                className="w-full h-full object-cover rounded-2xl border border-slate-800"
+                alt="System Performance" 
+                className="w-full h-full object-cover rounded-2xl shadow-2xl shadow-amber-500/5 border border-slate-800"
               />
+              <div className="absolute -bottom-6 -left-6 bg-amber-500 p-6 rounded-2xl hidden md:block z-10">
+                <p className="text-slate-900 font-bold text-xl leading-tight">Beyond Compliance.<br/>Into Transcendence.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Video Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
+            Experience the Introductory Principles by Doing them with Bruce
+          </h2>
+          <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
+            <iframe 
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/WS1ccYNZJtU"
+              title="Welcome Video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className="max-w-4xl mx-auto text-left space-y-8">
+            <p className="text-slate-700 text-xl font-medium leading-relaxed">
+              To demonstrate these ideas in action, you will receive immediate access to the following complimentary resources:
+            </p>
+            
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                  <Gift className="w-6 h-6 text-amber-600" />
+                </div>
+                <p className="text-slate-600 text-lg">
+                  Free Download of <strong className="text-slate-900">“Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message”</strong>
+                </p>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                  <Phone className="w-6 h-6 text-amber-600" />
+                </div>
+                <p className="text-slate-600 text-lg">
+                  <strong className="text-slate-900">Two highly confidential 45-minute calls with Bruce</strong> to create your emotionally and intellectually captivating “Ideal Introduction” and 30-second messages.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                <p className="text-slate-900 font-bold text-lg mb-4 flex items-center gap-2">
+                  <PlayCircle className="w-5 h-5 text-amber-600" /> Plus, selected video lessons from "The Wright Exit Strategy; Wealth, How to Create It, Keep It, and Use It" including:
+                </p>
+                <ul className="space-y-3 pl-7">
+                  <li className="text-slate-600 list-disc">How to Create an Effective Ecosystem for Uncommon Results</li>
+                  <li className="text-slate-600 list-disc">Do Not Claim You Care, Show You Care</li>
+                  <li className="text-slate-600 list-disc">Using Quantum Mind to Achieve Exceptional Outcomes Unavailable Through Competitors</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-slate-600 text-lg leading-relaxed">
+              These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.
+            </p>
+            
+            <p className="text-slate-900 text-xl font-bold border-l-4 border-amber-500 pl-4">
+              Make your Quantum Leap ahead of competitors today before this course becomes available to advisors everywhere in the spring of 2026.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Reserve Place CTA Section */}
       <section className="py-24 bg-slate-50 border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
+          <p className="text-xl text-slate-600 mb-10">
+            The Transcendent Heroic Advisor Mastery Course will be available to everyone in the Spring of 2026.
+            <br/>
+            <span className="font-bold text-amber-600 mt-2 block italic underline">Secure Early Riser pricing of $997.97 now.</span>
+          </p>
+          
           <div className="max-w-md mx-auto">
             <form onSubmit={handleSubscribe} className="space-y-4">
               <div className="relative">
@@ -183,12 +196,41 @@ const LandingPage: React.FC = () => {
                   type="email" 
                   required
                   placeholder="Enter your email address"
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none"
+                  className="w-full pl-12 pr-4 py-4 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all text-slate-900 shadow-sm"
                 />
               </div>
-              <button type="submit" className="w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 shadow-lg">
+              <button 
+                type="submit"
+                className="w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg active:scale-[0.98]"
+              >
                 Get Free Resources & Secure My Seat
               </button>
+              
+              <div className="space-y-6 pt-6">
+                <p className="text-xs text-slate-500 italic">
+                  This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
+                </p>
+
+                <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left">
+                  <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-amber-600" /> Want to learn more?
+                  </h4>
+                  <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                    To arrange a confidential “Due Diligence” call with Bruce Raymond Wright, click{' '}
+                    <a 
+                      href="https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-amber-600 font-bold underline hover:text-amber-700"
+                    >
+                      HERE
+                    </a>
+                  </p>
+                  <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">
+                    Zooms available beginning at 1:00 p.m. Pacific Mon - Fri
+                  </p>
+                </div>
+              </div>
             </form>
           </div>
         </div>
@@ -196,12 +238,5 @@ const LandingPage: React.FC = () => {
     </div>
   );
 };
-
-// Define global type for Vimeo Window object
-declare global {
-  interface Window {
-    Vimeo: any;
-  }
-}
 
 export default LandingPage;
