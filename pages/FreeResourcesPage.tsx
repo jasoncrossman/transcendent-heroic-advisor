@@ -11,7 +11,8 @@ import {
   Lock,
   PlayCircle,
   Clock,
-  Info
+  Info,
+  Quote
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
@@ -48,7 +49,6 @@ const FreeResourcesPage: React.FC = () => {
     { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
   ];
 
-  // Logic to handle playing a video and pausing others
   const handleVideoSelection = (id: string) => {
     globalSparksVideos.forEach(video => {
       if (video.id !== id && !video.comingSoon) {
@@ -77,14 +77,12 @@ const FreeResourcesPage: React.FC = () => {
           const player = new (window as any).Vimeo.Player(iframe);
           
           player.on('play', () => {
-            // If no video has been chosen yet, this one becomes the "Unlocked" one
             if (!selectedVideoId) {
               setSelectedVideoId(video.id);
             }
           });
 
           player.on('timeupdate', (data: { seconds: number }) => {
-            // Trigger lock if: 1. A video was already chosen 2. This isn't it 3. Time > 30s
             if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
               player.pause();
               setLockedVideoId(video.id);
@@ -156,10 +154,10 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Books Section - RESTORED IMAGES */}
+      {/* 3. Books Section */}
       <section className="py-24 bg-white px-4">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16 font-serif">The Professional Library</h2>
+          <h2 className="text-3xl font-bold text-center mb-16 font-serif uppercase tracking-widest">The Professional Library</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, i) => (
               <div key={i} className="text-center group">
@@ -174,76 +172,85 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Mastery Video Section - RESTORED TAGS AND LOCK */}
+      {/* 4. Mastery Video Section */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16 font-serif">Mastery Through Video</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+          <div className="mb-16">
+            <h2 className="text-3xl font-bold font-serif uppercase tracking-widest mb-2">Mastery Through Video</h2>
+            <p className="text-slate-500 font-medium italic">Select one lesson for full access; preview the rest.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {globalSparksVideos.map((v, i) => (
-              <div key={i} className="space-y-4">
-                <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
-                  {!v.comingSoon && (
-                    <iframe 
-                      id={`vimeo-${v.id}`}
-                      className={`w-full h-full transition-opacity duration-500 ${activeVideo === v.id ? 'opacity-100' : 'opacity-0'}`}
-                      src={`https://player.vimeo.com/video/${v.id}?badge=0&autopause=0&player_id=0&app_id=58479`}
-                      title={v.title} 
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  )}
+              <div key={i} className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
+                {!v.comingSoon && (
+                  <iframe 
+                    id={`vimeo-${v.id}`}
+                    className={`w-full h-full transition-opacity duration-500 ${activeVideo === v.id ? 'opacity-100' : 'opacity-0'}`}
+                    src={`https://player.vimeo.com/video/${v.id}?badge=0&autopause=0&player_id=0&app_id=58479`}
+                    title={v.title} 
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
 
-                  {/* Cover Overlay */}
-                  {activeVideo !== v.id && (
-                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center">
-                      <div className="absolute inset-0 bg-slate-800/40 backdrop-blur-xl"></div>
-                      <div className="relative z-20">
-                        <h4 className="text-white text-2xl font-bold mb-4 font-serif">{v.title}</h4>
-                        {v.comingSoon ? (
-                           <span className="text-amber-500 font-bold uppercase tracking-[0.3em] animate-pulse">Coming Soon</span>
-                        ) : (
-                          <button 
-                            onClick={() => handleVideoSelection(v.id)}
-                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto shadow-lg"
-                          >
-                            <PlayCircle className="w-4 h-4" /> Play Lesson
-                          </button>
-                        )}
-                      </div>
-                      
-                      {/* Unlocked / Preview Tags */}
-                      {!v.comingSoon && (
-                        <div className="absolute top-4 right-4">
-                          {selectedVideoId === v.id ? (
-                            <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
-                          ) : selectedVideoId && (
-                            <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><Clock className="w-3 h-3"/> Preview</span>
-                          ) }
-                        </div>
+                {activeVideo !== v.id && (
+                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center">
+                    <div className="absolute inset-0 bg-slate-800/40 backdrop-blur-xl"></div>
+                    <div className="relative z-20">
+                      <h4 className="text-white text-2xl font-bold mb-4 font-serif">{v.title}</h4>
+                      {v.comingSoon ? (
+                         <span className="text-amber-500 font-bold uppercase tracking-[0.3em] animate-pulse">Coming Soon</span>
+                      ) : (
+                        <button 
+                          onClick={() => handleVideoSelection(v.id)}
+                          className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto shadow-lg"
+                        >
+                          <PlayCircle className="w-4 h-4" /> Play Lesson
+                        </button>
                       )}
                     </div>
-                  )}
+                    
+                    {!v.comingSoon && (
+                      <div className="absolute top-4 right-4">
+                        {selectedVideoId === v.id ? (
+                          <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
+                        ) : selectedVideoId && (
+                          <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg"><Clock className="w-3 h-3"/> Preview</span>
+                        ) }
+                      </div>
+                    )}
+                  </div>
+                )}
 
-                  {/* 30 Second Lock Overlay */}
-                  {lockedVideoId === v.id && (
-                    <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8 animate-in fade-in">
-                      <Lock className="w-12 h-12 text-amber-500 mb-4" />
-                      <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
-                      <p className="text-slate-400 text-sm mb-6">Reserve your place to unlock the full library.</p>
-                      <button onClick={goToReservePage} className="px-6 py-2 text-sm bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
-                        Unlock Full Access
-                      </button>
-                    </div>
-                  )}
-                </div>
-                <h4 className="font-bold text-slate-800 px-2">{v.title}</h4>
+                {lockedVideoId === v.id && (
+                  <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8 animate-in fade-in">
+                    <Lock className="w-12 h-12 text-amber-500 mb-4" />
+                    <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
+                    <p className="text-slate-400 text-sm mb-6">Reserve your place to unlock the full library.</p>
+                    <button onClick={goToReservePage} className="px-6 py-2 text-sm bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
+                      Unlock Full Access
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5. Final CTA Section */}
+      {/* 5. Final Note Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <Quote className="w-12 h-12 text-slate-200 mx-auto mb-6" />
+          <h3 className="text-2xl font-serif italic text-slate-800 mb-6">
+            "The distance between where you are and where you want to be is measured solely by the quality of the frameworks you choose to adopt."
+          </h3>
+          <p className="text-amber-600 font-bold uppercase tracking-widest text-sm">— Bruce Raymond Wright</p>
+        </div>
+      </section>
+
+      {/* 6. Final CTA Section */}
       <section className="py-24 bg-slate-900 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-6 font-serif">Reserve Your Place</h2>
