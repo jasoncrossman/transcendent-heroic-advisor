@@ -10,7 +10,8 @@ import {
   Calendar,
   Lock,
   PlayCircle,
-  Clock
+  Clock,
+  Info
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
@@ -47,6 +48,21 @@ const FreeResourcesPage: React.FC = () => {
     { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
   ];
 
+  // Logic to handle auto-pausing when a new video is selected
+  const handleVideoSelection = (id: string) => {
+    // Pause all other vimeo players before starting a new one
+    globalSparksVideos.forEach(video => {
+      if (video.id !== id && !video.comingSoon) {
+        const iframe = document.getElementById(`vimeo-${video.id}`) as HTMLIFrameElement;
+        if (iframe && (window as any).Vimeo) {
+          const player = new (window as any).Vimeo.Player(iframe);
+          player.pause();
+        }
+      }
+    });
+    setActiveVideo(id);
+  };
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = "https://player.vimeo.com/api/player.js";
@@ -61,6 +77,13 @@ const FreeResourcesPage: React.FC = () => {
           const player = new (window as any).Vimeo.Player(iframe);
           
           player.on('play', () => {
+            // Requirement #3: Stop other videos if this one starts playing
+            globalSparksVideos.forEach(v => {
+               if (v.id !== video.id) {
+                 const otherIframe = document.getElementById(`vimeo-${v.id}`) as HTMLIFrameElement;
+                 if (otherIframe) new (window as any).Vimeo.Player(otherIframe).pause();
+               }
+            });
             if (!selectedVideoId) setSelectedVideoId(video.id);
           });
 
@@ -124,6 +147,18 @@ const FreeResourcesPage: React.FC = () => {
       {/* 2. Simplified Waitlist Resources Section */}
       <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
+          {/* Requirement #2: Helpful Prompts at the Top */}
+          <div className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
+            <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-amber-900 font-bold text-lg">Welcome to your Resource Vault</h3>
+              <p className="text-amber-800 leading-relaxed">
+                Your first selected video is available for full viewing. 
+                <span className="font-bold"> Please note:</span> Subsequent lessons are currently locked to a 30-second "Executive Summary" until you reserve your seat.
+              </p>
+            </div>
+          </div>
+
           <div className="max-w-4xl mb-12">
             <h2 className="text-2xl md:text-3xl font-bold font-serif mb-6 text-slate-900 leading-tight">
               When you join the waitlist, you receive immediate access to:
@@ -168,7 +203,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Mastery Video Section - UPDATED WITH BLURRED COVERS */}
+      {/* 4. Mastery Video Section */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-16 font-serif">Mastery Through Video</h2>
@@ -176,7 +211,6 @@ const FreeResourcesPage: React.FC = () => {
             {globalSparksVideos.map((v, i) => (
               <div key={i} className="space-y-4">
                 <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
-                  {/* The Actual Video (Only shows if clicked or "active") */}
                   {!v.comingSoon && (
                     <iframe 
                       id={`vimeo-${v.id}`}
@@ -188,7 +222,6 @@ const FreeResourcesPage: React.FC = () => {
                     ></iframe>
                   )}
 
-                  {/* Blurred Cover Overlay */}
                   {activeVideo !== v.id && (
                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center">
                       <div className="absolute inset-0 bg-slate-800/40 backdrop-blur-xl"></div>
@@ -197,15 +230,15 @@ const FreeResourcesPage: React.FC = () => {
                         {v.comingSoon ? (
                            <span className="text-amber-500 font-bold uppercase tracking-[0.3em] animate-pulse">Coming Soon</span>
                         ) : (
+                          // Requirement #1: Smaller Button (reduced py/px and text-sm)
                           <button 
-                            onClick={() => setActiveVideo(v.id)}
-                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-2 rounded-full font-bold flex items-center gap-2 transition-all"
+                            onClick={() => handleVideoSelection(v.id)}
+                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto"
                           >
-                            <PlayCircle className="w-5 h-5" /> Play Lesson
+                            <PlayCircle className="w-4 h-4" /> Play Lesson
                           </button>
                         )}
                       </div>
-                      {/* Status Tags */}
                       {!v.comingSoon && (
                         <div className="absolute top-4 right-4">
                           {selectedVideoId === v.id ? (
@@ -218,19 +251,18 @@ const FreeResourcesPage: React.FC = () => {
                     </div>
                   )}
 
-                  {/* 30 Second Lock Overlay */}
                   {lockedVideoId === v.id && (
                     <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8 animate-in fade-in">
                       <Lock className="w-12 h-12 text-amber-500 mb-4" />
                       <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
                       <p className="text-slate-400 text-sm mb-6">Reserve your place to unlock the full library.</p>
-                      <button onClick={goToReservePage} className="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
+                      <button onClick={goToReservePage} className="px-6 py-2 text-sm bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
                         Unlock Full Access
                       </button>
                     </div>
                   )}
                 </div>
-                <h4 className="font-bold text-slate-800 px-2">{v.title}</h4>
+                {/* Requirement #4: Removed the <h4>v.title</h4> here since it is now in the overlay */}
               </div>
             ))}
           </div>
