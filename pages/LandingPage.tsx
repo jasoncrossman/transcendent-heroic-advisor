@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
-  // State to handle the transition from blurred cover to playing video
-  const [isVideoActive, setIsVideoActive] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +41,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Philosophy Section */}
+     {/* Philosophy Section */}
       <section id="about" className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-12">
@@ -92,7 +90,7 @@ const LandingPage: React.FC = () => {
                   "Become far more attractive to A-level referrals… without asking for them.",
                   "Transcend fiduciary regulations in ways that matter most to clients.",
                   "Consistently deliver dazzling multidimensional wisdom that your competitors do not offer… and cannot even imagine.",
-                  "Create an entire ecosystem of like-minded transcendent advisors that bring dynamic execution of details to clients."
+                  "Create an entire ecosystem of like-minded transcendent advisors that bring dynamic execution of details to clients. Helping YOU to bring clients into alignment with who, what, and where they would rather be now and next."
                 ].map((item, idx) => (
                   <div key={idx} className="flex items-start gap-4">
                     <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
@@ -118,47 +116,21 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Video Section with Blurred Title Frame */}
+      {/* Video Section */}
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
             Experience the Introductory Principles by Doing them with Bruce
           </h2>
-          
-          <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12 border-4 border-white group">
-            
-            {/* The Actual Video */}
+          <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
             <iframe 
-              className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-0'}`}
-              src={`https://www.youtube.com/embed/WS1ccYNZJtU?autoplay=${isVideoActive ? 1 : 0}&rel=0`}
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/WS1ccYNZJtU"
               title="Welcome Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
             ></iframe>
-
-            {/* The Blurred Frame Overlay */}
-            {!isVideoActive && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center">
-                <div className="absolute inset-0 bg-slate-800/40 backdrop-blur-2xl"></div>
-                <div className="relative z-20">
-                  <h3 className="text-white text-3xl md:text-5xl font-bold mb-6 font-serif tracking-tight">
-                    The Transcendent <br/>
-                    <span className="text-amber-500">Heroic Advisor</span>
-                  </h3>
-                  <button 
-                    onClick={() => setIsVideoActive(true)}
-                    className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-10 py-4 rounded-full font-bold flex items-center gap-3 transition-all shadow-xl hover:scale-105"
-                  >
-                    <PlayCircle className="w-6 h-6" /> Watch Introduction
-                  </button>
-                </div>
-                <div className="absolute bottom-8 text-slate-300/60 text-xs font-bold uppercase tracking-widest">
-                  Quantum Mind Mastery Series
-                </div>
-              </div>
-            )}
           </div>
-
           <div className="max-w-4xl mx-auto text-left space-y-8">
             <p className="text-slate-700 text-xl font-medium leading-relaxed">
               To demonstrate these ideas in action, you will receive immediate access to the following complimentary resources:
@@ -185,15 +157,23 @@ const LandingPage: React.FC = () => {
 
               <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                 <p className="text-slate-900 font-bold text-lg mb-4 flex items-center gap-2">
-                  <PlayCircle className="w-5 h-5 text-amber-600" /> Plus, selected video lessons from "The Wright Exit Strategy" including:
+                  <PlayCircle className="w-5 h-5 text-amber-600" /> Plus, selected video lessons from "The Wright Exit Strategy; Wealth, How to Create It, Keep It, and Use It" including:
                 </p>
                 <ul className="space-y-3 pl-7">
-                  <li className="text-slate-600 list-disc text-sm md:text-base">How to Create an Effective Ecosystem for Uncommon Results</li>
-                  <li className="text-slate-600 list-disc text-sm md:text-base">Do Not Claim You Care, Show You Care</li>
-                  <li className="text-slate-600 list-disc text-sm md:text-base">Using Quantum Mind to Achieve Exceptional Outcomes</li>
+                  <li className="text-slate-600 list-disc">How to Create an Effective Ecosystem for Uncommon Results</li>
+                  <li className="text-slate-600 list-disc">Do Not Claim You Care, Show You Care</li>
+                  <li className="text-slate-600 list-disc">Using Quantum Mind to Achieve Exceptional Outcomes Unavailable Through Competitors</li>
                 </ul>
               </div>
             </div>
+
+            <p className="text-slate-600 text-lg leading-relaxed">
+              These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.
+            </p>
+            
+            <p className="text-slate-900 text-xl font-bold border-l-4 border-amber-500 pl-4">
+              Make your Quantum Leap ahead of competitors today before this course becomes available to advisors everywhere in the spring of 2026.
+            </p>
           </div>
         </div>
       </section>
@@ -203,7 +183,7 @@ const LandingPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
           <p className="text-xl text-slate-600 mb-10">
-            The Transcendent Heroic Advisor Mastery Course will be available in the Spring of 2026.
+            The Transcendent Heroic Advisor Mastery Course will be available to everyone in the Spring of 2026.
             <br/>
             <span className="font-bold text-amber-600 mt-2 block italic underline">Secure Early Riser pricing of $997.97 now.</span>
           </p>
@@ -226,7 +206,7 @@ const LandingPage: React.FC = () => {
                 Get Free Resources & Secure My Seat
               </button>
               
-              <div className="space-y-6 pt-6 text-center">
+              <div className="space-y-6 pt-6">
                 <p className="text-xs text-slate-500 italic">
                   This cohort is intentionally limited. By signing up, you agree to receive communications regarding this course.
                 </p>
