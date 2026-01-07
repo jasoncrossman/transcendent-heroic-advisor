@@ -13,24 +13,31 @@ const PurchasePage: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("full_name", fullName);
+    // Prepare the data as a clean JSON object
+    const payload = {
+      email: email,
+      full_name: fullName,
+      source: "Transcendent Mastery Checkout"
+    };
 
     try {
+      // Send data to Zapier
       await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
         method: "POST",
-        body: formData,
-        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        // keepalive ensures the request finishes even as the browser redirects
+        keepalive: true,
       });
 
-      // Brief delay to ensure the request fires before the page changes
-      setTimeout(() => {
-        window.location.href = "https://zippi.link/exitstrategy";
-      }, 150); 
+      // Redirect to the sales/payment page
+      window.location.assign("https://zippi.link/exitstrategy");
     } catch (error) {
-      // Redirect anyway so the customer can still purchase if Zapier fails
-      window.location.href = "https://zippi.link/exitstrategy";
+      console.error("Submission error:", error);
+      // Fallback redirect so the user can still buy if the webhook fails
+      window.location.assign("https://zippi.link/exitstrategy");
     }
   };
 
