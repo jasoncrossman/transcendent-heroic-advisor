@@ -10,15 +10,13 @@ import {
   Calendar,
   Lock,
   PlayCircle,
-  Clock,
-  Info
+  Clock
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [lockedVideoId, setLockedVideoId] = useState<string | null>(null);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
-  const [showSecretPassage, setShowSecretPassage] = useState(false);
 
   const goToReservePage = () => {
     window.location.href = 'https://transcendent-heroic-advisor.vercel.app/#/purchase';
@@ -49,20 +47,6 @@ const FreeResourcesPage: React.FC = () => {
     { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
   ];
 
-  const handleVideoSelection = (id: string) => {
-    globalSparksVideos.forEach(video => {
-      if (video.id !== id && !video.comingSoon) {
-        const iframe = document.getElementById(`vimeo-${video.id}`) as HTMLIFrameElement;
-        if (iframe && (window as any).Vimeo) {
-          const player = new (window as any).Vimeo.Player(iframe);
-          player.pause();
-        }
-      }
-    });
-    setActiveVideo(id);
-    setLockedVideoId(null);
-  };
-
   useEffect(() => {
     const script = document.createElement('script');
     script.src = "https://player.vimeo.com/api/player.js";
@@ -77,37 +61,24 @@ const FreeResourcesPage: React.FC = () => {
           const player = new (window as any).Vimeo.Player(iframe);
           
           player.on('play', () => {
-            globalSparksVideos.forEach(v => {
-               if (v.id !== video.id) {
-                 const otherIframe = document.getElementById(`vimeo-${v.id}`) as HTMLIFrameElement;
-                 if (otherIframe) new (window as any).Vimeo.Player(otherIframe).pause();
-               }
-            });
-            if (!selectedVideoId) setSelectedVideoId(video.id);
+            // The first video they play becomes the "Selected" one for full viewing
+            if (!selectedVideoId) {
+              setSelectedVideoId(video.id);
+            }
           });
 
           player.on('timeupdate', (data: { seconds: number }) => {
+            // If they are watching a video that ISN'T their first choice, lock it at 30s
             if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
               player.pause();
-              
-              const hasSeenLockBefore = localStorage.getItem('tha_lock_encountered') === 'true';
-              
-              // Only trigger Secret Passage if they've encountered it before AND refreshed
-              if (hasSeenLockBefore && !lockedVideoId) {
-                setShowSecretPassage(true);
-              } else if (!hasSeenLockBefore) {
-                setLockedVideoId(video.id);
-                localStorage.setItem('tha_lock_encountered', 'true');
-              } else {
-                setLockedVideoId(video.id);
-              }
+              setLockedVideoId(video.id);
             }
           });
         }
       });
     };
     return () => { if (document.body.contains(script)) document.body.removeChild(script); };
-  }, [selectedVideoId, activeVideo, lockedVideoId]);
+  }, [selectedVideoId, activeVideo]);
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
@@ -139,25 +110,24 @@ const FreeResourcesPage: React.FC = () => {
                 <p>After a meteoric rise at Associated Planners, Bruce liquidated his positions to build a holistic, "in-the-trenches" system designed for tangible, massive results.</p>
                 <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">Consigliere</span> for discerning minds.</p>
               </div>
+              <div className="flex flex-wrap gap-4 mt-12">
+                <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3">
+                  <Star className="text-amber-500 w-5 h-5 fill-current" />
+                  <span className="text-sm font-semibold uppercase tracking-tight">100-Year Legacy Architect</span>
+                </div>
+                <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center gap-3">
+                  <Zap className="text-amber-500 w-5 h-5" />
+                  <span className="text-sm font-semibold uppercase tracking-tight">Conflict-Free Innovator</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Resources Info Section */}
+      {/* 2. Simplified Waitlist Resources Section */}
       <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
-            <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="text-amber-900 font-bold text-lg">Welcome to your Resource Vault</h3>
-              <p className="text-amber-800 leading-relaxed">
-                Your first selected video is available for full viewing. 
-                <span className="font-bold"> Please note:</span> Subsequent lessons are currently locked to a 30-second "Executive Summary" until you reserve your seat.
-              </p>
-            </div>
-          </div>
-
           <div className="max-w-4xl mb-12">
             <h2 className="text-2xl md:text-3xl font-bold font-serif mb-6 text-slate-900 leading-tight">
               When you join the waitlist, you receive immediate access to:
@@ -184,21 +154,18 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Books Section (Restored) */}
+      {/* 3. Books Section */}
       <section className="py-24 bg-white px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-16 font-serif">The Professional Library</h2>
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-16 font-serif">The Professional Library</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, i) => (
               <div key={i} className="text-center group">
-                <div className="relative aspect-[3/4] mb-6 bg-slate-50 rounded-lg shadow-lg group-hover:shadow-xl transition-all p-4 flex items-center justify-center">
-                   <div className="w-full h-full bg-slate-200 rounded flex items-center justify-center text-slate-400 italic">
-                     {/* Placeholder for images if they are not yet uploaded */}
-                     Book Image
-                   </div>
+                <div className="relative aspect-[3/4] mb-6 bg-slate-50 rounded-lg shadow-lg group-hover:shadow-xl transition-all p-4">
+                  <img src={book.image} alt={book.title} className="max-h-full mx-auto object-contain" />
                 </div>
                 <h3 className="font-bold text-lg mb-2">{book.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{book.description}</p>
+                <p className="text-slate-500 text-sm">{book.description}</p>
               </div>
             ))}
           </div>
@@ -233,48 +200,37 @@ const FreeResourcesPage: React.FC = () => {
                            <span className="text-amber-500 font-bold uppercase tracking-[0.3em] animate-pulse">Coming Soon</span>
                         ) : (
                           <button 
-                            onClick={() => handleVideoSelection(v.id)}
-                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto shadow-lg"
+                            onClick={() => setActiveVideo(v.id)}
+                            className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-6 py-2 rounded-full font-bold flex items-center gap-2 transition-all"
                           >
-                            <PlayCircle className="w-4 h-4" /> Play Lesson
+                            <PlayCircle className="w-5 h-5" /> Play Lesson
                           </button>
                         )}
                       </div>
+                      {!v.comingSoon && (
+                        <div className="absolute top-4 right-4">
+                          {selectedVideoId === v.id ? (
+                            <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
+                          ) : selectedVideoId && (
+                            <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1"><Clock className="w-3 h-3"/> Preview</span>
+                          ) }
+                        </div>
+                      )}
                     </div>
                   )}
 
-                  {/* Standard 30 Second Lock */}
-                  {lockedVideoId === v.id && !showSecretPassage && (
+                  {lockedVideoId === v.id && (
                     <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8 animate-in fade-in">
                       <Lock className="w-12 h-12 text-amber-500 mb-4" />
                       <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
                       <p className="text-slate-400 text-sm mb-6">Reserve your place to unlock the full library.</p>
-                      <button onClick={goToReservePage} className="px-6 py-2 text-sm bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
+                      <button onClick={goToReservePage} className="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all">
                         Unlock Full Access
                       </button>
                     </div>
                   )}
-
-                  {/* Secret Passage UI */}
-                  {showSecretPassage && activeVideo === v.id && (
-                    <div className="absolute inset-0 z-40 bg-slate-950/90 backdrop-blur-xl flex flex-col items-center justify-center text-center p-8 border-2 border-amber-500/30 rounded-2xl animate-in zoom-in duration-500">
-                      <Zap className="w-10 h-10 text-amber-500 mb-4 animate-pulse" />
-                      <h3 className="text-white text-2xl font-bold mb-2 font-serif italic">Initiative Detected.</h3>
-                      <p className="text-slate-300 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
-                        Clearly, you are ready for <span className="text-amber-500 font-bold uppercase tracking-wide">Quantum levels of thinking</span>. Enjoy the full lesson... but let's keep this between us.
-                      </p>
-                      <button 
-                        onClick={() => {
-                          setShowSecretPassage(false);
-                          setLockedVideoId(null);
-                        }} 
-                        className="px-8 py-2 bg-transparent border border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-slate-900 font-bold rounded-full transition-all text-xs uppercase tracking-widest"
-                      >
-                        Enter the Vault
-                      </button>
-                    </div>
-                  )}
                 </div>
+                <h4 className="font-bold text-slate-800 px-2">{v.title}</h4>
               </div>
             ))}
           </div>
@@ -289,7 +245,7 @@ const FreeResourcesPage: React.FC = () => {
           <button onClick={goToReservePage} className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl mb-12">
             Get My Free Resources
           </button>
-          
+
           <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700 max-w-2xl w-full mx-auto">
             <h4 className="text-amber-500 font-bold mb-3 flex items-center justify-center gap-2 uppercase tracking-widest">
               <Calendar className="w-5 h-5" /> Want to learn more?
