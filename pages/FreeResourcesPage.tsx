@@ -54,14 +54,12 @@ const FreeResourcesPage: React.FC = () => {
   ];
 
   const handleVideoSelection = (id: string) => {
-    // Clear any existing intervals and players before switching
     if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
     setActiveVideo(id);
     setLockedVideoId(null);
   };
 
   useEffect(() => {
-    // Load APIs
     const vScript = document.createElement('script');
     vScript.src = "https://player.vimeo.com/api/player.js";
     vScript.async = true;
@@ -79,25 +77,18 @@ const FreeResourcesPage: React.FC = () => {
     };
   }, []);
 
-  // Monitor activeVideo changes to attach listeners
   useEffect(() => {
     if (!activeVideo) return;
-
     const currentVideo = globalSparksVideos.find(v => v.id === activeVideo);
     if (!currentVideo) return;
 
-    // VIMEO LOGIC
     if (currentVideo.type === 'vimeo') {
       const initVimeo = () => {
         const iframe = document.getElementById(`vimeo-${activeVideo}`) as HTMLIFrameElement;
         if (iframe && (window as any).Vimeo) {
           const player = new (window as any).Vimeo.Player(iframe);
           vimeoPlayerRef.current = player;
-
-          player.on('play', () => {
-            if (!selectedVideoId) setSelectedVideoId(activeVideo);
-          });
-
+          player.on('play', () => { if (!selectedVideoId) setSelectedVideoId(activeVideo); });
           player.on('timeupdate', (data: { seconds: number }) => {
             if (selectedVideoId && selectedVideoId !== activeVideo && data.seconds >= 30) {
               player.pause();
@@ -106,10 +97,9 @@ const FreeResourcesPage: React.FC = () => {
           });
         }
       };
-      setTimeout(initVimeo, 500); // Give DOM time to render iframe
+      setTimeout(initVimeo, 500);
     }
 
-    // YOUTUBE LOGIC
     if (currentVideo.type === 'youtube') {
       const initYouTube = () => {
         if ((window as any).YT && (window as any).YT.Player) {
@@ -118,7 +108,6 @@ const FreeResourcesPage: React.FC = () => {
               'onStateChange': (event: any) => {
                 if (event.data === (window as any).YT.PlayerState.PLAYING) {
                   if (!selectedVideoId) setSelectedVideoId(activeVideo);
-                  
                   checkIntervalRef.current = setInterval(() => {
                     const currentTime = event.target.getCurrentTime();
                     if (selectedVideoId && selectedVideoId !== activeVideo && currentTime >= 30) {
@@ -139,7 +128,6 @@ const FreeResourcesPage: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
-      {/* 1. Bio Section */}
       <section className="bg-slate-900 py-20 lg:py-32 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -168,7 +156,6 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Resources Header */}
       <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
@@ -193,7 +180,6 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Books Section */}
       <section className="py-24 bg-white px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16 font-serif uppercase tracking-widest">The Professional Library</h2>
@@ -211,7 +197,6 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Mastery Video Section */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <div className="mb-16">
@@ -285,7 +270,6 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Quote Section */}
       <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <Quote className="w-12 h-12 text-slate-200 mx-auto mb-6" />
@@ -296,7 +280,6 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. Footer CTA */}
       <section className="py-24 bg-slate-900 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-6 font-serif">Reserve Your Place</h2>
