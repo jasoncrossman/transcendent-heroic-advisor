@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Award, 
   Star, 
@@ -19,6 +19,10 @@ const FreeResourcesPage: React.FC = () => {
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [lockedVideoId, setLockedVideoId] = useState<string | null>(null);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  
+  const vimeoPlayerRef = useRef<any>(null);
+  const ytPlayerRef = useRef<any>(null);
+  const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const goToReservePage = () => {
     window.location.href = 'https://transcendent-heroic-advisor.vercel.app/#/purchase';
@@ -43,56 +47,95 @@ const FreeResourcesPage: React.FC = () => {
   ];
 
   const globalSparksVideos = [
-    { id: '816394768', title: "Create an Ecosystem for Uncommon Results" },
-    { id: '816409798', title: "Do Not Claim You Care, Show You Care" },
-    { id: '816414705', title: "Using the Quantum Mind" },
-    { id: 'elephant', title: "Think, Do, and BE as the Elephant", comingSoon: true }
+    { id: '816394768', title: "Create an Ecosystem for Uncommon Results", type: 'vimeo' },
+    { id: '816409798', title: "Do Not Claim You Care, Show You Care", type: 'vimeo' },
+    { id: '816414705', title: "Using the Quantum Mind", type: 'vimeo' },
+    { id: 'hoI5E1D5c3Y', title: "Think, Do, and BE as the Elephant", type: 'youtube' }
   ];
 
   const handleVideoSelection = (id: string) => {
-    globalSparksVideos.forEach(video => {
-      if (video.id !== id && !video.comingSoon) {
-        const iframe = document.getElementById(`vimeo-${video.id}`) as HTMLIFrameElement;
-        if (iframe && (window as any).Vimeo) {
-          const player = new (window as any).Vimeo.Player(iframe);
-          player.pause();
-        }
-      }
-    });
+    // Clear any existing intervals and players before switching
+    if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
     setActiveVideo(id);
     setLockedVideoId(null);
   };
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://player.vimeo.com/api/player.js";
-    script.async = true;
-    document.body.appendChild(script);
+    // Load APIs
+    const vScript = document.createElement('script');
+    vScript.src = "https://player.vimeo.com/api/player.js";
+    vScript.async = true;
+    document.body.appendChild(vScript);
 
-    script.onload = () => {
-      globalSparksVideos.forEach(video => {
-        if (video.comingSoon) return;
-        const iframe = document.getElementById(`vimeo-${video.id}`) as HTMLIFrameElement;
+    const yScript = document.createElement('script');
+    yScript.src = "https://www.youtube.com/iframe_api";
+    yScript.async = true;
+    document.body.appendChild(yScript);
+
+    return () => {
+      if (document.body.contains(vScript)) document.body.removeChild(vScript);
+      if (document.body.contains(yScript)) document.body.removeChild(yScript);
+      if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
+    };
+  }, []);
+
+  // Monitor activeVideo changes to attach listeners
+  useEffect(() => {
+    if (!activeVideo) return;
+
+    const currentVideo = globalSparksVideos.find(v => v.id === activeVideo);
+    if (!currentVideo) return;
+
+    // VIMEO LOGIC
+    if (currentVideo.type === 'vimeo') {
+      const initVimeo = () => {
+        const iframe = document.getElementById(`vimeo-${activeVideo}`) as HTMLIFrameElement;
         if (iframe && (window as any).Vimeo) {
           const player = new (window as any).Vimeo.Player(iframe);
-          
+          vimeoPlayerRef.current = player;
+
           player.on('play', () => {
-            if (!selectedVideoId) {
-              setSelectedVideoId(video.id);
-            }
+            if (!selectedVideoId) setSelectedVideoId(activeVideo);
           });
 
           player.on('timeupdate', (data: { seconds: number }) => {
-            if (selectedVideoId && selectedVideoId !== video.id && data.seconds >= 30) {
+            if (selectedVideoId && selectedVideoId !== activeVideo && data.seconds >= 30) {
               player.pause();
-              setLockedVideoId(video.id);
+              setLockedVideoId(activeVideo);
             }
           });
         }
-      });
-    };
-    return () => { if (document.body.contains(script)) document.body.removeChild(script); };
-  }, [selectedVideoId]);
+      };
+      setTimeout(initVimeo, 500); // Give DOM time to render iframe
+    }
+
+    // YOUTUBE LOGIC
+    if (currentVideo.type === 'youtube') {
+      const initYouTube = () => {
+        if ((window as any).YT && (window as any).YT.Player) {
+          ytPlayerRef.current = new (window as any).YT.Player(`yt-${activeVideo}`, {
+            events: {
+              'onStateChange': (event: any) => {
+                if (event.data === (window as any).YT.PlayerState.PLAYING) {
+                  if (!selectedVideoId) setSelectedVideoId(activeVideo);
+                  
+                  checkIntervalRef.current = setInterval(() => {
+                    const currentTime = event.target.getCurrentTime();
+                    if (selectedVideoId && selectedVideoId !== activeVideo && currentTime >= 30) {
+                      event.target.pauseVideo();
+                      setLockedVideoId(activeVideo);
+                      if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
+                    }
+                  }, 1000);
+                }
+              }
+            }
+          });
+        }
+      };
+      setTimeout(initYouTube, 500);
+    }
+  }, [activeVideo, selectedVideoId]);
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
@@ -102,11 +145,7 @@ const FreeResourcesPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5">
               <div className="relative aspect-[3/4] max-w-sm mx-auto bg-slate-800 rounded-3xl overflow-hidden border-2 border-slate-700 shadow-2xl">
-                <img 
-                  src="/assets/images/bruce.jpg" 
-                  alt="Bruce Wright" 
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-                />
+                <img src="/assets/images/bruce.jpg" alt="Bruce Wright" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 p-6 text-center">
                    <p className="text-amber-500 font-bold uppercase tracking-widest italic">The Architect of Transcendence</p>
                 </div>
@@ -183,15 +222,28 @@ const FreeResourcesPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {globalSparksVideos.map((v, i) => (
               <div key={i} className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
-                {!v.comingSoon && (
-                  <iframe 
-                    id={`vimeo-${v.id}`}
-                    className={`w-full h-full transition-opacity duration-500 ${activeVideo === v.id ? 'opacity-100' : 'opacity-0'}`}
-                    src={`https://player.vimeo.com/video/${v.id}?badge=0&autopause=0&player_id=0&app_id=58479`}
-                    title={v.title} 
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                
+                {activeVideo === v.id && (
+                  v.type === 'youtube' ? (
+                    <iframe
+                      id={`yt-${v.id}`}
+                      className="w-full h-full"
+                      src={`https://www.youtube.com/embed/${v.id}?enablejsapi=1&autoplay=1&rel=0`}
+                      title={v.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <iframe 
+                      id={`vimeo-${v.id}`}
+                      className="w-full h-full transition-opacity duration-500"
+                      src={`https://player.vimeo.com/video/${v.id}?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1`}
+                      title={v.title} 
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  )
                 )}
 
                 {activeVideo !== v.id && (
@@ -199,27 +251,21 @@ const FreeResourcesPage: React.FC = () => {
                     <div className="absolute inset-0 bg-slate-800/40 backdrop-blur-xl"></div>
                     <div className="relative z-20">
                       <h4 className="text-white text-2xl font-bold mb-4 font-serif">{v.title}</h4>
-                      {v.comingSoon ? (
-                         <span className="text-amber-500 font-bold uppercase tracking-[0.3em] animate-pulse">Coming Soon</span>
-                      ) : (
-                        <button 
-                          onClick={() => handleVideoSelection(v.id)}
-                          className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto shadow-lg"
-                        >
-                          <PlayCircle className="w-4 h-4" /> Play Lesson
-                        </button>
-                      )}
+                      <button 
+                        onClick={() => handleVideoSelection(v.id)}
+                        className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-5 py-2 rounded-full font-bold flex items-center gap-2 transition-all text-sm mx-auto shadow-lg"
+                      >
+                        <PlayCircle className="w-4 h-4" /> Play Lesson
+                      </button>
                     </div>
                     
-                    {!v.comingSoon && (
-                      <div className="absolute top-4 right-4">
-                        {selectedVideoId === v.id ? (
-                          <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
-                        ) : selectedVideoId && (
-                          <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg"><Clock className="w-3 h-3"/> Preview</span>
-                        ) }
-                      </div>
-                    )}
+                    <div className="absolute top-4 right-4">
+                      {selectedVideoId === v.id ? (
+                        <span className="bg-green-600/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg"><CheckCircle2 className="w-3 h-3"/> Unlocked</span>
+                      ) : selectedVideoId && (
+                        <span className="bg-amber-500/90 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg"><Clock className="w-3 h-3"/> Preview</span>
+                      ) }
+                    </div>
                   </div>
                 )}
 
@@ -239,7 +285,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Final Note Section */}
+      {/* 5. Quote Section */}
       <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <Quote className="w-12 h-12 text-slate-200 mx-auto mb-6" />
@@ -250,13 +296,13 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. Final CTA Section */}
+      {/* 6. Footer CTA */}
       <section className="py-24 bg-slate-900 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-6 font-serif">Reserve Your Place</h2>
           <p className="text-xl text-slate-300 mb-10">Tuition: <span className="text-amber-500 font-bold">$997.97</span></p>
           <button onClick={goToReservePage} className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl mb-12">
-            Get My Free Resources
+            Register & Unlock Vault
           </button>
           
           <div className="bg-slate-800/50 p-8 rounded-3xl border border-slate-700 max-w-2xl w-full mx-auto">
