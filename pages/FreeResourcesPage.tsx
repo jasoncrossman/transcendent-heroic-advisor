@@ -59,7 +59,6 @@ const FreeResourcesPage: React.FC = () => {
 
   // --- SCRIPT LOADING ---
   useEffect(() => {
-    // Load Vimeo API
     if (!document.getElementById('vimeo-api')) {
       const vScript = document.createElement('script');
       vScript.id = 'vimeo-api';
@@ -68,7 +67,6 @@ const FreeResourcesPage: React.FC = () => {
       document.body.appendChild(vScript);
     }
 
-    // Load YouTube API
     if (!document.getElementById('youtube-api')) {
       const yScript = document.createElement('script');
       yScript.id = 'youtube-api';
@@ -124,7 +122,7 @@ const FreeResourcesPage: React.FC = () => {
           }
         });
       } else {
-        setTimeout(initYouTube, 300); // Retry if YT isn't ready
+        setTimeout(initYouTube, 300);
       }
     };
 
@@ -149,7 +147,7 @@ const FreeResourcesPage: React.FC = () => {
               <div className="relative aspect-[3/4] max-w-sm mx-auto bg-slate-800 rounded-3xl overflow-hidden border-2 border-slate-700 shadow-2xl">
                 <img src="/assets/images/bruce.jpg" alt="Bruce Wright" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 p-6 text-center">
-                    <p className="text-amber-500 font-bold uppercase tracking-widest italic">The Architect of Transcendence</p>
+                    <p className="text-amber-500 font-bold uppercase tracking-widest italic text-xs">The Architect of Transcendence</p>
                 </div>
               </div>
             </div>
@@ -158,10 +156,9 @@ const FreeResourcesPage: React.FC = () => {
                 <Award className="w-5 h-5" /> Visionary • Inventor • Consigliere
               </span>
               <h1 className="text-4xl md:text-5xl font-bold font-serif mb-8">About Bruce Raymond Wright</h1>
-              <div className="space-y-8 text-slate-300 text-lg leading-relaxed">
+              <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
                 <p className="font-semibold text-white text-xl">Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.</p>
                 <p>Decades ago, Bruce realized the financial world was built on "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span></p>
-                <p>After a meteoric rise at Associated Planners, Bruce liquidated his positions to build a holistic, "in-the-trenches" system designed for tangible, massive results.</p>
                 <p>Bruce is the ultimate <span className="italic text-amber-500 font-bold">Consigliere</span> for discerning minds.</p>
               </div>
             </div>
@@ -170,25 +167,17 @@ const FreeResourcesPage: React.FC = () => {
       </section>
 
       {/* 2. VAULT HEADER */}
-      <section className="py-20 bg-slate-50 border-y border-slate-200 px-4">
+      <section className="py-16 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-12 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
+          <div className="mb-10 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
             <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
             <div>
               <h3 className="text-amber-900 font-bold text-lg">Welcome to your Resource Vault</h3>
               <p className="text-amber-800 leading-relaxed">
                 Your first selected video is available for full viewing. 
-                <span className="font-bold"> Please note:</span> Subsequent lessons are currently locked to a 30-second "Executive Summary" until you reserve your seat.
+                <span className="font-bold"> Subsequent lessons</span> are preview-only until you reserve your seat.
               </p>
             </div>
-          </div>
-          <div className="max-w-4xl mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold font-serif mb-6 text-slate-900 leading-tight">
-              When you join the waitlist, you receive immediate access to:
-            </h2>
-            <button onClick={goToReservePage} className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-lg hover:bg-amber-400 transition-all shadow-md text-sm uppercase tracking-wide">
-              Get My Free Resources
-            </button>
           </div>
         </div>
       </section>
@@ -197,4 +186,113 @@ const FreeResourcesPage: React.FC = () => {
       <section className="py-24 bg-white px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16 font-serif uppercase tracking-widest">The Professional Library</h2>
-          <div className
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {books.map((book, i) => (
+              <div key={i} className="text-center group">
+                <div className="relative aspect-[3/4] mb-6 bg-slate-50 rounded-lg shadow-lg group-hover:shadow-xl transition-all p-4">
+                  <img src={book.image} alt={book.title} className="max-h-full mx-auto object-contain" />
+                </div>
+                <h3 className="font-bold text-lg mb-2">{book.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">{book.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. VIDEO GRID (Fixed Centering) */}
+      <section className="py-24 bg-slate-50 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold font-serif uppercase tracking-widest mb-2">Mastery Through Video</h2>
+            <p className="text-slate-500 font-medium italic">Select one lesson for full access; preview the rest.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {globalSparksVideos.map((v) => (
+              <div key={v.id} className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                
+                {activeVideo === v.id && (
+                  v.type === 'youtube' ? (
+                    <iframe
+                      id={`yt-${v.id}`}
+                      className="w-full h-full"
+                      src={`https://www.youtube.com/embed/${v.id}?enablejsapi=1&autoplay=1&rel=0`}
+                      title={v.title}
+                      frameBorder="0"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                    ></iframe>
+                  ) : (
+                    <iframe 
+                      id={`vimeo-${v.id}`}
+                      className="w-full h-full"
+                      src={`https://player.vimeo.com/video/${v.id}?autoplay=1`}
+                      title={v.title} 
+                      allow="autoplay; fullscreen"
+                      allowFullScreen
+                    ></iframe>
+                  )
+                )}
+
+                {activeVideo !== v.id && (
+                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 text-center">
+                    <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xl"></div>
+                    <div className="relative z-20 flex flex-col items-center">
+                      <h4 className="text-white text-2xl font-bold mb-6 font-serif">{v.title}</h4>
+                      <button 
+                        onClick={() => handleVideoSelection(v.id)}
+                        className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-8 py-3 rounded-full font-bold flex items-center gap-2 transition-all shadow-lg"
+                      >
+                        <PlayCircle className="w-5 h-5" /> Play Lesson
+                      </button>
+                    </div>
+                    
+                    <div className="absolute top-4 right-4">
+                      {selectedVideoId === v.id ? (
+                        <span className="bg-green-600 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg">
+                          <CheckCircle2 className="w-3 h-3"/> Unlocked
+                        </span>
+                      ) : selectedVideoId && (
+                        <span className="bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg">
+                          <Clock className="w-3 h-3"/> Preview
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {lockedVideoId === v.id && (
+                  <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
+                    <Lock className="w-12 h-12 text-amber-500 mb-4" />
+                    <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
+                    <p className="text-slate-400 text-sm mb-6 max-w-xs">Reserve your place to unlock the full library.</p>
+                    <button onClick={goToReservePage} className="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl">
+                      Unlock Full Access
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. FINAL FOOTER */}
+      <section className="py-24 bg-slate-900 text-white text-center">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-10 font-serif">Reserve Your Place</h2>
+          <button onClick={goToReservePage} className="px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl mb-12">
+            Register & Unlock Vault
+          </button>
+          <div className="text-slate-400 text-sm">
+            © {new Date().getFullYear()} The Transcendent Heroic Advisor. All Rights Reserved.
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default FreeResourcesPage;
+// --- END OF FILE ---
