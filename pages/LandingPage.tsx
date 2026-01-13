@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { 
   ChevronRight, 
   CheckCircle2, 
@@ -7,13 +7,11 @@ import {
   ChevronLeft, 
   Zap, 
   Star,
-  PlayCircle,
-  ShieldCheck,
-  TrendingUp,
-  Award
+  PlayCircle
 } from 'lucide-react';
 
-const QUANTUM_VIDEO_ID = "WS1ccYNZJtU"; 
+// UPDATED VIDEO ID
+const QUANTUM_VIDEO_ID = "9mxOlmaUyXA"; 
 
 const LandingPage: React.FC = () => {
   const [isVideoActive, setIsVideoActive] = useState(false);
@@ -26,7 +24,7 @@ const LandingPage: React.FC = () => {
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
   const [hasDismissedPermanently, setHasDismissedPermanently] = useState(false);
 
-  // Initial Entry Sequence
+  // 1. Initial Entry: "Initializing Heroics"
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoadingQuantum(false);
@@ -35,7 +33,7 @@ const LandingPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // THE MECHANISM: Synchronized Slide-Out
+  // 2. EXIT MECHANISM: Synchronized Slide-Out
   const handleDockVideo = () => {
     setIsAnimatingOut(true);
     setTimeout(() => {
@@ -47,7 +45,7 @@ const LandingPage: React.FC = () => {
     }, 750); 
   };
 
-  // THE MECHANISM: Smooth Re-entry Fade & Slide
+  // 3. ENTRY MECHANISM: Fade & Slide-Back
   const handleResumeVideo = () => {
     setIsQuantumDocked(false);
     setIsAnimatingIn(true);
@@ -60,7 +58,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="animate-in fade-in duration-700 relative overflow-x-hidden bg-slate-900 min-h-screen">
       
-      {/* --- 1. QUANTUM PULSE LOADER --- */}
+      {/* --- QUANTUM PULSE LOADER --- */}
       {isLoadingQuantum && (
         <div className="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
           <div className="relative mb-8">
@@ -73,7 +71,7 @@ const LandingPage: React.FC = () => {
         </div>
       )}
 
-      {/* --- 2. FLOATING PLAYER MECHANISM --- */}
+      {/* --- FLOATING PLAYER OVERLAY --- */}
       {isQuantumModalOpen && !hasDismissedPermanently && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-8">
           <div 
@@ -101,19 +99,17 @@ const LandingPage: React.FC = () => {
               src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`} 
               title="Becoming A Transcendent Heroic Advisor" 
               allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
             ></iframe>
           </div>
         </div>
       )}
 
-      {/* --- 3. SIDEBAR DOCK BUTTON --- */}
+      {/* --- SIDEBAR DOCK BUTTON --- */}
       {isQuantumDocked && !hasDismissedPermanently && (
         <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[110] flex items-center animate-in slide-in-from-right duration-500 ease-out">
           <div className="relative flex flex-col items-center">
-            <button 
-              onClick={() => setHasDismissedPermanently(true)}
-              className="absolute -top-10 right-2 p-1.5 bg-slate-900 text-slate-500 hover:text-white rounded-full border border-slate-700 shadow-xl"
-            >
+            <button onClick={() => setHasDismissedPermanently(true)} className="absolute -top-10 right-2 p-1.5 bg-slate-900 text-slate-500 hover:text-white rounded-full border border-slate-700 shadow-xl">
               <X className="w-4 h-4" />
             </button>
             <button 
@@ -130,24 +126,13 @@ const LandingPage: React.FC = () => {
       {/* --- 4. HERO SECTION --- */}
       <section className="relative py-24 md:py-32 px-4 text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920" 
-            alt="Hero Background" 
-            className="w-full h-full object-cover opacity-20 grayscale"
-          />
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920" alt="Hero" className="w-full h-full object-cover opacity-20 grayscale" />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900 to-slate-900"></div>
         </div>
-
         <div className="relative z-10 max-w-7xl mx-auto">
-          <span className="inline-block px-4 py-1.5 mb-6 text-[10px] md:text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/5">
-            Launching Spring 2026
-          </span>
-          <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight">
-            The Transcendent <span className="text-amber-500">Heroic Advisor</span>
-          </h1>
-          <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 leading-relaxed mb-10">
-            Welcome to our Quantum Mind Mastery Course for advisors and their associates. Each lesson goes beyond theory to SHOW you exactly how to implement solutions that make you naturally compelling.
-          </p>
+          <span className="inline-block px-4 py-1.5 mb-6 text-[10px] md:text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/5">Launching Spring 2026</span>
+          <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight">The Transcendent <span className="text-amber-500">Heroic Advisor</span></h1>
+          <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 mb-10">Mastery Course for advisors and associates. Beyond theory—we SHOW you how to be compelling.</p>
           <Link to="/purchase" className="inline-flex items-center px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg group">
             Reserve Your Place <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
@@ -158,15 +143,10 @@ const LandingPage: React.FC = () => {
       <section className="py-20 bg-white px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif uppercase tracking-tight">Mastery Through Doing</h2>
-          <p className="text-lg text-slate-600 italic mb-12">"We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you..."</p>
-          
-          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
+          <div className="bg-amber-500 p-8 md:p-12 rounded-3xl shadow-2xl text-left mb-12 transform hover:scale-[1.01] transition-all">
             <h3 className="text-2xl font-bold text-slate-900 mb-4 font-serif">Quantum Alignment</h3>
-            <p className="text-slate-900 font-medium text-lg leading-relaxed">
-              Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. Grow yourself into being what they need someone to be in their lives.
-            </p>
+            <p className="text-slate-900 font-medium text-lg">We don’t get what we want, we get what we are aligned with. Grow into being what they need.</p>
           </div>
-          <p className="text-xl text-slate-600 font-medium">Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold">BEING</span> beyond the reach of the masses.</p>
         </div>
       </section>
 
@@ -174,50 +154,26 @@ const LandingPage: React.FC = () => {
       <section className="py-24 bg-slate-900 text-white px-4">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div className="text-left">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps</h2>
-            <p className="text-slate-400 text-lg mb-8">Proven SYSTEMS, methods, and ways that optimize Quantum Thinking for high-level advisors.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif uppercase">Quantum Systems</h2>
             <div className="space-y-4">
-              {[
-                "Demonstrate how you are extraordinary.",
-                "Become attractive to A-level referrals.",
-                "Transcend fiduciary regulations.",
-                "Deliver dazzling multidimensional wisdom."
-              ].map((text, i) => (
-                <div key={i} className="flex gap-4 items-start">
-                  <CheckCircle2 className="text-amber-500 w-6 h-6 flex-shrink-0" />
-                  <p className="text-slate-300">{text}</p>
-                </div>
+              {["Demonstrate extraordinary value.", "Attract A-level referrals.", "Transcend fiduciary limits."].map((text, i) => (
+                <div key={i} className="flex gap-4 items-start"><CheckCircle2 className="text-amber-500 w-6 h-6" /><p className="text-slate-300">{text}</p></div>
               ))}
             </div>
           </div>
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-amber-700 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-            <img 
-              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
-              alt="Systems" 
-              className="relative rounded-2xl border border-slate-800"
-            />
-          </div>
+          <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" alt="Systems" className="rounded-2xl border border-slate-800" />
         </div>
       </section>
 
-      {/* --- 7. INTRODUCTORY PRINCIPLES VIDEO --- */}
+      {/* --- 7. INTRODUCTORY VIDEO --- */}
       <section className="py-20 bg-white text-center px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">Experience the Introductory Principles</h2>
-          <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl group">
-            <iframe 
-              className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-30'}`} 
-              src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=${isVideoActive ? 1 : 0}&rel=0`} 
-              title="Welcome Video" 
-              allowFullScreen
-            ></iframe>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif uppercase">Experience The Principle</h2>
+          <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl">
+            <iframe className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-30'}`} src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=${isVideoActive ? 1 : 0}&rel=0`} allowFullScreen></iframe>
             {!isVideoActive && (
               <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-sm bg-slate-900/10">
-                <button 
-                  onClick={() => setIsVideoActive(true)} 
-                  className="bg-amber-500 hover:bg-amber-400 text-slate-900 px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-all shadow-xl hover:scale-105"
-                >
+                <button onClick={() => setIsVideoActive(true)} className="bg-amber-500 text-slate-900 px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-all hover:scale-105">
                   <PlayCircle className="w-6 h-6" /> Watch Introduction
                 </button>
               </div>
@@ -228,16 +184,8 @@ const LandingPage: React.FC = () => {
 
       {/* --- 8. RESERVE CTA --- */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 text-center px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
-          <p className="text-slate-600 mb-10 text-lg">Secure your seat for Spring 2026 and get access to our pre-launch resources.</p>
-          <Link 
-            to="/purchase" 
-            className="inline-block px-12 py-5 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-2xl text-lg"
-          >
-            Get Free Resources & Secure My Seat
-          </Link>
-        </div>
+        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
+        <Link to="/purchase" className="inline-block px-12 py-5 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all text-lg shadow-2xl">Secure My Seat</Link>
       </section>
 
     </div>
