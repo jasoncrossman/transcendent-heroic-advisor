@@ -22,7 +22,7 @@ const FreeResourcesPage: React.FC = () => {
   const [lockedVideoId, setLockedVideoId] = useState<string | null>(null);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   
-  // Quantum Popup States
+  // Quantum Popup & Loader States
   const [isLoadingQuantum, setIsLoadingQuantum] = useState(true);
   const [isQuantumModalOpen, setIsQuantumModalOpen] = useState(false);
   const [isQuantumDocked, setIsQuantumDocked] = useState(false);
@@ -48,7 +48,7 @@ const FreeResourcesPage: React.FC = () => {
     { title: "30-Second Marketing Message", image: "/assets/images/book3.jpg", description: "Transform your industry presence with this framework." }
   ];
 
-  // --- MECHANISMS ---
+  // --- QUANTUM MECHANISMS ---
   const handleDockVideo = () => {
     setIsAnimatingOut(true);
     setTimeout(() => setIsQuantumDocked(true), 350);
@@ -87,7 +87,7 @@ const FreeResourcesPage: React.FC = () => {
     setLockedVideoId(null);
   };
 
-  // --- INITIAL ENTRY ---
+  // --- INITIAL ENTRY & SCRIPT LOADING ---
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoadingQuantum(false);
@@ -158,9 +158,9 @@ const FreeResourcesPage: React.FC = () => {
   }, [activeVideo, selectedVideoId]);
 
   return (
-    <div className="bg-white min-h-screen font-sans text-slate-900 overflow-x-hidden">
+    <div className="bg-white min-h-screen font-sans text-slate-900 overflow-x-hidden relative">
       
-      {/* --- STANDARDIZED GOLD SHARE BUTTON --- */}
+      {/* --- GOLD SHARE BUTTON --- */}
       <div className="fixed top-6 right-6 z-[120]">
         <button 
           onClick={handleShare}
@@ -184,7 +184,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       )}
 
-      {/* --- FLOATING PLAYER OVERLAY --- */}
+      {/* --- FLOATING QUANTUM OVERLAY --- */}
       {isQuantumModalOpen && !hasDismissedPermanently && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-8">
           <div className={`absolute inset-0 bg-slate-950/90 backdrop-blur-xl transition-opacity duration-700 ${(isAnimatingOut || isAnimatingIn) ? 'opacity-0' : 'opacity-100'}`} onClick={handleDockVideo}></div>
@@ -196,7 +196,7 @@ const FreeResourcesPage: React.FC = () => {
               </div>
               <button onClick={handleDockVideo} className="bg-white/10 hover:bg-amber-500 hover:text-slate-900 text-white p-2 rounded-full transition-all group active:scale-90"><X className="w-5 h-5 md:w-6 md:h-6" /></button>
             </div>
-            <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0`} title="Masterclass" allow="autoplay; fullscreen" allowFullScreen></iframe>
+            <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`} title="Quantum Masterclass" allow="autoplay; encrypted-media; fullscreen" allowFullScreen></iframe>
           </div>
         </div>
       )}
@@ -214,7 +214,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       )}
 
-      {/* 1. HERO / BIO SECTION */}
+      {/* 1. HERO & BIO */}
       <section className="bg-slate-900 py-20 lg:py-32 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -241,13 +241,13 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. VAULT HEADER INFO */}
+      {/* 2. VAULT INFO BAR */}
       <section className="py-12 bg-slate-50 border-y border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-0 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl mx-auto">
+          <div className="flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl mx-auto">
             <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
             <div>
-              <h3 className="text-amber-900 font-bold text-lg">Welcome to your Resource Vault</h3>
+              <h3 className="text-amber-900 font-bold text-lg">Your Resource Vault</h3>
               <p className="text-amber-800 leading-relaxed text-sm">Your first selected video is available for full viewing. <span className="font-bold">Subsequent lessons</span> are preview-only until you reserve your seat.</p>
             </div>
           </div>
@@ -257,7 +257,7 @@ const FreeResourcesPage: React.FC = () => {
       {/* 3. BOOK LIBRARY */}
       <section className="py-24 bg-white px-4 text-center">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-16 font-serif uppercase tracking-[0.3em]">The Professional Library</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-16 font-serif uppercase tracking-[0.3em]">The Professional Library</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, i) => (
               <div key={i} className="group">
@@ -272,10 +272,10 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. VIDEO GRID WITH LOCK LOGIC */}
+      {/* 4. VIDEO GRID & HIDDEN LINK LOGIC */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold font-serif uppercase tracking-[0.3em] mb-16">Mastery Through Video</h2>
+          <h2 className="text-2xl md:text-3xl font-bold font-serif uppercase tracking-[0.3em] mb-16">Mastery Through Video</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {globalSparksVideos.map((v) => (
               <div key={v.id} className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
@@ -318,12 +318,12 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. FINAL FOOTER CTA */}
+      {/* 5. FOOTER */}
       <section className="py-24 bg-slate-900 text-white text-center px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold mb-10 font-serif uppercase tracking-[0.2em]">Ready to Ascend?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-10 font-serif uppercase tracking-[0.2em]">Ready to Ascend?</h2>
           <button onClick={goToReservePage} className="px-12 py-2.5 bg-amber-500 text-slate-900 text-[11px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-amber-400 transition-all shadow-2xl mb-12 border border-amber-600/20">Register & Unlock Vault</button>
-          <div className="text-slate-500 text-[10px] uppercase tracking-widest">© {new Date().getFullYear()} The Transcendent Heroic Advisor. All Rights Reserved.</div>
+          <div className="text-slate-500 text-[10px] uppercase tracking-widest tracking-widest">© {new Date().getFullYear()} The Transcendent Heroic Advisor. All Rights Reserved.</div>
         </div>
       </section>
     </div>
