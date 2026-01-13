@@ -33,32 +33,30 @@ const LandingPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 2. Smooth Exit Logic
+  // 2. Smooth Exit Logic: Ensures video clears the frame completely
   const handleDockVideo = () => {
     setIsAnimatingOut(true);
-    // Increased duration slightly to 700ms for a more luxurious "glide"
     setTimeout(() => {
       setIsQuantumModalOpen(false);
       setIsQuantumDocked(true);
       setIsAnimatingOut(false);
-    }, 750); // Added 50ms buffer to ensure it is completely off-screen
+    }, 750); // Buffer ensures total off-screen clearance before unmounting
   };
 
-  // 3. Smooth Entry Logic
+  // 3. Smooth Entry Logic: Reverse slide from the right
   const handleResumeVideo = () => {
     setIsAnimatingIn(true);
     setIsQuantumDocked(false);
     setIsQuantumModalOpen(true);
-    // Smallest possible delay to allow the browser to register the off-screen starting position
     setTimeout(() => {
       setIsAnimatingIn(false);
     }, 50); 
   };
 
   return (
-    <div className="animate-in fade-in duration-700 relative overflow-x-hidden bg-slate-900">
+    <div className="animate-in fade-in duration-700 relative overflow-x-hidden bg-slate-900 min-h-screen">
       
-      {/* --- QUANTUM PULSE LOADER --- */}
+      {/* --- QUANTUM PULSE LOADER (Initializing Heroics) --- */}
       {isLoadingQuantum && (
         <div className="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
           <div className="relative mb-8">
@@ -67,46 +65,50 @@ const LandingPage: React.FC = () => {
               <Zap className="w-10 h-10 text-amber-500 animate-pulse" />
             </div>
           </div>
-          <h2 className="text-amber-500 font-bold tracking-[0.3em] uppercase text-sm">Initializing Masterclass</h2>
+          <h2 className="text-amber-500 font-bold tracking-[0.4em] uppercase text-sm animate-pulse">Initializing Heroics</h2>
         </div>
       )}
 
-      {/* --- FLOATING PLAYER OVERLAY --- */}
+      {/* --- FLOATING PLAYER OVERLAY (Becoming A Transcendent Heroic Advisor) --- */}
       {isQuantumModalOpen && !hasDismissedPermanently && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-8">
           
-          {/* Backdrop: Fades with the slide */}
+          {/* Backdrop Blur */}
           <div 
             className={`absolute inset-0 bg-slate-950/90 backdrop-blur-xl transition-opacity duration-700 
               ${isAnimatingOut ? 'opacity-0' : 'opacity-100'}`} 
             onClick={handleDockVideo}
           ></div>
           
-          {/* Physical Slide Container */}
-          <div className={`relative w-full max-w-5xl aspect-video bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border border-amber-500/30 transition-all duration-700 ease-in-out z-50
-            ${isAnimatingOut ? 'translate-x-[150vw] opacity-100' : ''} 
-            ${isAnimatingIn ? 'translate-x-[150vw] opacity-100' : ''}
-            ${!isAnimatingOut && !isAnimatingIn ? 'translate-x-0 opacity-100' : ''}
+          {/* Physical Slide Container with 150vw clearance */}
+          <div className={`relative w-full max-w-5xl aspect-video bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_0_100px_rgba(245,158,11,0.3)] border border-amber-500/30 transition-all duration-700 ease-in-out z-50
+            ${isAnimatingOut || isAnimatingIn ? 'translate-x-[150vw] opacity-100' : 'translate-x-0 opacity-100'}
           `}>
-            <div className="absolute top-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-b from-black/90 to-transparent z-20 flex justify-between items-start">
+            {/* Header Overlay */}
+            <div className="absolute top-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-b from-black/95 to-transparent z-20 flex justify-between items-start">
               <div className="pr-10">
                 <span className="flex items-center gap-2 text-amber-500 font-bold text-[10px] uppercase tracking-widest mb-1">
-                  <Star className="w-3 h-3 fill-amber-500" /> Exclusive Free Lesson
+                  <Star className="w-3 h-3 fill-amber-500" /> Exclusive Preview
                 </span>
-                <h3 className="text-white text-base md:text-2xl font-bold font-serif leading-tight">Quantum Thinking Masterclass</h3>
+                <h3 className="text-white text-base md:text-2xl font-bold font-serif leading-tight">
+                  Becoming A Transcendent Heroic Advisor
+                </h3>
               </div>
               <button 
                 onClick={handleDockVideo}
                 className="bg-white/10 hover:bg-amber-500 hover:text-slate-900 text-white p-2 rounded-full transition-all"
+                title="Minimize Lesson"
               >
                 <X className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             </div>
+
             <iframe
               className="w-full h-full"
-              src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0`}
-              title="Quantum Masterclass"
+              src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
+              title="Becoming A Transcendent Heroic Advisor"
               allow="autoplay; encrypted-media; fullscreen"
+              allowFullScreen
             ></iframe>
           </div>
         </div>
@@ -124,7 +126,7 @@ const LandingPage: React.FC = () => {
             </button>
             <button 
               onClick={handleResumeVideo}
-              className="bg-amber-500 hover:bg-amber-400 text-slate-900 py-8 md:py-10 px-3 md:px-4 rounded-l-2xl font-black uppercase tracking-tighter [writing-mode:vertical-lr] flex items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.4)] transition-all group overflow-hidden"
+              className="bg-amber-500 hover:bg-amber-400 text-slate-900 py-8 md:py-10 px-3 md:px-4 rounded-l-2xl font-black uppercase tracking-tighter [writing-mode:vertical-lr] flex items-center gap-3 shadow-[-15px_0_35px_rgba(245,158,11,0.2)] transition-all group overflow-hidden"
             >
               <ChevronLeft className="w-5 h-5 mb-2 group-hover:-translate-x-1 transition-transform" />
               <span className="flex items-center gap-2 text-xs md:text-sm">Quantum Lesson <Zap className="w-4 h-4 fill-slate-900 mt-2" /></span>
@@ -133,11 +135,51 @@ const LandingPage: React.FC = () => {
         </div>
       )}
 
-      {/* --- REST OF THE ORIGINAL PAGE CONTENT --- */}
-      {/* Content omitted for brevity but preserved in implementation */}
-      <section className="py-32 px-4 text-center">
-         <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight">The Transcendent <span className="text-amber-500">Heroic Advisor</span></h1>
-         <Link to="/purchase" className="inline-flex items-center px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full">Reserve Your Place</Link>
+      {/* --- MAIN PAGE CONTENT (Original Structure Preserved) --- */}
+      <section className="relative py-24 md:py-32 px-4 text-center">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920" 
+            alt="Quantum Vision" 
+            className="w-full h-full object-cover opacity-20 grayscale"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900 to-slate-900"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/5">
+            Launching Spring 2026
+          </span>
+          <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight">
+            The Transcendent <span className="text-amber-500">Heroic Advisor</span>
+          </h1>
+          <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
+            Welcome to our Quantum Mind Mastery Course. Each lesson goes beyond theory to SHOW you exactly how to implement solutions that make you naturally compelling.
+          </p>
+          <Link to="/purchase" className="inline-flex items-center px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg group">
+            Reserve Your Place <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Simple Philosophy Segment */}
+      <section className="py-20 bg-white px-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif uppercase">Mastery Through Doing</h2>
+        <div className="max-w-4xl mx-auto bg-amber-500 p-8 rounded-3xl shadow-xl text-left">
+          <h3 className="text-2xl font-bold mb-4 font-serif">Quantum Alignment</h3>
+          <p className="text-lg font-medium">Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with.</p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <section className="py-24 bg-slate-50 border-t border-slate-200 text-center px-4">
+        <h2 className="text-4xl font-bold text-slate-900 mb-10 font-serif">Reserve Your Place</h2>
+        <Link 
+          to="/purchase"
+          className="inline-block px-12 py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg"
+        >
+          Get Free Resources & Secure My Seat
+        </Link>
       </section>
     </div>
   );
