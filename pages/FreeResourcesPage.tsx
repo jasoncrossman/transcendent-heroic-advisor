@@ -7,7 +7,7 @@ import {
   PlayCircle,
   Clock,
   Info,
-  Quote
+  Star
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
@@ -21,11 +21,29 @@ const FreeResourcesPage: React.FC = () => {
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // --- DATA ---
+  // Reordered: "Seeing the Elephant" is now first (Top-Left in a 2x2 grid)
   const globalSparksVideos = [
-    { id: '816394768', title: "Create an Ecosystem for Uncommon Results", type: 'vimeo' },
-    { id: '816409798', title: "Do Not Claim You Care, Show You Care", type: 'vimeo' },
-    { id: '816414705', title: "Using the Quantum Mind", type: 'vimeo' },
-    { id: 'hoI5E1D5c3Y', title: "Think, Do, and BE as the Elephant", type: 'youtube' }
+    { 
+      id: 'hoI5E1D5c3Y', 
+      title: "Think, Do, and BE as the Elephant", 
+      type: 'youtube',
+      featured: true 
+    },
+    { 
+      id: '816394768', 
+      title: "Create an Ecosystem for Uncommon Results", 
+      type: 'vimeo' 
+    },
+    { 
+      id: '816409798', 
+      title: "Do Not Claim You Care, Show You Care", 
+      type: 'vimeo' 
+    },
+    { 
+      id: '816414705', 
+      title: "Using the Quantum Mind", 
+      type: 'vimeo' 
+    }
   ];
 
   const books = [
@@ -200,7 +218,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. VIDEO GRID (Fixed Centering) */}
+      {/* 4. VIDEO GRID */}
       <section className="py-24 bg-slate-50 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -210,7 +228,10 @@ const FreeResourcesPage: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {globalSparksVideos.map((v) => (
-              <div key={v.id} className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+              <div 
+                key={v.id} 
+                className={`relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 ${v.featured && activeVideo !== v.id ? 'border-amber-500/50' : 'border-white'}`}
+              >
                 
                 {activeVideo === v.id && (
                   v.type === 'youtube' ? (
@@ -239,6 +260,11 @@ const FreeResourcesPage: React.FC = () => {
                   <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-8 text-center">
                     <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xl"></div>
                     <div className="relative z-20 flex flex-col items-center">
+                      {v.featured && (
+                        <span className="flex items-center gap-1 text-amber-500 font-bold text-[10px] uppercase tracking-tighter mb-2 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                          <Star className="w-3 h-3 fill-amber-500" /> Essential Lesson
+                        </span>
+                      )}
                       <h4 className="text-white text-2xl font-bold mb-6 font-serif">{v.title}</h4>
                       <button 
                         onClick={() => handleVideoSelection(v.id)}
@@ -295,4 +321,3 @@ const FreeResourcesPage: React.FC = () => {
 };
 
 export default FreeResourcesPage;
-// --- END OF FILE ---
