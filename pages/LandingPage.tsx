@@ -8,7 +8,7 @@ import {
   Zap, 
   Star,
   PlayCircle,
-  Share2 // New icon for the share button
+  Share2 
 } from 'lucide-react';
 
 const QUANTUM_VIDEO_ID = "9mxOlmaUyXA"; 
@@ -40,21 +40,17 @@ const LandingPage: React.FC = () => {
       text: 'Experience the Quantum Thinking Masterclass for high-level advisors.',
       url: window.location.href,
     };
-
     try {
       if (navigator.share) {
         await navigator.share(shareData);
       } else {
-        // Fallback: Copy to clipboard
         await navigator.clipboard.writeText(window.location.href);
         alert("Link copied to clipboard!");
       }
-    } catch (err) {
-      console.error("Error sharing:", err);
-    }
+    } catch (err) { console.error("Error sharing:", err); }
   };
 
-  // Exit/Entry Logic
+  // The Mechanism
   const handleDockVideo = () => {
     setIsAnimatingOut(true);
     setTimeout(() => setIsQuantumDocked(true), 350);
@@ -74,14 +70,14 @@ const LandingPage: React.FC = () => {
   return (
     <div className="animate-in fade-in duration-700 relative overflow-x-hidden bg-slate-900 min-h-screen">
       
-      {/* --- GLOBAL SHARE BUTTON (Top Right) --- */}
+      {/* --- REFINED GOLD SHARE BUTTON --- */}
       <div className="fixed top-6 right-6 z-[120]">
         <button 
           onClick={handleShare}
-          className="flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full hover:bg-amber-500 hover:text-slate-900 transition-all duration-300 shadow-xl group"
+          className="flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2.5 rounded-full hover:bg-amber-400 transition-all duration-300 shadow-[0_10px_30px_rgba(245,158,11,0.3)] active:scale-95 group border border-amber-600/20"
         >
-          <span className="text-xs font-bold uppercase tracking-widest hidden md:inline">Share</span>
-          <Share2 className="w-4 h-4 group-hover:scale-110 transition-transform" />
+          <span className="text-[10px] font-black uppercase tracking-[0.15em] hidden md:inline">Share Heroics</span>
+          <Share2 className="w-4 h-4" />
         </button>
       </div>
 
@@ -166,20 +162,20 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* --- CONTENT SECTIONS (Philosophy, Systems, etc.) --- */}
+      {/* --- PHILOSOPHY SECTION --- */}
       <section className="py-20 bg-white px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif uppercase tracking-tight">Mastery Through Doing</h2>
           <div className="bg-amber-500 p-8 md:p-12 rounded-3xl shadow-2xl text-left transform hover:scale-[1.01] transition-all">
-            <h3 className="text-2xl font-bold text-slate-900 mb-4 font-serif">Quantum Alignment</h3>
+            <h3 className="text-2xl font-bold text-slate-900 mb-4 font-serif uppercase">Quantum Alignment</h3>
             <p className="text-slate-900 font-medium text-lg">We don’t get what we want, we get what we are aligned with. Grow into being what they need.</p>
           </div>
         </div>
       </section>
 
-      {/* (Rest of page remains intact below) */}
+      {/* --- FOOTER CTA --- */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 text-center px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif uppercase">Reserve Your Place</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif uppercase tracking-tight">Reserve Your Place</h2>
         <Link to="/purchase" className="inline-block px-12 py-5 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all text-lg shadow-2xl">Secure My Seat</Link>
       </section>
 
