@@ -70,11 +70,11 @@ const LandingPage: React.FC = () => {
   return (
     <div className="animate-in fade-in duration-700 relative overflow-x-hidden bg-slate-900 min-h-screen">
       
-      {/* --- REFINED GOLD SHARE BUTTON --- */}
+      {/* --- STANDARDIZED GOLD SHARE BUTTON --- */}
       <div className="fixed top-6 right-6 z-[120]">
         <button 
           onClick={handleShare}
-          className="flex items-center gap-2 bg-amber-500 text-slate-900 px-4 py-2.5 rounded-full hover:bg-amber-400 transition-all duration-300 shadow-[0_10px_30px_rgba(245,158,11,0.3)] active:scale-95 group border border-amber-600/20"
+          className="flex items-center gap-2 bg-amber-500 text-slate-900 px-5 py-2.5 rounded-full hover:bg-amber-400 transition-all duration-300 shadow-[0_10px_30px_rgba(245,158,11,0.3)] active:scale-95 group border border-amber-600/20"
         >
           <span className="text-[10px] font-black uppercase tracking-[0.15em] hidden md:inline">Share Heroics</span>
           <Share2 className="w-4 h-4" />
@@ -156,8 +156,13 @@ const LandingPage: React.FC = () => {
           <span className="inline-block px-4 py-1.5 mb-6 text-[10px] md:text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/5">Launching Spring 2026</span>
           <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight">The Transcendent <span className="text-amber-500">Heroic Advisor</span></h1>
           <p className="max-w-3xl mx-auto text-lg md:text-xl text-slate-300 mb-10 leading-relaxed">Mastery Course for advisors and associates. Beyond theory—we SHOW you how to be compelling.</p>
-          <Link to="/purchase" className="inline-flex items-center px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg group">
-            Reserve Your Place <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          
+          {/* STANDARDIZED CTA BUTTON */}
+          <Link 
+            to="/purchase" 
+            className="inline-flex items-center px-8 py-2.5 bg-amber-500 text-slate-900 text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-full hover:bg-amber-400 transition-all shadow-[0_10px_30px_rgba(245,158,11,0.3)] group border border-amber-600/20"
+          >
+            Reserve Your Place <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>
@@ -168,15 +173,22 @@ const LandingPage: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif uppercase tracking-tight">Mastery Through Doing</h2>
           <div className="bg-amber-500 p-8 md:p-12 rounded-3xl shadow-2xl text-left transform hover:scale-[1.01] transition-all">
             <h3 className="text-2xl font-bold text-slate-900 mb-4 font-serif uppercase">Quantum Alignment</h3>
-            <p className="text-slate-900 font-medium text-lg">We don’t get what we want, we get what we are aligned with. Grow into being what they need.</p>
+            <p className="text-slate-900 font-medium text-lg leading-relaxed">We don’t get what we want, we get what we are aligned with. Grow into being what they need.</p>
           </div>
         </div>
       </section>
 
       {/* --- FOOTER CTA --- */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 text-center px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif uppercase tracking-tight">Reserve Your Place</h2>
-        <Link to="/purchase" className="inline-block px-12 py-5 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all text-lg shadow-2xl">Secure My Seat</Link>
+        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif uppercase tracking-tight">Ready to Ascend?</h2>
+        
+        {/* STANDARDIZED CTA BUTTON */}
+        <Link 
+          to="/purchase" 
+          className="inline-block px-12 py-2.5 bg-slate-900 text-white text-[11px] md:text-xs font-black uppercase tracking-[0.2em] rounded-full hover:bg-slate-800 transition-all shadow-xl border border-slate-700/30"
+        >
+          Secure My Seat
+        </Link>
       </section>
 
     </div>
