@@ -2,21 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   ChevronRight, 
-  CheckCircle2, 
   X, 
   ChevronLeft, 
   Zap, 
   Star,
-  PlayCircle,
-  Gift,
-  Phone,
-  Calendar
+  PlayCircle
 } from 'lucide-react';
 
 const QUANTUM_VIDEO_ID = "WS1ccYNZJtU"; 
 
 const LandingPage: React.FC = () => {
-  // Quantum States
+  // States
   const [isLoadingQuantum, setIsLoadingQuantum] = useState(true);
   const [isQuantumModalOpen, setIsQuantumModalOpen] = useState(false);
   const [isQuantumDocked, setIsQuantumDocked] = useState(false);
@@ -24,7 +20,7 @@ const LandingPage: React.FC = () => {
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
   const [hasDismissedPermanently, setHasDismissedPermanently] = useState(false);
 
-  // 1. Initial Entry
+  // Initial Entry
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoadingQuantum(false);
@@ -33,21 +29,28 @@ const LandingPage: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 2. Smooth Exit Logic: Ensures video clears the frame completely
+  // THE MECHANISM: Synchronized Slide & Appear
   const handleDockVideo = () => {
     setIsAnimatingOut(true);
+
+    // 1. Halfway through the slide (300ms), make the button appear
+    setTimeout(() => {
+      setIsQuantumDocked(true);
+    }, 300);
+
+    // 2. Once the video is fully off-screen (750ms), unmount the modal
     setTimeout(() => {
       setIsQuantumModalOpen(false);
-      setIsQuantumDocked(true);
       setIsAnimatingOut(false);
-    }, 750); // Buffer ensures total off-screen clearance before unmounting
+    }, 750); 
   };
 
-  // 3. Smooth Entry Logic: Reverse slide from the right
   const handleResumeVideo = () => {
     setIsAnimatingIn(true);
-    setIsQuantumDocked(false);
+    // Button vanishes immediately to "become" the video
+    setIsQuantumDocked(false); 
     setIsQuantumModalOpen(true);
+    
     setTimeout(() => {
       setIsAnimatingIn(false);
     }, 50); 
@@ -56,7 +59,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="animate-in fade-in duration-700 relative overflow-x-hidden bg-slate-900 min-h-screen">
       
-      {/* --- QUANTUM PULSE LOADER (Initializing Heroics) --- */}
+      {/* --- QUANTUM PULSE LOADER --- */}
       {isLoadingQuantum && (
         <div className="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
           <div className="relative mb-8">
@@ -65,58 +68,41 @@ const LandingPage: React.FC = () => {
               <Zap className="w-10 h-10 text-amber-500 animate-pulse" />
             </div>
           </div>
-          <h2 className="text-amber-500 font-bold tracking-[0.4em] uppercase text-sm animate-pulse">Initializing Heroics</h2>
+          <h2 className="text-amber-500 font-bold tracking-[0.4em] uppercase text-sm">Initializing Heroics</h2>
         </div>
       )}
 
-      {/* --- FLOATING PLAYER OVERLAY (Becoming A Transcendent Heroic Advisor) --- */}
+      {/* --- FLOATING PLAYER OVERLAY --- */}
       {isQuantumModalOpen && !hasDismissedPermanently && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-8">
-          
-          {/* Backdrop Blur */}
           <div 
             className={`absolute inset-0 bg-slate-950/90 backdrop-blur-xl transition-opacity duration-700 
               ${isAnimatingOut ? 'opacity-0' : 'opacity-100'}`} 
             onClick={handleDockVideo}
           ></div>
           
-          {/* Physical Slide Container with 150vw clearance */}
-          <div className={`relative w-full max-w-5xl aspect-video bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_0_100px_rgba(245,158,11,0.3)] border border-amber-500/30 transition-all duration-700 ease-in-out z-50
-            ${isAnimatingOut || isAnimatingIn ? 'translate-x-[150vw] opacity-100' : 'translate-x-0 opacity-100'}
+          <div className={`relative w-full max-w-5xl aspect-video bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_0_100px_rgba(245,158,11,0.3)] border border-amber-500/30 transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1) z-50
+            ${isAnimatingOut || isAnimatingIn ? 'translate-x-[150vw]' : 'translate-x-0'}
           `}>
-            {/* Header Overlay */}
             <div className="absolute top-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-b from-black/95 to-transparent z-20 flex justify-between items-start">
               <div className="pr-10">
                 <span className="flex items-center gap-2 text-amber-500 font-bold text-[10px] uppercase tracking-widest mb-1">
                   <Star className="w-3 h-3 fill-amber-500" /> Exclusive Preview
                 </span>
-                <h3 className="text-white text-base md:text-2xl font-bold font-serif leading-tight">
-                  Becoming A Transcendent Heroic Advisor
-                </h3>
+                <h3 className="text-white text-base md:text-2xl font-bold font-serif leading-tight">Becoming A Transcendent Heroic Advisor</h3>
               </div>
-              <button 
-                onClick={handleDockVideo}
-                className="bg-white/10 hover:bg-amber-500 hover:text-slate-900 text-white p-2 rounded-full transition-all"
-                title="Minimize Lesson"
-              >
-                <X className="w-5 h-5 md:w-6 md:h-6" />
+              <button onClick={handleDockVideo} className="bg-white/10 hover:bg-amber-500 hover:text-slate-900 text-white p-2 rounded-full transition-all">
+                <X className="w-5 h-6 md:w-6 md:h-6" />
               </button>
             </div>
-
-            <iframe
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
-              title="Becoming A Transcendent Heroic Advisor"
-              allow="autoplay; encrypted-media; fullscreen"
-              allowFullScreen
-            ></iframe>
+            <iframe className="w-full h-full" src={`https://www.youtube.com/embed/${QUANTUM_VIDEO_ID}?autoplay=1&rel=0`} title="Masterclass" allow="autoplay; fullscreen"></iframe>
           </div>
         </div>
       )}
 
-      {/* --- SIDEBAR DOCK BUTTON --- */}
+      {/* --- SIDEBAR DOCK BUTTON (The Mechanism Component) --- */}
       {isQuantumDocked && !hasDismissedPermanently && (
-        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[110] flex items-center animate-in slide-in-from-right duration-500">
+        <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[110] flex items-center animate-in slide-in-from-right duration-[400ms] ease-out">
           <div className="relative flex flex-col items-center">
             <button 
               onClick={() => setHasDismissedPermanently(true)}
@@ -135,51 +121,10 @@ const LandingPage: React.FC = () => {
         </div>
       )}
 
-      {/* --- MAIN PAGE CONTENT (Original Structure Preserved) --- */}
-      <section className="relative py-24 md:py-32 px-4 text-center">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920" 
-            alt="Quantum Vision" 
-            className="w-full h-full object-cover opacity-20 grayscale"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900 to-slate-900"></div>
-        </div>
-
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-amber-400 uppercase border border-amber-400/30 rounded-full bg-amber-400/5">
-            Launching Spring 2026
-          </span>
-          <h1 className="text-4xl md:text-7xl font-bold text-white mb-8 tracking-tight">
-            The Transcendent <span className="text-amber-500">Heroic Advisor</span>
-          </h1>
-          <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
-            Welcome to our Quantum Mind Mastery Course. Each lesson goes beyond theory to SHOW you exactly how to implement solutions that make you naturally compelling.
-          </p>
-          <Link to="/purchase" className="inline-flex items-center px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg group">
-            Reserve Your Place <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Simple Philosophy Segment */}
-      <section className="py-20 bg-white px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif uppercase">Mastery Through Doing</h2>
-        <div className="max-w-4xl mx-auto bg-amber-500 p-8 rounded-3xl shadow-xl text-left">
-          <h3 className="text-2xl font-bold mb-4 font-serif">Quantum Alignment</h3>
-          <p className="text-lg font-medium">Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with.</p>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <section className="py-24 bg-slate-50 border-t border-slate-200 text-center px-4">
-        <h2 className="text-4xl font-bold text-slate-900 mb-10 font-serif">Reserve Your Place</h2>
-        <Link 
-          to="/purchase"
-          className="inline-block px-12 py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg"
-        >
-          Get Free Resources & Secure My Seat
-        </Link>
+      {/* --- ORIGINAL CONTENT SECTION --- */}
+      <section className="relative py-32 px-4 text-center">
+        <h1 className="text-4xl md:text-7xl font-bold text-white mb-8">The Transcendent <span className="text-amber-500">Heroic Advisor</span></h1>
+        <Link to="/purchase" className="inline-flex items-center px-10 py-4 bg-amber-500 text-slate-900 font-bold rounded-full">Reserve Your Place</Link>
       </section>
     </div>
   );
