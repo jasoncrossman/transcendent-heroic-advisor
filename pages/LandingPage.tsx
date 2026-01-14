@@ -10,6 +10,8 @@ const LandingPage: React.FC = () => {
   const [showPulse, setShowPulse] = useState(true); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDocked, setIsDocked] = useState(false); 
+  // NEW: Track if the user has clicked the poster to start the floating video
+  const [hasStartedFloatingVideo, setHasStartedFloatingVideo] = useState(false);
   
   // Track video progress (in seconds)
   const [videoTime, setVideoTime] = useState(0);
@@ -43,8 +45,6 @@ const LandingPage: React.FC = () => {
   }, []);
 
   const handleCloseVideo = () => {
-    // In a production environment with the YT API, we would get the current time here.
-    // Since we are using a standard iframe, we stop the video by setting isModalOpen to false.
     setIsModalOpen(false);
     setIsDocked(true);
   };
@@ -52,6 +52,13 @@ const LandingPage: React.FC = () => {
   const handleRestoreVideo = () => {
     setIsDocked(false);
     setIsModalOpen(true);
+  };
+
+  // NEW: Handle permanent dismissal of the dock
+  const handlePermanentDismiss = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsDocked(false);
+    setHasStartedFloatingVideo(false);
   };
 
   return (
@@ -100,39 +107,68 @@ const LandingPage: React.FC = () => {
 
           <button 
             onClick={handleCloseVideo}
-            className="absolute top-4 right-4 z-20 p-2 bg-amber-500 text-slate-900 rounded-full hover:scale-110 transition-transform shadow-lg pointer-events-auto"
+            className="absolute top-4 right-4 z-40 p-2 bg-amber-500 text-slate-900 rounded-full hover:scale-110 transition-transform shadow-lg pointer-events-auto"
           >
             <X className="w-5 h-5 md:w-6 md:h-6" />
           </button>
           
-          {/* If the modal is closed, we remove the iframe from the DOM to stop playback */}
-          {isModalOpen && (
-            <iframe 
-              className="w-full h-full"
-              src={`https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&autoplay=1&start=${videoTime}`}
-              title="The Transcendent Heroic Advisor"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+          {/* HEROIC POSTER COVER: Only shows if video hasn't been started */}
+          {!hasStartedFloatingVideo ? (
+            <div 
+              className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-900/90 cursor-pointer group"
+              onClick={() => setHasStartedFloatingVideo(true)}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90"></div>
+              <h2 className="relative z-10 text-white text-2xl md:text-5xl font-bold text-center px-8 mb-10 tracking-tight leading-tight drop-shadow-2xl">
+                Learn How to Become a <br/>
+                <span className="text-amber-500 uppercase tracking-widest text-lg md:text-3xl">Transcendent Heroic Advisor</span>
+              </h2>
+              <div className="relative z-10 flex flex-col items-center gap-4 group-hover:scale-110 transition-transform duration-500">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-amber-500 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(245,158,11,0.5)]">
+                  <PlayCircle className="w-10 h-10 md:w-12 md:h-12 text-slate-900 fill-slate-900" />
+                </div>
+                <span className="text-amber-500 font-black uppercase tracking-[0.4em] text-[10px] md:text-xs">Begin Your Journey</span>
+              </div>
+            </div>
+          ) : (
+            /* IFRAME RENDERS ONLY AFTER POSTER CLICK */
+            isModalOpen && (
+              <iframe 
+                className="w-full h-full" 
+                src={`https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&autoplay=1&modestbranding=1&rel=0&start=${videoTime}`} 
+                title="The Transcendent Heroic Advisor" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen 
+              ></iframe>
+            )
           )}
         </div>
       </div>
 
-      {/* --- PHASE 3 & 4: GOLD DOCK TAB --- */}
-      <button 
-        onClick={handleRestoreVideo}
-        className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] bg-amber-500 hover:bg-amber-400 text-slate-900 py-8 md:py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] transition-all duration-700 ease-in-out group
-          ${isDocked && !isModalOpen 
-            ? 'translate-x-0 opacity-100' 
-            : 'translate-x-full opacity-0 pointer-events-none'}`}
-      >
-        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
-          Quantum Lesson
-        </span>
-        <PlayCircle className="w-5 h-5 mt-2" />
-      </button>
+      {/* --- PHASE 3 & 4: GOLD DOCK TAB WITH EXIT --- */}
+      <div className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] flex items-start transition-all duration-700 ease-in-out
+          ${isDocked && !isModalOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
+        
+        {/* SMALL DISMISS BUTTON */}
+        <button 
+          onClick={handlePermanentDismiss}
+          className="bg-slate-900 text-amber-500 p-1.5 rounded-full -mr-3 -mt-3 relative z-10 border border-amber-500/40 shadow-xl hover:bg-amber-500 hover:text-slate-900 transition-all active:scale-75"
+        >
+          <X className="w-3 h-3" />
+        </button>
+
+        <button 
+          onClick={handleRestoreVideo} 
+          className="bg-amber-500 hover:bg-amber-400 text-slate-900 py-8 md:py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] transition-all group"
+        >
+          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
+            Quantum Lesson
+          </span>
+          <PlayCircle className="w-5 h-5 mt-2" />
+        </button>
+      </div>
 
       {/* --- ORIGINAL CODE START (UNTOUCHED SECTIONS) --- */}
       <div className="animate-in fade-in duration-700">
@@ -183,7 +219,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Video Section */}
+        {/* Video Section (LEAVING UNTOUCHED) */}
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
