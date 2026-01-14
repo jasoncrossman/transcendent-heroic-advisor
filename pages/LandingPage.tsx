@@ -112,7 +112,7 @@ const LandingPage: React.FC = () => {
         </button>
       </div>
 
-      {/* --- ORIGINAL PAGE START (EXACTLY AS PROVIDED) --- */}
+      {/* --- ORIGINAL PAGE START --- */}
       <div className="animate-in fade-in duration-700">
         <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 z-0">
