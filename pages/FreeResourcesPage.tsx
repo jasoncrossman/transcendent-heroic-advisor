@@ -21,7 +21,6 @@ const FreeResourcesPage: React.FC = () => {
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // --- DATA ---
-  // Reordered: "Seeing the Elephant" is now first (Top-Left in a 2x2 grid)
   const globalSparksVideos = [
     { 
       id: 'hoI5E1D5c3Y', 
@@ -184,23 +183,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. VAULT HEADER */}
-      <section className="py-16 bg-slate-50 border-y border-slate-200 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-10 flex items-start gap-4 bg-amber-50 border border-amber-200 p-6 rounded-2xl shadow-sm max-w-4xl">
-            <Info className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
-            <div>
-              <h3 className="text-amber-900 font-bold text-lg">Welcome to your Resource Vault</h3>
-              <p className="text-amber-800 leading-relaxed">
-                Your first selected video is available for full viewing. 
-                <span className="font-bold"> Subsequent lessons</span> are preview-only until you reserve your seat.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. BOOK LIBRARY */}
+      {/* 2. BOOK LIBRARY */}
       <section className="py-24 bg-white px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16 font-serif uppercase tracking-widest">The Professional Library</h2>
@@ -218,21 +201,33 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. VIDEO GRID */}
-      <section className="py-24 bg-slate-50 px-4">
+      {/* 3. VAULT SECTION (INSTRUCTIONS MOVED HERE) */}
+      <section className="py-24 bg-slate-50 border-t border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
+          {/* Instructions Box: Now contextually linked to the videos below */}
+          <div className="mb-12 flex items-start gap-4 bg-white border border-amber-200 p-8 rounded-3xl shadow-sm max-w-4xl mx-auto">
+            <Info className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="text-slate-900 font-bold text-xl mb-2 font-serif uppercase tracking-tight">Welcome to your Resource Vault</h3>
+              <p className="text-slate-600 text-lg leading-relaxed">
+                Your first selected video is available for full viewing. 
+                <span className="text-amber-600 font-bold"> Subsequent lessons</span> are preview-only until you reserve your seat.
+              </p>
+            </div>
+          </div>
+
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold font-serif uppercase tracking-widest mb-2">Mastery Through Video</h2>
             <p className="text-slate-500 font-medium italic">Select one lesson for full access; preview the rest.</p>
           </div>
           
+          {/* 4. VIDEO GRID */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {globalSparksVideos.map((v) => (
               <div 
                 key={v.id} 
                 className={`relative aspect-video bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 ${v.featured && activeVideo !== v.id ? 'border-amber-500/50' : 'border-white'}`}
               >
-                
                 {activeVideo === v.id && (
                   v.type === 'youtube' ? (
                     <iframe
