@@ -160,7 +160,7 @@ const LandingPage: React.FC = () => {
 
             <div className="max-w-3xl mx-auto">
               <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others.
+                Transcendent Heroic Advisor takes you <span className="text-slate-900 font-bold uppercase tracking-tight">ABOVE AND BEYOND</span> the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others.
               </p>
             </div>
           </div>
@@ -172,7 +172,7 @@ const LandingPage: React.FC = () => {
               <div className="flex flex-col justify-center">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps in Performance</h2>
                 <p className="text-slate-400 text-lg mb-6 leading-relaxed">
-                  This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
+                  This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning, highly affluent people and ATTRACT them to become your loyal long-term clients.          
                 </p>
                 
                 <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
