@@ -8,9 +8,6 @@ const LandingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);     
   const [isDocked, setIsDocked] = useState(false); 
 
-  // Simulation: Progress of the video (0 to 100)
-  const [progress, setProgress] = useState(35); 
-
   const cleanVideoSrc = "https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&modestbranding=1&rel=0&iv_load_policy=3&showinfo=0";
 
   useEffect(() => {
@@ -24,6 +21,11 @@ const LandingPage: React.FC = () => {
   const handleCloseMaster = () => {
     setIsModalOpen(false);
     setIsDocked(true);
+  };
+
+  const handlePermanentDismiss = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevents the tab from triggering the 'restore' action
+    setIsDocked(false);
   };
 
   const handleRestoreMaster = () => {
@@ -82,36 +84,36 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
 
-      {/* --- PHASE 3 & 4: GOLD DOCK TAB WITH PROGRESS BAR --- */}
-      <button 
-        onClick={handleRestoreMaster}
-        className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] bg-amber-500 hover:bg-amber-400 text-slate-900 py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] transition-all duration-700 ease-in-out group
-          ${isDocked && !isModalOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
-        
-        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-        
-        <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
-          Quantum Lesson
-        </span>
-        
-        <div className="relative mt-2">
-            <PlayCircle className="w-5 h-5" />
-            {/* Tiny indicator that video is "paused/ready" in the dock */}
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-slate-900 rounded-full animate-pulse"></div>
-        </div>
+      {/* --- PHASE 3 & 4: GOLD DOCK TAB WITH EXIT BUTTON --- */}
+      <div 
+        className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] flex items-start transition-all duration-700 ease-in-out
+          ${isDocked && !isModalOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}
+      >
+        {/* The Mini Exit Button */}
+        <button 
+          onClick={handlePermanentDismiss}
+          className="bg-red-600 text-white p-1 rounded-full -mr-2 -mt-2 relative z-10 shadow-lg hover:bg-red-500 transition-colors"
+          title="Dismiss Lesson"
+        >
+          <X className="w-3 h-3" />
+        </button>
 
-        {/* --- VERTICAL PROGRESS BAR --- */}
-        <div className="w-1.5 h-20 bg-slate-900/20 rounded-full mt-4 overflow-hidden flex flex-col-reverse">
-            <div 
-                className="w-full bg-slate-900 transition-all duration-1000" 
-                style={{ height: `${progress}%` }}
-            ></div>
-        </div>
-      </button>
+        {/* The Main Dock Body */}
+        <button 
+          onClick={handleRestoreMaster}
+          className="bg-amber-500 hover:bg-amber-400 text-slate-900 py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] group transition-all"
+        >
+          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
+            Quantum Lesson
+          </span>
+          <PlayCircle className="w-5 h-5 mt-2" />
+        </button>
+      </div>
 
       {/* --- MAIN PAGE CONTENT --- */}
       <div className="bg-white">
-        {/* Hero Section placeholder */}
+        {/* Placeholder for Hero/Main Content */}
         <div className="h-screen bg-slate-900 flex items-center justify-center">
             <h1 className="text-white text-4xl font-serif">Main Content Area</h1>
         </div>
@@ -126,7 +128,11 @@ const LandingPage: React.FC = () => {
                   <button onClick={() => setIsVideoActive(false)} className="absolute top-4 right-4 z-20 p-1.5 bg-black/50 text-white rounded-full hover:bg-black transition-colors">
                     <X className="w-5 h-5" />
                   </button>
-                  <iframe className="w-full h-full" src={`${cleanVideoSrc}&autoplay=1`} allowFullScreen></iframe>
+                  <iframe 
+                    className="w-full h-full" 
+                    src={`${cleanVideoSrc}&autoplay=1`} 
+                    allowFullScreen
+                  ></iframe>
                 </>
               ) : (
                 <div className="absolute inset-0 z-10 flex items-center justify-center backdrop-blur-md bg-slate-900/10">
