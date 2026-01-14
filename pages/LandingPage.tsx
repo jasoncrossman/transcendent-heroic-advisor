@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  ChevronRight, 
-  CheckCircle2, 
-  Mail, 
-  Gift, 
-  Phone, 
-  PlayCircle, 
-  Calendar, 
-  X, 
-  Zap, 
-  ChevronLeft, 
-  Share 
-} from 'lucide-react';
+// Added Share to imports
+import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar, X, Zap, ChevronLeft, Share } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [isVideoActive, setIsVideoActive] = useState(false);
 
-  // --- QUANTUM VIDEO SUITE LOGIC ---
+  // --- QUANTUM VIDEO SUITE LOGIC (ADDITIONS) ---
   const [showPulse, setShowPulse] = useState(true); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDocked, setIsDocked] = useState(false); 
@@ -63,8 +52,8 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-900">
-      
+    <div className="relative min-h-screen">
+
       {/* --- GOLDEN SHARE ARROW (TOP RIGHT) --- */}
       <div className="fixed top-6 right-6 z-[100] flex flex-col items-center gap-1 group">
         <button 
@@ -78,7 +67,7 @@ const LandingPage: React.FC = () => {
           Share
         </span>
       </div>
-
+      
       {/* --- PHASE 1: PULSE OVERLAY --- */}
       {showPulse && (
         <div className="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center">
@@ -127,7 +116,7 @@ const LandingPage: React.FC = () => {
         </button>
       )}
 
-      {/* --- PAGE CONTENT --- */}
+      {/* --- ORIGINAL CODE START (UNTOUCHED) --- */}
       <div className="animate-in fade-in duration-700">
         {/* Hero Section */}
         <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
@@ -145,7 +134,7 @@ const LandingPage: React.FC = () => {
               Launching Spring 2026
             </span>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tight">
-              The Transcendent <span className="gradient-gold text-amber-500">Heroic Advisor</span>
+              The Transcendent <span className="gradient-gold">Heroic Advisor</span>
             </h1>
             <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
               Welcome to our Quantum Mind Mastery Course for advisors and their associates. Each lesson goes beyond theory to SHOW you exactly how to implement Quantum Mind solutions, methods, and frameworks that make you naturally compelling and deeply trusted by high-net-worth individuals.
@@ -233,7 +222,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Inline Video Section */}
+        {/* Video Section with Glass Overlay */}
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
