@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, CreditCard, ChevronLeft, ArrowRight, Star } from 'lucide-react';
+import { ShieldCheck, CreditCard, ChevronLeft, ArrowRight, Star, PlayCircle } from 'lucide-react';
 
 const PurchasePage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +11,6 @@ const PurchasePage: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // This payload is optimized for Zapier Catch Hooks
     const payload = {
       email: email.trim(),
       full_name: fullName.trim(),
@@ -19,24 +18,21 @@ const PurchasePage: React.FC = () => {
     };
 
     try {
-      // Sending to your verified Zapier Hook
       await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
         method: "POST",
-        mode: "no-cors", // Prevents CORS preflight issues with Zapier
+        mode: "no-cors",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
-      // Brief delay to ensure the request is dispatched before redirect
       setTimeout(() => {
         window.location.assign("https://zippi.link/exitstrategy");
       }, 100);
       
     } catch (error) {
       console.error("Submission error:", error);
-      // Fallback redirect
       window.location.assign("https://zippi.link/exitstrategy");
     }
   };
@@ -74,26 +70,48 @@ const PurchasePage: React.FC = () => {
 
                 <div className="space-y-4 pt-4">
                   <h4 className="font-bold text-slate-900">Your Enrollment Includes:</h4>
-                  <ul className="space-y-3 text-sm text-slate-600">
+                  <ul className="space-y-4 text-sm text-slate-600">
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                       <span>2x Confidential 45min Calls with Bruce</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>30-Sec Marketing Message Book</span>
+                      <span>Ten Steps to Creating Your Dynamic & Magnetic 30-Second Marketing Message (workbook)</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Wright Exit Strategy Lessons</span>
+                      <span>(4) Free Lessons From The Best Selling The Wright Exit Strategy; Wealth - How to Create It, Keep It, and Use It Advisory Training</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Transcendent Thought and Market Leadership 1.0 Book</span>
+                      <span>The Wright Exit Strategy; Wealth - How to Create It, Keep It, and Use It Book</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Access to the Transcendent Heroic Advisor Cohort (Late Jan 2026)</span>
+                      <span>Transcendent Thought and Market Leadership 1.0; How to Lead Any Profession, Anywhere in the World Book</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                      <span>Macro Strategic Planning® Your Life and Business (workbook)</span>
+                    </li>
+                    
+                    {/* Highlighted Video Course Item */}
+                    <li className="mt-6 p-5 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
+                      <div className="flex items-start gap-4">
+                        <div className="bg-amber-500 p-2 rounded-lg shrink-0">
+                          <PlayCircle className="w-6 h-6 text-slate-900" />
+                        </div>
+                        <div>
+                          <h5 className="text-amber-500 font-bold text-base mb-2 italic">Special Immediate Access:</h5>
+                          <p className="text-white font-bold leading-tight mb-2">
+                            Early Access to our 2 Hour course where we walk you through how to creating Your Dynamic & Magnetic 30-Second Marketing Message.
+                          </p>
+                          <p className="text-slate-300 text-xs leading-relaxed font-medium">
+                            You’ll learn how to clearly communicate your true value in a way that attracts higher-quality clients, sparks immediate curiosity, and positions you as the obvious choice—without sounding salesy or generic. The result: better conversations, more qualified referrals, and a message that keeps working for you long after the introduction ends.
+                          </p>
+                        </div>
+                      </div>
                     </li>
                   </ul>
                 </div>
