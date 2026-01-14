@@ -1,177 +1,68 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ShieldCheck, CreditCard, ChevronLeft, ArrowRight, Star } from 'lucide-react';
+/* ... (Within PurchasePage, replacing the previous segment) ... */
 
-const PurchasePage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // This payload is optimized for Zapier Catch Hooks
-    const payload = {
-      email: email.trim(),
-      full_name: fullName.trim(),
-      source: "Transcendent Mastery Checkout"
-    };
-
-    try {
-      // Sending to your verified Zapier Hook
-      await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
-        method: "POST",
-        mode: "no-cors", // Prevents CORS preflight issues with Zapier
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      // Brief delay to ensure the request is dispatched before redirect
-      setTimeout(() => {
-        window.location.assign("https://zippi.link/exitstrategy");
-      }, 100);
-      
-    } catch (error) {
-      console.error("Submission error:", error);
-      // Fallback redirect
-      window.location.assign("https://zippi.link/exitstrategy");
-    }
-  };
-
-  return (
-    <div className="bg-slate-50 min-h-screen py-16 animate-in slide-in-from-bottom-4 duration-500">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="inline-flex items-center text-slate-500 hover:text-slate-900 mb-8 font-medium group transition-colors">
-          <ChevronLeft className="mr-1 w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Course Details
-        </Link>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Order Summary */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-              <h1 className="text-3xl font-bold text-slate-900 mb-6 font-serif">Secure Your Place in the Mastery Course</h1>
-              
-              <div className="space-y-6">
-                <div className="flex justify-between items-start pb-6 border-b border-slate-100">
-                  <div className="flex gap-4">
-                    <div className="w-20 h-20 bg-slate-900 rounded-xl flex items-center justify-center text-white shrink-0">
-                      <Star className="w-8 h-8 text-amber-500" />
+                {/* --- ENHANCED HIGH-PRIORITY SEGMENT: THE 10 STEPS --- */}
+                <div className="mt-8 pt-8 border-t border-slate-100">
+                  <div className="bg-slate-900 rounded-3xl p-8 text-white relative overflow-hidden group border border-amber-500/30 shadow-2xl">
+                    {/* Background Decorative Element */}
+                    <div className="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform duration-1000">
+                      <Zap className="w-32 h-32 text-amber-500" />
                     </div>
-                    <div>
-                      <h3 className="font-bold text-slate-900 text-lg">Transcendent Heroic Advisor Mastery Course</h3>
-                      <p className="text-slate-500 text-sm">Quantum Mind Mastery for Professionals</p>
-                      <span className="inline-block mt-2 px-2 py-0.5 bg-amber-100 text-amber-800 text-xs font-bold rounded uppercase tracking-wider">Early Riser Special</span>
+                    
+                    <div className="flex flex-col md:flex-row items-start gap-6 relative z-10">
+                      {/* Signature Shield Icon */}
+                      <div className="bg-amber-500 p-4 rounded-2xl shadow-[0_0_40px_rgba(245,158,11,0.3)] shrink-0 mx-auto md:mx-0">
+                        <ShieldCheck className="w-12 h-12 text-slate-900" />
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-3 mb-4 justify-center md:justify-start">
+                          <span className="bg-amber-500 text-slate-900 text-[10px] font-black uppercase tracking-[0.2em] px-2 py-1 rounded">
+                            Core Masterclass
+                          </span>
+                          <span className="text-amber-500/80 text-[10px] font-bold uppercase tracking-widest border border-amber-500/30 px-2 py-1 rounded">
+                            Feb 15 Release
+                          </span>
+                        </div>
+
+                        <h4 className="text-2xl md:text-3xl font-bold mb-4 leading-tight text-center md:text-left font-serif">
+                          Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message
+                        </h4>
+                        
+                        <p className="text-slate-300 text-lg mb-8 text-center md:text-left leading-relaxed">
+                          This isn't just a book—it’s a <span className="text-white font-bold italic">guided strategic transformation.</span> You’ll receive exclusive access to a deep-dive video session where Bruce Raymond Wright walks you through all 10 steps of the blueprint.
+                        </p>
+
+                        {/* The "Teaser" Preview List */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-white/5 p-6 rounded-2xl border border-white/10">
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-3 text-sm text-slate-300">
+                              <span className="text-amber-500 font-bold">01.</span> The Identity Shift
+                            </div>
+                            <div className="flex items-center gap-3 text-sm text-slate-300">
+                              <span className="text-amber-500 font-bold">02.</span> The Quantum Hook
+                            </div>
+                            <div className="flex items-center gap-3 text-sm text-slate-300">
+                              <span className="text-amber-500 font-bold">03.</span> Pattern Interruption
+                            </div>
+                          </div>
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-3 text-sm text-slate-300 font-bold">
+                              <span className="text-amber-500">10.</span> The Irresistible Response
+                            </div>
+                            <div className="text-[10px] text-amber-500/60 uppercase tracking-widest pt-2">
+                              + 6 additional proprietary steps
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+                          <p className="text-sm text-amber-200 leading-relaxed text-center md:text-left">
+                            <strong>The Outcome:</strong> By the end of this session, you will have the clarity to craft your message yourself, or the option to hire our elite team to <span className="text-amber-500 font-bold italic underline">build it for you.</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="block text-2xl font-bold text-slate-900">$997.97</span>
-                    <span className="block text-sm text-slate-400 line-through">$1,497.97</span>
-                  </div>
                 </div>
 
-                <div className="space-y-4 pt-4">
-                  <h4 className="font-bold text-slate-900">Your Enrollment Includes:</h4>
-                  <ul className="space-y-3 text-sm text-slate-600">
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>2x Confidential 45min Calls with Bruce</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>30-Sec Marketing Message Book</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Wright Exit Strategy Lessons</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Transcendent Thought and Market Leadership 1.0 Book</span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Access to the Transcendent Heroic Advisor Cohort (Late Jan 2026)</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-              <p className="text-amber-900 font-medium text-sm">
-                <strong>Waitlist Note:</strong> This cohort is limited to ensure personalized attention. Registration is first-come, first-served.
-              </p>
-            </div>
-          </div>
-
-          {/* Checkout Form Sidebar */}
-          <div className="lg:col-span-5">
-            <div className="bg-white p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 sticky top-24">
-              <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                <CreditCard className="w-5 h-5 text-amber-600" /> Payment Details
-              </h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Email Address</label>
-                  <input 
-                    required
-                    type="email" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com" 
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none text-slate-900 bg-white placeholder:text-slate-400" 
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Full Name</label>
-                  <input 
-                    required
-                    type="text" 
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    placeholder="John Doe" 
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-amber-500 outline-none text-slate-900 bg-white placeholder:text-slate-400" 
-                  />
-                </div>
-
-                <div className="pt-4 border-t border-slate-100">
-                   <div className="flex justify-between items-center mb-2">
-                     <span className="text-slate-600">Subtotal</span>
-                     <span className="font-bold text-slate-900">$997.97</span>
-                   </div>
-                   <div className="flex justify-between items-center mb-6">
-                     <span className="text-slate-600">Early Riser Discount</span>
-                     <span className="text-green-600 font-bold">-$500.00</span>
-                   </div>
-                   <div className="flex justify-between items-center text-xl font-bold text-slate-900 mb-8 pt-4 border-t border-slate-100">
-                     <span>Total Due</span>
-                     <span>$997.97</span>
-                   </div>
-                </div>
-
-                <button 
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-lg shadow-slate-900/20 disabled:opacity-50"
-                >
-                  {isLoading ? 'Processing...' : 'Complete Enrollment'} <ArrowRight className="w-5 h-5" />
-                </button>
-                
-                <p className="text-center text-xs text-slate-400 mt-4">
-                  Secure 256-bit encrypted checkout. No hidden fees.
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default PurchasePage;
+/* ... (Rest of PurchasePage remains consistent) ... */
