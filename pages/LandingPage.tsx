@@ -160,7 +160,7 @@ const LandingPage: React.FC = () => {
 
             <div className="max-w-3xl mx-auto">
               <p className="text-xl text-slate-600 leading-relaxed font-medium">
-                Transcendent Heroic Advisor takes you <span className="text-slate-900 font-bold uppercase tracking-tight">ABOVE AND BEYOND</span> the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others. Quantum thinking is essential. 
+               There are no competitive advantages in being ordinary or similar to others. Quantum thinking is essential. Transcendent Heroic Advisor teaches you to think beyond binary choices and conventional solutions. Where others see limitations, you will see infinite possibilities, giving you strategies that rise above competition <span className="text-slate-900 font-bold uppercase tracking-tight">ENTIRELY</span>. T
               </p>
             </div>
           </div>
