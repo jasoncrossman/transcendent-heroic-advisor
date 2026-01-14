@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar, X, Zap, ChevronLeft, Share } from 'lucide-react';
 
@@ -11,9 +11,6 @@ const LandingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDocked, setIsDocked] = useState(false); 
   const [hasStartedFloatingVideo, setHasStartedFloatingVideo] = useState(false);
-  
-  // Track video progress (in seconds)
-  const [videoTime, setVideoTime] = useState(0);
 
   // --- SHARE LOGIC ---
   const handleShare = async () => {
@@ -22,7 +19,6 @@ const LandingPage: React.FC = () => {
       text: 'Experience the Quantum Mind Mastery Course for Professionals.',
       url: window.location.href,
     };
-
     try {
       if (navigator.share) {
         await navigator.share(shareData);
@@ -61,26 +57,19 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-
-      {/* --- GOLDEN SHARE ARROW --- */}
+      
+      {/* --- FLOATING SUITE UI ELEMENTS --- */}
       <div className="fixed top-6 right-6 z-[100] flex flex-col items-center gap-1 group">
-        <button 
-          onClick={handleShare}
-          className="p-3 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 rounded-full text-amber-500 hover:bg-amber-500 hover:text-slate-900 transition-all shadow-lg shadow-amber-500/10 active:scale-90"
-        >
+        <button onClick={handleShare} className="p-3 bg-slate-900/80 backdrop-blur-md border border-amber-500/30 rounded-full text-amber-500 hover:bg-amber-500 hover:text-slate-900 transition-all shadow-lg active:scale-90">
           <Share className="w-5 h-5" />
         </button>
-        <span className="text-[9px] font-black uppercase tracking-widest text-amber-500/80 opacity-0 group-hover:opacity-100 transition-opacity">
-          Share
-        </span>
       </div>
-      
-      {/* --- PHASE 1: PULSE OVERLAY --- */}
+
       {showPulse && (
         <div className="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center">
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-amber-500/20 animate-ping duration-1000"></div>
-            <div className="relative w-24 h-24 bg-slate-900 border-2 border-amber-500 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(245,158,11,0.4)]">
+            <div className="relative w-24 h-24 bg-slate-900 border-2 border-amber-500 rounded-full flex items-center justify-center">
               <Zap className="w-10 h-10 text-amber-500 animate-pulse" />
             </div>
           </div>
@@ -88,92 +77,49 @@ const LandingPage: React.FC = () => {
         </div>
       )}
 
-      {/* --- PHASE 2: FLOATING VIDEO POPUP (THE APPARATUS) --- */}
       <div className={`fixed inset-0 z-[150] flex items-center justify-center p-4 transition-all duration-700 ${isModalOpen ? 'bg-slate-900/95 backdrop-blur-sm pointer-events-auto' : 'bg-transparent backdrop-blur-none pointer-events-none'}`}>
-        <div 
-          className={`relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-amber-500/20 transition-all duration-700 ease-in-out
-            ${isModalOpen 
-              ? 'translate-x-0 opacity-100 scale-100' 
-              : 'translate-x-[110%] md:translate-x-[120%] opacity-0 scale-95'}`}
-        >
-          {/* VIDEO TITLE OVERLAY */}
-          <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 pointer-events-none">
-            <span className="text-white/90 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] drop-shadow-md bg-slate-900/60 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10">
-              The Transcendent Heroic Advisor
-            </span>
-          </div>
-
-          <button 
-            onClick={handleCloseVideo}
-            className="absolute top-4 right-4 z-40 p-2 bg-amber-500 text-slate-900 rounded-full hover:scale-110 transition-transform shadow-lg pointer-events-auto"
-          >
-            <X className="w-5 h-5 md:w-6 md:h-6" />
+        <div className={`relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-amber-500/20 transition-all duration-700 ${isModalOpen ? 'translate-x-0 opacity-100 scale-100' : 'translate-x-[110%] opacity-0 scale-95'}`}>
+          <button onClick={handleCloseVideo} className="absolute top-4 right-4 z-40 p-2 bg-amber-500 text-slate-900 rounded-full hover:scale-110 transition-transform">
+            <X className="w-5 h-5" />
           </button>
-          
-          {/* HEROIC POSTER COVER */}
           {!hasStartedFloatingVideo ? (
-            <div 
-              className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-900/90 cursor-pointer group"
-              onClick={() => setHasStartedFloatingVideo(true)}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90"></div>
-              <h2 className="relative z-10 text-white text-2xl md:text-5xl font-bold text-center px-8 mb-10 tracking-tight leading-tight drop-shadow-2xl">
+            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-900/90 cursor-pointer" onClick={() => setHasStartedFloatingVideo(true)}>
+              <h2 className="relative z-10 text-white text-2xl md:text-5xl font-bold text-center px-8 mb-10">
                 Learn How to Become a <br/>
                 <span className="text-amber-500 uppercase tracking-widest text-lg md:text-3xl">Transcendent Heroic Advisor</span>
               </h2>
-              <div className="relative z-10 flex flex-col items-center gap-4 group-hover:scale-110 transition-transform duration-500">
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-amber-500 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(245,158,11,0.5)]">
-                  <PlayCircle className="w-10 h-10 md:w-12 md:h-12 text-slate-900 fill-slate-900" />
+              <div className="relative z-10 flex flex-col items-center gap-4">
+                <div className="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center shadow-[0_0_50px_rgba(245,158,11,0.5)]">
+                  <PlayCircle className="w-10 h-10 text-slate-900 fill-slate-900" />
                 </div>
-                <span className="text-amber-500 font-black uppercase tracking-[0.4em] text-[10px] md:text-xs">Begin Your Journey</span>
+                <span className="text-amber-500 font-black uppercase tracking-[0.4em] text-[10px]">Begin Your Journey</span>
               </div>
             </div>
           ) : (
             isModalOpen && (
-              <iframe 
-                className="w-full h-full" 
-                src={`https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&autoplay=1&modestbranding=1&rel=0&start=${videoTime}`} 
-                title="The Transcendent Heroic Advisor" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerPolicy="strict-origin-when-cross-origin" 
-                allowFullScreen 
-              ></iframe>
+              <iframe className="w-full h-full" src="https://www.youtube.com/embed/9mxOlmaUyXA?autoplay=1&modestbranding=1&rel=0" title="The Transcendent Heroic Advisor" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             )
           )}
         </div>
       </div>
 
-      {/* --- PHASE 3 & 4: GOLD DOCK TAB WITH EXIT --- */}
-      <div className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] flex items-start transition-all duration-700 ease-in-out
-          ${isDocked && !isModalOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
-        
-        <button 
-          onClick={handlePermanentDismiss}
-          className="bg-slate-900 text-amber-500 p-1.5 rounded-full -mr-3 -mt-3 relative z-10 border border-amber-500/40 shadow-xl hover:bg-amber-500 hover:text-slate-900 transition-all active:scale-75"
-        >
-          <X className="w-3 h-3" />
-        </button>
-
-        <button 
-          onClick={handleRestoreVideo} 
-          className="bg-amber-500 hover:bg-amber-400 text-slate-900 py-8 md:py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] transition-all group"
-        >
-          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
-            Quantum Lesson
-          </span>
+      <div className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] flex items-start transition-all duration-700 ${isDocked && !isModalOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
+        <button onClick={handlePermanentDismiss} className="bg-slate-900 text-amber-500 p-1.5 rounded-full -mr-3 -mt-3 relative z-10 border border-amber-500/40 shadow-xl hover:bg-amber-500 hover:text-slate-900 transition-all"><X className="w-3 h-3" /></button>
+        <button onClick={handleRestoreVideo} className="bg-amber-500 hover:bg-amber-400 text-slate-900 py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)]">
+          <ChevronLeft className="w-5 h-5" />
+          <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">Quantum Lesson</span>
           <PlayCircle className="w-5 h-5 mt-2" />
         </button>
       </div>
 
-      {/* --- PAGE CONTENT --- */}
+      {/* --- ORIGINAL PAGE START (EXACTLY AS PROVIDED) --- */}
       <div className="animate-in fade-in duration-700">
         <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
               src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920" 
+              alt="Quantum Vision" 
               className="w-full h-full object-cover opacity-20 grayscale"
-              alt="Quantum Background"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900 to-slate-900"></div>
           </div>
@@ -186,7 +132,7 @@ const LandingPage: React.FC = () => {
               The Transcendent <span className="gradient-gold">Heroic Advisor</span>
             </h1>
             <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
-              Welcome to our Quantum Mind Mastery Course for advisors and their associates. Each lesson goes beyond theory to SHOW you exactly how to implement Quantum Mind solutions.
+              Welcome to our Quantum Mind Mastery Course for advisors and their associates. Each lesson goes beyond theory to SHOW you exactly how to implement Quantum Mind solutions, methods, and frameworks that make you naturally compelling and deeply trusted by high-net-worth individuals.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/purchase" className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center group">
@@ -196,36 +142,89 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Philosophy Section */}
         <section id="about" className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
               <p className="text-lg text-slate-600 leading-relaxed italic">
-                "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you."
+                "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as actually APPLYING the details directly with the inventor."
               </p>
             </div>
             
             <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
               <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
               <p className="text-slate-900 font-medium text-lg leading-relaxed">
-                Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with.
+                Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
+              </p>
+            </div>
+
+            <div className="max-w-3xl mx-auto">
+              <p className="text-xl text-slate-600 leading-relaxed font-medium">
+                Quantum thinking and doing elevate you into <span className="text-slate-900 font-bold uppercase tracking-tight">BEING</span> above and beyond the reach of the masses of ordinary advisors… who offer similar engagement, conversations, and solutions. There are no competitive advantages in being ordinary or similar to others.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SWAPPED VIDEO SECTION (Bottom) */}
+        <section className="py-24 bg-slate-900 text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+              <div className="flex flex-col justify-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps in Performance</h2>
+                <p className="text-slate-400 text-lg mb-6 leading-relaxed">
+                  This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
+                </p>
+                
+                <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
+                  The Transcendent Heroic Advisor Mastery Course provides an array of practical, well-proven thinking and behavioral shifts that help grow you into what people need, but don't know how to ask for… YET.
+                </p>
+
+                <p className="text-white font-bold text-lg mb-6 leading-relaxed">
+                  As you learn our methods, ways, and means by DOING them properly, you will:
+                </p>
+                
+                <div className="space-y-4">
+                  {[
+                    "Demonstrate how you are extraordinary, priceless, and irreplaceable.",
+                    "Become far more attractive to A-level referrals… without asking for them.",
+                    "Transcend fiduciary regulations in ways that matter most to clients.",
+                    "Consistently deliver dazzling multidimensional wisdom that your competitors do not offer… and cannot even imagine.",
+                    "Create an entire ecosystem of like-minded transcendent advisors that bring dynamic execution of details to clients. Helping YOU to bring clients into alignment with who, what, and where they would rather be now and next."
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-4">
+                      <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/30">
+                        <CheckCircle2 className="w-4 h-4 text-amber-500" />
+                      </div>
+                      <p className="text-slate-300 font-medium">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative min-h-[500px] lg:min-h-full">
+                <img 
+                  src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80&w=800" 
+                  alt="System Performance" 
+                  className="w-full h-full object-cover rounded-2xl shadow-2xl shadow-amber-500/5 border border-slate-800"
+                />
+                <div className="absolute -bottom-6 -left-6 bg-amber-500 p-6 rounded-2xl hidden md:block z-10">
+                  <p className="text-slate-900 font-bold text-xl leading-tight">Beyond Compliance.<br/>Into Transcendence.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
-              Experience the Introductory Principles
+              Experience the Introductory Principles by Doing them with Bruce
             </h2>
-            <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
               <iframe 
                 className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-30'}`}
-                src={`https://www.youtube.com/embed/WS1ccYNZJtU?si=gEKaMXAA_M8UQyvk&autoplay=${isVideoActive ? 1 : 0}`}
-                title="Introduction Video"
+                src={`https://www.youtube.com/embed/WS1ccYNZJtU?autoplay=${isVideoActive ? 1 : 0}&rel=0`}
+                title="Welcome Video"
                 allowFullScreen
               ></iframe>
               {!isVideoActive && (
@@ -235,6 +234,53 @@ const LandingPage: React.FC = () => {
                   </button>
                 </div>
               )}
+            </div>
+
+            <div className="max-w-4xl mx-auto text-left space-y-8">
+              <p className="text-slate-700 text-xl font-medium leading-relaxed">To demonstrate these ideas in action, you will receive immediate access to the following complimentary resources:</p>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center"><Gift className="w-6 h-6 text-amber-600" /></div>
+                  <p className="text-slate-600 text-lg">Free Download of <strong className="text-slate-900">“Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message”</strong></p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center"><Phone className="w-6 h-6 text-amber-600" /></div>
+                  <p className="text-slate-600 text-lg"><strong className="text-slate-900">Two highly confidential 45-minute calls with Bruce</strong> to create your emotionally and intellectually captivating “Ideal Introduction” and 30-second messages.</p>
+                </div>
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                  <p className="text-slate-900 font-bold text-lg mb-4 flex items-center gap-2"><PlayCircle className="w-5 h-5 text-amber-600" /> Plus, selected video lessons from "The Wright Exit Strategy; Wealth, How to Create It, Keep It, and Use It" including:</p>
+                  <ul className="space-y-3 pl-7">
+                    <li className="text-slate-600 list-disc">How to Create an Effective Ecosystem for Uncommon Results</li>
+                    <li className="text-slate-600 list-disc">Do Not Claim You Care, Show You Care</li>
+                    <li className="text-slate-600 list-disc">Using Quantum Mind to Achieve Exceptional Outcomes Unavailable Through Competitors</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="text-slate-600 text-lg leading-relaxed">These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.</p>
+              <p className="text-slate-900 text-xl font-bold border-l-4 border-amber-500 pl-4">Make your Quantum Leap ahead of competitors today before this course becomes available to advisors everywhere in the spring of 2026.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-24 bg-slate-50 border-t border-slate-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
+            <p className="text-xl text-slate-600 mb-10">
+              The Transcendent Heroic Advisor Mastery Course will be available to everyone in the Spring of 2026.
+              <br/><span className="font-bold text-amber-600 mt-2 block italic underline">Secure Early Riser pricing of $997.97 now.</span>
+            </p>
+            <div className="max-w-md mx-auto">
+                <Link to="/purchase" className="block w-full py-4 bg-slate-900 text-white font-bold rounded-full hover:bg-slate-800 transition-all shadow-lg active:scale-[0.98] text-center">Get Free Resources & Secure My Seat</Link>
+                <div className="space-y-6 pt-10">
+                  <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 text-left">
+                    <h4 className="text-slate-900 font-bold mb-2 flex items-center gap-2"><Calendar className="w-4 h-4 text-amber-600" /> Want to learn more?</h4>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                      To arrange a confidential “Due Diligence” call with Bruce Raymond Wright, click{' '}
+                      <a href="https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg" target="_blank" rel="noopener noreferrer" className="text-amber-600 font-bold underline">HERE</a>
+                    </p>
+                    <p className="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Zooms available beginning at 1:00 p.m. Pacific Mon - Fri</p>
+                  </div>
+                </div>
             </div>
           </div>
         </section>
