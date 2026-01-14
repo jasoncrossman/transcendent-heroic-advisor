@@ -154,28 +154,11 @@ const LandingPage: React.FC = () => {
             <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
               <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
               <p className="text-slate-900 font-medium text-lg leading-relaxed">
-                Success isn't about chasing clients; it's about aligning your internal frequency with the results you intend to create. We don't get what we desire—we get what we resonate with. To earn the loyalty of world-class leaders, you must become the caliber of person they can't afford to live without.
+                Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want, we get what we are aligned with. If you desire greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
               </p>
             </div>
 
-            {/* Philosophy Section */}
-        <section id="about" className="py-20 bg-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 font-serif">Mastery Through Doing</h2>
-              <p className="text-lg text-slate-600 leading-relaxed italic">
-                "We believe the best way to learn unique approaches to life and business is to have the inventor teach you by doing them with you. Teaching by telling isn’t as effective as actually APPLYING the details directly with the inventor."
-              </p>
-            </div>
-            
-            <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
-              <p className="text-slate-900 font-medium text-lg leading-relaxed">
-                Learn how to use Quantum Physics to achieve more of what you want. We don’t get what we want; we get what we are aligned with. If you desire a greater connection with the people you want as loyal clients, you must grow yourself into being what they need someone to be in their lives, that they lack right now.
-              </p>
-            </div>
-
-            {/* Widened container (max-w-5xl) with updated text */}
+            {/* UPDATED WIDTH HERE (max-w-5xl) */}
             <div className="max-w-5xl mx-auto">
               <p className="text-xl text-slate-600 leading-relaxed font-medium">
                 There are no competitive advantages in being ordinary or similar to others. Quantum thinking is essential. Transcendent Heroic Advisor teaches you to think beyond binary choices and conventional solutions. Where others see limitations, you will see infinite possibilities, giving you strategies that rise above competition <span className="text-slate-900 font-bold uppercase tracking-tight">ENTIRELY</span>.
@@ -190,7 +173,7 @@ const LandingPage: React.FC = () => {
               <div className="flex flex-col justify-center">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6 font-serif">Quantum Systems Produce Quantum Leaps in Performance</h2>
                 <p className="text-slate-400 text-lg mb-6 leading-relaxed">
-                  This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning, highly affluent people and ATTRACT them to become your loyal, long-term clients.          
+                  This mastery course teaches proven SYSTEMS, methods, ways, and means that optimize Quantum Thinking beyond Fiduciary Standards of Care above federal and state regulations. While many advisors struggle to COMPLY with government standards, we will SHOW YOU how to transcend them in ways that dazzle discerning highly affluent people and ATTRACT them to become your loyal long-term clients.          
                 </p>
                 
                 <p className="text-amber-400 font-semibold text-lg mb-2 leading-relaxed italic">
