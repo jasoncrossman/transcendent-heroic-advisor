@@ -96,14 +96,14 @@ const PurchasePage: React.FC = () => {
                       <span>Macro Strategic Planning® Your Life and Business (workbook)</span>
                     </li>
                     
-                    {/* Highlighted Video Course Item with updated spacing and language */}
+                    {/* Highlighted Video Course Item with updated language */}
                     <li className="mt-10 p-6 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
                       <div className="flex items-start gap-4">
                         <div className="bg-amber-500 p-2 rounded-lg shrink-0">
                           <PlayCircle className="w-6 h-6 text-slate-900" />
                         </div>
                         <div>
-                          <h5 className="text-amber-500 font-bold text-base mb-2 italic underline decoration-amber-500/30 underline-offset-4">Priority Early Access Benefit:</h5>
+                          <h5 className="text-amber-500 font-bold text-base mb-2 italic underline decoration-amber-500/30 underline-offset-4">Early Access to our Feb 15th Launch:</h5>
                           <p className="text-white font-bold leading-tight mb-3 text-base">
                             Receive our 2-hour "Magnetic 30-Second Message" course one week before the official February 15th launch.
                           </p>
