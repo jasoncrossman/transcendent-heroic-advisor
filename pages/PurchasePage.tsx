@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, CreditCard, ChevronLeft, ArrowRight, Star, Zap } from 'lucide-react';
+import { ShieldCheck, CreditCard, ChevronLeft, ArrowRight, Star } from 'lucide-react';
 
 const PurchasePage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,6 +11,7 @@ const PurchasePage: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
 
+    // This payload is optimized for Zapier Catch Hooks
     const payload = {
       email: email.trim(),
       full_name: fullName.trim(),
@@ -18,22 +19,24 @@ const PurchasePage: React.FC = () => {
     };
 
     try {
+      // Sending to your verified Zapier Hook
       await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
         method: "POST",
-        // @ts-ignore
-        mode: "no-cors",
+        mode: "no-cors", // Prevents CORS preflight issues with Zapier
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
+      // Brief delay to ensure the request is dispatched before redirect
       setTimeout(() => {
         window.location.assign("https://zippi.link/exitstrategy");
       }, 100);
       
     } catch (error) {
       console.error("Submission error:", error);
+      // Fallback redirect
       window.location.assign("https://zippi.link/exitstrategy");
     }
   };
@@ -69,28 +72,16 @@ const PurchasePage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* --- 30-SECOND MESSAGE FEATURED ITEM --- */}
-                <div className="bg-slate-900 rounded-2xl p-6 text-white relative overflow-hidden border border-amber-500/30">
-                  <div className="flex items-start gap-4 relative z-10">
-                    <div className="bg-amber-500 p-2 rounded-lg shrink-0">
-                      <Zap className="w-5 h-5 text-slate-900" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-amber-500 uppercase text-xs tracking-widest mb-1">Exclusive Masterclass Included</h4>
-                      <p className="font-serif text-lg leading-tight mb-2">Ten Steps to Creating Your Dynamic and Magnetic 30-Second Marketing Message</p>
-                      <p className="text-slate-400 text-sm leading-relaxed">
-                        A guided strategic transformation and deep-dive video session with Bruce Raymond Wright.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="space-y-4 pt-4">
-                  <h4 className="font-bold text-slate-900">Your Enrollment Also Includes:</h4>
+                  <h4 className="font-bold text-slate-900">Your Enrollment Includes:</h4>
                   <ul className="space-y-3 text-sm text-slate-600">
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                       <span>2x Confidential 45min Calls with Bruce</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                      <span>30-Sec Marketing Message Book</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
@@ -102,7 +93,7 @@ const PurchasePage: React.FC = () => {
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Access to the Transcendent Heroic Advisor Cohort (Spring 2026)</span>
+                      <span>Access to the Transcendent Heroic Advisor Cohort (Late Jan 2026)</span>
                     </li>
                   </ul>
                 </div>
