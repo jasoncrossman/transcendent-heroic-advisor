@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// Added Share to imports
 import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar, X, Zap, ChevronLeft, Share } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const [isVideoActive, setIsVideoActive] = useState(false);
 
-  // --- QUANTUM VIDEO SUITE LOGIC (ADDITIONS) ---
+  // --- QUANTUM VIDEO SUITE LOGIC ---
   const [showPulse, setShowPulse] = useState(true); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDocked, setIsDocked] = useState(false); 
@@ -33,26 +32,26 @@ const LandingPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // Phase 1: The Pulse
     const timer = setTimeout(() => {
       setShowPulse(false);
-      setIsModalOpen(true); // Phase 2: The Play
+      setIsModalOpen(true);
     }, 2800);
     return () => clearTimeout(timer);
   }, []);
 
+  // Updated handlers to trigger simultaneous animation
   const handleCloseVideo = () => {
     setIsModalOpen(false);
-    setIsDocked(true); // Phase 3: The Hide/Dock
+    setIsDocked(true);
   };
 
   const handleRestoreVideo = () => {
     setIsDocked(false);
-    setIsModalOpen(true); // Phase 4: The Return
+    setIsModalOpen(true);
   };
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
 
       {/* --- GOLDEN SHARE ARROW (TOP RIGHT) --- */}
       <div className="fixed top-6 right-6 z-[100] flex flex-col items-center gap-1 group">
@@ -82,43 +81,48 @@ const LandingPage: React.FC = () => {
       )}
 
       {/* --- PHASE 2: FLOATING VIDEO POPUP --- */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-900/95 backdrop-blur-sm" onClick={handleCloseVideo}></div>
-          <div className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-amber-500/20 animate-in zoom-in duration-300">
-            <button 
-              onClick={handleCloseVideo}
-              className="absolute top-4 right-4 z-20 p-2 bg-amber-500 text-slate-900 rounded-full hover:scale-110 transition-transform"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <iframe 
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/WS1ccYNZJtU?autoplay=1&rel=0"
-              title="Quantum Lesson"
-              allow="autoplay; fullscreen"
-            ></iframe>
-          </div>
+      {/* Container persists to allow the children to animate out cleanly */}
+      <div className={`fixed inset-0 z-[150] flex items-center justify-center p-4 pointer-events-none transition-all duration-700 ${isModalOpen ? 'bg-slate-900/95 backdrop-blur-sm' : 'bg-transparent backdrop-blur-none'}`}>
+        <div 
+          className={`relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl border border-amber-500/20 pointer-events-auto transition-all duration-700 ease-in-out
+            ${isModalOpen 
+              ? 'translate-x-0 opacity-100 scale-100' 
+              : 'translate-x-[120%] opacity-0 scale-95'}`}
+        >
+          <button 
+            onClick={handleCloseVideo}
+            className="absolute top-4 right-4 z-20 p-2 bg-amber-500 text-slate-900 rounded-full hover:scale-110 transition-transform"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <iframe 
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&autoplay=${isModalOpen ? 1 : 0}`}
+            title="The Transcendent Heroic Advisor"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
         </div>
-      )}
+      </div>
 
       {/* --- PHASE 3 & 4: GOLD DOCK TAB --- */}
-      {isDocked && (
-        <button 
-          onClick={handleRestoreVideo}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-[140] bg-amber-500 hover:bg-amber-400 text-slate-900 py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] transition-all group animate-in slide-in-from-right"
-        >
-          <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
-            Quantum Lesson
-          </span>
-          <PlayCircle className="w-5 h-5 mt-2" />
-        </button>
-      )}
+      <button 
+        onClick={handleRestoreVideo}
+        className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] bg-amber-500 hover:bg-amber-400 text-slate-900 py-10 px-3 rounded-l-2xl font-bold flex flex-col items-center gap-3 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] transition-all duration-700 ease-in-out group
+          ${isDocked && !isModalOpen 
+            ? 'translate-x-0 opacity-100' 
+            : 'translate-x-full opacity-0'}`}
+      >
+        <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+        <span className="[writing-mode:vertical-lr] tracking-widest uppercase text-[10px] font-black">
+          Quantum Lesson
+        </span>
+        <PlayCircle className="w-5 h-5 mt-2" />
+      </button>
 
       {/* --- ORIGINAL CODE START (UNTOUCHED) --- */}
       <div className="animate-in fade-in duration-700">
-        {/* Hero Section */}
         <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
@@ -147,7 +151,6 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Philosophy Section */}
         <section id="about" className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="mb-12">
@@ -172,7 +175,6 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Systems Section */}
         <section className="py-24 bg-slate-900 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
@@ -222,7 +224,6 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Video Section with Glass Overlay */}
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
@@ -231,7 +232,7 @@ const LandingPage: React.FC = () => {
             <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
               <iframe 
                 className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-30'}`}
-                src={`https://www.youtube.com/embed/WS1ccYNZJtU?autoplay=${isVideoActive ? 1 : 0}&rel=0`}
+                src={`https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&autoplay=${isVideoActive ? 1 : 0}`}
                 title="Welcome Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
@@ -251,7 +252,6 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Reserve Place CTA Section */}
         <section className="py-24 bg-slate-50 border-t border-slate-200">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 font-serif">Reserve Your Place</h2>
