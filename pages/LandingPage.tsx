@@ -10,7 +10,6 @@ const LandingPage: React.FC = () => {
   const [showPulse, setShowPulse] = useState(true); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isDocked, setIsDocked] = useState(false); 
-  // NEW: Track if the user has clicked the poster to start the floating video
   const [hasStartedFloatingVideo, setHasStartedFloatingVideo] = useState(false);
   
   // Track video progress (in seconds)
@@ -54,7 +53,6 @@ const LandingPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  // NEW: Handle permanent dismissal of the dock
   const handlePermanentDismiss = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsDocked(false);
@@ -112,7 +110,7 @@ const LandingPage: React.FC = () => {
             <X className="w-5 h-5 md:w-6 md:h-6" />
           </button>
           
-          {/* HEROIC POSTER COVER: Only shows if video hasn't been started */}
+          {/* HEROIC POSTER COVER */}
           {!hasStartedFloatingVideo ? (
             <div 
               className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-slate-900/90 cursor-pointer group"
@@ -131,7 +129,6 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
           ) : (
-            /* IFRAME RENDERS ONLY AFTER POSTER CLICK */
             isModalOpen && (
               <iframe 
                 className="w-full h-full" 
@@ -150,7 +147,6 @@ const LandingPage: React.FC = () => {
       <div className={`fixed right-0 top-1/2 -translate-y-1/2 z-[140] flex items-start transition-all duration-700 ease-in-out
           ${isDocked && !isModalOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0 pointer-events-none'}`}>
         
-        {/* SMALL DISMISS BUTTON */}
         <button 
           onClick={handlePermanentDismiss}
           className="bg-slate-900 text-amber-500 p-1.5 rounded-full -mr-3 -mt-3 relative z-10 border border-amber-500/40 shadow-xl hover:bg-amber-500 hover:text-slate-900 transition-all active:scale-75"
@@ -170,7 +166,7 @@ const LandingPage: React.FC = () => {
         </button>
       </div>
 
-      {/* --- ORIGINAL CODE START (UNTOUCHED SECTIONS) --- */}
+      {/* --- PAGE CONTENT --- */}
       <div className="animate-in fade-in duration-700">
         <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 z-0">
@@ -219,7 +215,7 @@ const LandingPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Video Section (LEAVING UNTOUCHED) */}
+        {/* SWAPPED VIDEO SECTION (Bottom) */}
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 font-serif">
@@ -228,7 +224,7 @@ const LandingPage: React.FC = () => {
             <div className="relative aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl">
               <iframe 
                 className={`w-full h-full transition-opacity duration-700 ${isVideoActive ? 'opacity-100' : 'opacity-30'}`}
-                src={`https://www.youtube.com/embed/9mxOlmaUyXA?si=_8yRGElGNOU_6Asc&autoplay=${isVideoActive ? 1 : 0}`}
+                src={`https://www.youtube.com/embed/WS1ccYNZJtU?si=gEKaMXAA_M8UQyvk&autoplay=${isVideoActive ? 1 : 0}`}
                 title="Introduction Video"
                 allowFullScreen
               ></iframe>
