@@ -96,8 +96,8 @@ const PurchasePage: React.FC = () => {
                       <span>Macro Strategic Planning® Your Life and Business (workbook)</span>
                     </li>
                     
-                    {/* Highlighted Video Course Item with updated language */}
-                    <li className="mt-10 p-6 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
+                    {/* Highlighted Video Course Item with doubled top margin (mt-20) */}
+                    <li className="mt-20 p-6 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
                       <div className="flex items-start gap-4">
                         <div className="bg-amber-500 p-2 rounded-lg shrink-0">
                           <PlayCircle className="w-6 h-6 text-slate-900" />
