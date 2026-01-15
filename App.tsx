@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import PurchasePage from './pages/PurchasePage';
-import FreeResourcesPage from './pages/FreeResourcesPage';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import LandingPage from './pages/LandingPage.tsx';
+import PurchasePage from './pages/PurchasePage.tsx';
+import FreeResourcesPage from './pages/FreeResourcesPage.tsx';
+import Header from './components/Header.tsx';
+import Footer from './components/Footer.tsx';
 
 const App: React.FC = () => {
   return (
