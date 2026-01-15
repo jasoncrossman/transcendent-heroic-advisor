@@ -1,26 +1,16 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import PurchasePage from './pages/PurchasePage';
-import FreeResources from './pages/FreeResourcesPage';
-import AcademyPage from './pages/AcademyPage';
 
+// We are intentionally NOT importing the pages yet to isolate the crash
 const rootElement = document.getElementById('root');
+
 if (rootElement) {
   const root = createRoot(rootElement);
   root.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <Routes>
-          {/* We are pointing "/" directly to the LandingPage file */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/purchase" element={<PurchasePage />} />
-          <Route path="/freeresources" element={<FreeResources />} />
-          <Route path="/academy" element={<AcademyPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </React.StrictMode>
+    <div style={{ padding: '50px', fontFamily: 'sans-serif', textAlign: 'center' }}>
+      <h1>System Check: ONLINE</h1>
+      <p>If you can see this, the website wiring is perfect.</p>
+      <p>The crash is happening inside one of the Page files.</p>
+    </div>
   );
 }
