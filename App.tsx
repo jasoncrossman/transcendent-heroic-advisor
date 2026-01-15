@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage.tsx';
 import PurchasePage from './pages/PurchasePage.tsx';
 import FreeResourcesPage from './pages/FreeResourcesPage.tsx';
+import AcademyPage from './pages/AcademyPage.tsx'; // ADDED
 import Header from './components/Header.tsx';
 import Footer from './components/Footer.tsx';
 
@@ -16,6 +17,7 @@ const App: React.FC = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/purchase" element={<PurchasePage />} />
             <Route path="/free-resources" element={<FreeResourcesPage />} />
+            <Route path="/academy" element={<AcademyPage />} /> {/* ADDED */}
           </Routes>
         </main>
         <Footer />
