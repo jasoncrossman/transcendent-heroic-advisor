@@ -40,7 +40,7 @@ const AcademyPage: React.FC = () => {
       <main className="max-w-7xl mx-auto py-12 px-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* LEFT SIDE: MEMBERSPACE CONTENT */}
+          {/* LEFT SIDE: MEMBERSPACE CONTENT DOCK */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 min-h-[500px] flex flex-col">
               <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-100">
@@ -48,7 +48,8 @@ const AcademyPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-slate-900 font-serif">Your Curriculum</h2>
               </div>
               
-              <div className="flex-grow flex flex-col items-center justify-center text-center py-20">
+              {/* This specific ID tells MemberSpace where to inject your videos */}
+              <div id="ms-content-library" className="flex-grow flex flex-col items-center justify-center text-center py-20">
                 <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
                   <Shield className="w-8 h-8 text-slate-200" />
                 </div>
