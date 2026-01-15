@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
 import PurchasePage from './pages/PurchasePage';
-import FreeResources from './pages/FreeResources';
+import FreeResources from './pages/FreeResourcesPage'; // Matches your folder exactly
 import AcademyPage from './pages/AcademyPage';
 
 const rootElement = document.getElementById('root');
