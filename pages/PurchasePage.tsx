@@ -5,10 +5,9 @@ import { ShieldCheck, ChevronLeft, Star, PlayCircle } from 'lucide-react';
 const PurchasePage: React.FC = () => {
   const navigate = useNavigate();
 
-  // THE LISTENER: Detects Stripe success and moves the user immediately
+  // Redirect to Congratulations page immediately upon Stripe success
   useEffect(() => {
     if (window.location.href.includes('payment_success=true')) {
-      // No pop-up here anymore. We send them straight to the onboarding flow.
       navigate('/congratulations?payment_success=true');
     }
   }, [navigate]);
@@ -21,7 +20,6 @@ const PurchasePage: React.FC = () => {
         </Link>
         
         <div className="flex flex-col lg:flex-row gap-16">
-          {/* CONTENT COLUMN */}
           <div className="lg:w-7/12 space-y-10">
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
               <h1 className="text-4xl font-bold text-slate-900 mb-8 font-serif leading-tight">Secure Your Place in the Mastery Course</h1>
@@ -69,7 +67,6 @@ const PurchasePage: React.FC = () => {
             </div>
           </div>
 
-          {/* STRIPE COLUMN */}
           <div className="lg:w-5/12">
             <div className="bg-white p-2 rounded-[2.5rem] shadow-2xl border border-slate-100 sticky top-12 overflow-hidden">
                <div className="p-6 text-center border-b border-slate-50">
