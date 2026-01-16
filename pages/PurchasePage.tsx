@@ -7,14 +7,10 @@ const PurchasePage: React.FC = () => {
   const [shippingAddress, setShippingAddress] = useState('');
   const [isSubmittingAddress, setIsSubmittingAddress] = useState(false);
 
-  // 1. Detect the Stripe Redirect to show the "Signed Book" Modal
+  // --- TRIPLE-CHECKED TRIGGER ---
   useEffect(() => {
-    // This checks both the standard URL and the "Hash" part of the URL 
-    // to ensure HashRouter doesn't hide the success flag.
-    const searchParams = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams(window.location.hash.split('?')[1]);
-    
-    if (searchParams.get('payment_success') === 'true' || hashParams.get('payment_success') === 'true') {
+    // This looks at the raw URL string to catch the flag regardless of HashRouter behavior
+    if (window.location.href.includes('payment_success=true')) {
       setShowSuccessModal(true);
     }
   }, []);
@@ -31,21 +27,19 @@ const PurchasePage: React.FC = () => {
     };
 
     try {
-      // Send shipping info to your Zapier hook
       await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
         method: "POST",
         mode: "no-cors",
         body: JSON.stringify(payload),
       });
 
-      // Redirect to the internal Congratulations Page after 1.5s
+      // Redirect to the internal hash route
       setTimeout(() => {
         window.location.assign("/#/congratulations");
       }, 1500);
       
     } catch (error) {
       console.error("Error saving address:", error);
-      // Ensure user moves to onboarding even if the Zapier hook fails
       window.location.assign("/#/congratulations");
     }
   };
@@ -53,7 +47,7 @@ const PurchasePage: React.FC = () => {
   return (
     <div className="bg-slate-50 min-h-screen py-16 animate-in fade-in duration-700">
       
-      {/* SHIPPING ADDRESS MODAL (Triggered by ?payment_success=true) */}
+      {/* SHIPPING ADDRESS MODAL */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
           <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-300">
@@ -91,11 +85,9 @@ const PurchasePage: React.FC = () => {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* LEFT: COURSE DETAILS */}
           <div className="lg:col-span-7 space-y-10">
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
               <h1 className="text-4xl font-bold text-slate-900 mb-8 font-serif leading-tight">Secure Your Place in the Mastery Course</h1>
-              
               <div className="space-y-8">
                 <div className="flex justify-between items-start pb-8 border-b border-slate-100">
                   <div className="flex gap-5">
@@ -123,13 +115,12 @@ const PurchasePage: React.FC = () => {
                     </li>
                     <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
                       <ShieldCheck className="w-6 h-6 text-[#F59E0B] shrink-0" />
-                      <span className="text-sm font-medium">(4) Free Lessons From The Best Selling The Wright Exit Strategy; Wealth - How to Create It, Keep It, and Use It Advisory Training</span>
+                      <span className="text-sm font-medium">(4) Free Lessons From The Wright Exit Strategy; Wealth Training</span>
                     </li>
                     <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
                       <ShieldCheck className="w-6 h-6 text-[#F59E0B] shrink-0" />
                       <span className="text-sm font-medium">Macro Strategic Planning® Your Life and Business (workbook)</span>
                     </li>
-                    
                     <li className="mt-8 p-8 bg-slate-900 rounded-[2rem] border-2 border-[#F59E0B] shadow-2xl relative overflow-hidden group">
                       <div className="relative z-10 flex items-start gap-6">
                         <div className="bg-[#F59E0B] p-3 rounded-xl shrink-0 shadow-lg shadow-[#F59E0B]/20">
@@ -137,12 +128,8 @@ const PurchasePage: React.FC = () => {
                         </div>
                         <div>
                           <h5 className="text-[#F59E0B] font-bold text-lg mb-2 italic underline underline-offset-8 decoration-[#F59E0B]/30">Early Access to our Feb 15th Launch:</h5>
-                          <p className="text-white font-bold leading-snug mb-4 text-lg">
-                            Receive our 2-hour "Magnetic 30-Second Message" course one week before the official February 15th launch.
-                          </p>
-                          <p className="text-slate-300 text-sm leading-relaxed font-medium">
-                            Learn how to clearly communicate your true value in a way that attracts higher-quality clients and positions you as the obvious choice—without sounding salesy.
-                          </p>
+                          <p className="text-white font-bold leading-snug mb-4 text-lg">Receive our 2-hour "Magnetic 30-Second Message" course one week before the launch.</p>
+                          <p className="text-slate-300 text-sm leading-relaxed font-medium">Learn how to clearly communicate your true value without sounding salesy.</p>
                         </div>
                       </div>
                     </li>
@@ -152,27 +139,17 @@ const PurchasePage: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT: STRIPE EMBED */}
           <div className="lg:col-span-5">
             <div className="bg-white p-2 rounded-[2.5rem] shadow-2xl shadow-slate-200 border border-slate-100 sticky top-12 overflow-hidden">
                <div className="p-6 text-center border-b border-slate-50">
                   <h2 className="text-xl font-bold text-slate-900 font-serif">Secure Enrollment</h2>
                </div>
-               
                <div className="min-h-[650px] bg-white">
                 {/* @ts-ignore */}
-                <stripe-pricing-table 
-                  pricing-table-id="prctbl_1Sq3zc4qZAoEhXfslOVzOlXK"
-                  publishable-key="pk_live_4QZHow0uzfALujwLcvSBXSPK"
-                >
-                {/* @ts-ignore */}
-                </stripe-pricing-table>
+                <stripe-pricing-table pricing-table-id="prctbl_1Sq3zc4qZAoEhXfslOVzOlXK" publishable-key="pk_live_4QZHow0uzfALujwLcvSBXSPK" />
                </div>
-
                <div className="p-6 bg-slate-50/50">
-                  <p className="text-center text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black">
-                    🔒 Certified Secure 256-Bit Connection
-                  </p>
+                  <p className="text-center text-[10px] text-slate-400 uppercase tracking-[0.2em] font-black">🔒 Certified Secure 256-Bit Connection</p>
                </div>
             </div>
           </div>
