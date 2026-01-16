@@ -6,42 +6,23 @@ const PurchasePage: React.FC = () => {
   const navigate = useNavigate();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [shippingAddress, setShippingAddress] = useState('');
-  const [isSubmittingAddress, setIsSubmittingAddress] = useState(false);
 
+  // Detect Stripe Success Parameter
   useEffect(() => {
     if (window.location.href.includes('payment_success=true')) {
       setShowSuccessModal(true);
-      const killGhosts = () => {
-        const selectors = ['.ms-widget', '#memberspace-widget', '.ms-modal-container', '.ms-overlay'];
-        selectors.forEach(s => {
-          document.querySelectorAll(s).forEach(el => (el as HTMLElement).style.display = 'none');
-        });
-      };
-      killGhosts();
-      const obs = new MutationObserver(killGhosts);
-      obs.observe(document.body, { childList: true, subtree: true });
-      return () => obs.disconnect();
     }
   }, []);
 
-  const handleShippingSubmit = async (e: React.FormEvent) => {
+  const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmittingAddress(true);
-    try {
-      await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({ shipping_address: shippingAddress.trim(), type: "Signed Book Request" }),
-      });
-      // Navigate to congrats and pass the success flag so the congrats page knows it's a new buyer
-      navigate('/congratulations?payment_success=true');
-    } catch (error) {
-      navigate('/congratulations?payment_success=true');
-    }
+    // Pure navigation: No Zapier, no MemberSpace redirects.
+    navigate('/congratulations?payment_success=true');
   };
 
   return (
     <div className="bg-slate-50 min-h-screen py-16">
+      {/* SHIPPING MODAL */}
       {showSuccessModal && (
         <div className="fixed inset-0 bg-[#0f172a]/95 backdrop-blur-md z-[100000] flex items-center justify-center p-4">
           <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-300">
@@ -53,9 +34,19 @@ const PurchasePage: React.FC = () => {
               Bruce would like to mail you a <strong>signed copy</strong> of <span className="italic">The Wright Exit Strategy</span>. Where should he send it?
             </p>
             <form onSubmit={handleShippingSubmit} className="space-y-4">
-              <textarea required className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50" placeholder="Full Shipping Address..." rows={3} value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} />
-              <button type="submit" disabled={isSubmittingAddress} className="w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-lg">
-                {isSubmittingAddress ? 'Saving...' : 'Claim My Signed Book'}
+              <textarea 
+                required 
+                className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-[#F59E0B]" 
+                placeholder="Full Shipping Address..." 
+                rows={3} 
+                value={shippingAddress} 
+                onChange={(e) => setShippingAddress(e.target.value)} 
+              />
+              <button 
+                type="submit" 
+                className="w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-lg"
+              >
+                Claim My Signed Book
               </button>
             </form>
           </div>
@@ -66,7 +57,9 @@ const PurchasePage: React.FC = () => {
         <Link to="/" className="inline-flex items-center text-slate-500 hover:text-slate-900 mb-10 font-medium group">
           <ChevronLeft className="mr-1 w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Details
         </Link>
+        
         <div className="flex flex-col lg:flex-row gap-16">
+          {/* CONTENT COLUMN */}
           <div className="lg:w-7/12 space-y-10">
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
               <h1 className="text-4xl font-bold text-slate-900 mb-8 font-serif leading-tight">Secure Your Place in the Mastery Course</h1>
@@ -111,6 +104,8 @@ const PurchasePage: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* STRIPE COLUMN */}
           <div className="lg:w-5/12">
             <div className="bg-white p-2 rounded-[2.5rem] shadow-2xl border border-slate-100 sticky top-12 overflow-hidden">
                <div className="p-6 text-center border-b border-slate-50">
