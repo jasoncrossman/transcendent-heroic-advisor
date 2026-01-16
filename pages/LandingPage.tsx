@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar, X, Zap, ChevronLeft, Share } from 'lucide-react';
+import { ChevronRight, CheckCircle2, Mail, Gift, Phone, PlayCircle, Calendar, X, Zap, ChevronLeft, Share, ExternalLink } from 'lucide-react';
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -31,12 +31,24 @@ const LandingPage: React.FC = () => {
     }
   };
 
+  // UPDATED: Logic to prevent video from re-triggering on return
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const hasSeenVideo = sessionStorage.getItem('hasSeenHeroicVideo');
+
+    if (hasSeenVideo) {
+      // If they've seen it this session, skip the pulse and modal
       setShowPulse(false);
-      setIsModalOpen(true);
-    }, 2800);
-    return () => clearTimeout(timer);
+      setIsModalOpen(false);
+      setIsDocked(true); // Keep it docked/available but hidden
+    } else {
+      // First time visit this session
+      const timer = setTimeout(() => {
+        setShowPulse(false);
+        setIsModalOpen(true);
+        sessionStorage.setItem('hasSeenHeroicVideo', 'true');
+      }, 2800);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const handleCloseVideo = () => {
@@ -112,7 +124,7 @@ const LandingPage: React.FC = () => {
         </button>
       </div>
 
-      {/* --- ORIGINAL PAGE START --- */}
+      {/* --- PAGE CONTENT --- */}
       <div className="animate-in fade-in duration-700">
         <section className="relative bg-slate-900 py-24 lg:py-32 overflow-hidden">
           <div className="absolute inset-0 z-0">
@@ -158,7 +170,6 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
 
-            {/* UPDATED WIDTH HERE (max-w-5xl) */}
             <div className="max-w-5xl mx-auto">
               <p className="text-xl text-slate-600 leading-relaxed font-medium">
                 There are no competitive advantages in being ordinary or similar to others. Quantum thinking is essential. Transcendent Heroic Advisor teaches you to think beyond binary choices and conventional solutions. Where others see limitations, you will see infinite possibilities, giving you strategies that rise above competition <span className="text-slate-900 font-bold uppercase tracking-tight">ENTIRELY</span>.
@@ -248,15 +259,31 @@ const LandingPage: React.FC = () => {
                   <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center"><Phone className="w-6 h-6 text-amber-600" /></div>
                   <p className="text-slate-600 text-lg"><strong className="text-slate-900">Two highly confidential 45-minute calls with Bruce</strong> to create your emotionally and intellectually captivating “Ideal Introduction” and 30-second messages.</p>
                 </div>
+                
                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                  <p className="text-slate-900 font-bold text-lg mb-4 flex items-center gap-2"><PlayCircle className="w-5 h-5 text-amber-600" /> Plus, selected video lessons from "The Wright Exit Strategy; Wealth, How to Create It, Keep It, and Use It" including:</p>
-                  <ul className="space-y-3 pl-7">
+                  <p className="text-slate-900 font-bold text-lg mb-4 flex items-center gap-2">
+                    <PlayCircle className="w-5 h-5 text-amber-600" /> 
+                    Plus, selected video lessons from "The Wright Exit Strategy; Wealth, How to Create It, Keep It, and Use It" including:
+                  </p>
+                  <ul className="space-y-3 pl-7 mb-6">
                     <li className="text-slate-600 list-disc">How to Create an Effective Ecosystem for Uncommon Results</li>
                     <li className="text-slate-600 list-disc">Do Not Claim You Care, Show You Care</li>
                     <li className="text-slate-600 list-disc">Using Quantum Mind to Achieve Exceptional Outcomes Unavailable Through Competitors</li>
                   </ul>
+                  
+                  <div className="pl-7 pt-2 border-t border-slate-200/60">
+                    <p className="text-slate-600 text-sm">
+                      Available on our <Link 
+                        to="/free-resources" 
+                        className="text-amber-600 font-bold hover:text-amber-700 underline transition-colors inline-flex items-center gap-1"
+                      >
+                        Free Resources page <ExternalLink className="w-3 h-3" />
+                      </Link>
+                    </p>
+                  </div>
                 </div>
               </div>
+              
               <p className="text-slate-600 text-lg leading-relaxed">These lessons are a direct demonstration of the Quantum Thinking and ways of doing and BEING that deliver the Transcendent Heroic Advisor framework.</p>
               <p className="text-slate-900 text-xl font-bold border-l-4 border-amber-500 pl-4">Make your Quantum Leap ahead of competitors today before this course becomes available to advisors everywhere in the spring of 2026.</p>
             </div>
