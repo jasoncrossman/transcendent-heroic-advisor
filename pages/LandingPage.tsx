@@ -166,7 +166,7 @@ const LandingPage: React.FC = () => {
             <div className="bg-amber-500 p-8 md:p-12 rounded-3xl border border-amber-600 shadow-2xl text-left transform hover:scale-[1.01] transition-all duration-300 mb-12">
               <h3 className="text-2xl font-bold text-slate-900 mb-6 font-serif">Quantum Alignment</h3>
               <p className="text-slate-900 font-medium text-lg leading-relaxed">
-              Success isn't about chasing clients; it's about aligning your internal frequency with the results you intend to create. We don't get what we desire—we get what we resonate with. To earn the loyalty of world-class leaders, you must become the caliber of person they can't afford to live without.  
+              Success isn't about chasing clients; it's about aligning your internal frequency with the results you intend to create. To earn the loyalty of world-class leaders, you must become the caliber of person they can't afford to live without.  
               </p>
             </div>
 
