@@ -1,153 +1,91 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, Calendar, Mail, Truck, Share2, X, ArrowRight } from 'lucide-react';
-import { PopupModal } from "react-calendly";
+import { CheckCircle2, Truck, Share2, Mail, ArrowRight, Gift } from 'lucide-react';
 
 const CongratulationsPage: React.FC = () => {
   const navigate = useNavigate();
-  
-  // Funnel State Management
-  const [funnelStep, setFunnelStep] = useState<'welcome' | 'calendly' | 'shipping' | 'share' | 'complete'>('welcome');
+  const [funnelStep, setFunnelStep] = useState<'welcome' | 'shipping' | 'share' | 'complete'>('welcome');
   const [shippingData, setShippingData] = useState({ name: '', address: '' });
   const [shareEmail, setShareEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // 1. Calendly Toggle
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
-
-  const handleNextFromWelcome = () => {
-    setFunnelStep('calendly');
-    setIsCalendlyOpen(true);
-  };
-
-  // This handles both Booking or Closing the Calendly modal
-  const proceedToShipping = () => {
-    setIsCalendlyOpen(false);
+  const handleContinue = () => {
+    window.open("https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg", "_blank");
     setFunnelStep('shipping');
   };
 
   const handleShippingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Send to your Zapier hook (Same as your PurchasePage logic)
     try {
       await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
         method: "POST",
         mode: "no-cors",
-        body: JSON.stringify({ ...shippingData, type: "Signed Book & Course Entry" }),
+        body: JSON.stringify({ ...shippingData, type: "Signed Book Request" }),
       });
     } catch (err) { console.error(err); }
-    
     setIsSubmitting(false);
     setFunnelStep('share');
   };
 
   const handleFinalRedirect = () => {
     setFunnelStep('complete');
-    setTimeout(() => {
-      navigate('/'); // Back to Landing Page
-    }, 2000);
+    setTimeout(() => navigate('/'), 2000);
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-16 px-4 font-sans">
+    <div className="bg-slate-50 min-h-screen py-16 px-4">
       <div className="max-w-3xl mx-auto">
-        
-        {/* --- STEP 1: WELCOME SCREEN --- */}
         {funnelStep === 'welcome' && (
-          <div className="bg-white rounded-[3rem] p-12 shadow-2xl border border-slate-100 text-center animate-in fade-in zoom-in duration-500">
-            <div className="w-20 h-20 bg-amber-50 rounded-2xl flex items-center justify-center mb-8 mx-auto">
-              <CheckCircle2 className="w-10 h-10 text-[#F59E0B]" />
-            </div>
+          <div className="bg-white rounded-[3rem] p-12 shadow-2xl border border-slate-100 text-center">
+            <CheckCircle2 className="w-16 h-16 text-amber-500 mx-auto mb-6" />
             <h1 className="text-4xl font-bold text-slate-900 mb-6 font-serif">Welcome, Heroic Advisor</h1>
-            <p className="text-slate-600 text-lg mb-10 leading-relaxed">
-              You’ve officially secured your place in our February 15th cohort. 
-              Bruce is honored to have you with us.
-            </p>
-            <button 
-              onClick={handleNextFromWelcome}
-              className="w-full py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2"
-            >
+            <p className="text-slate-600 text-lg mb-10">I’ll be personally signing and mailing your copy of The Wright Exit Strategy this week. Let's get your onboarding started.</p>
+            <button onClick={handleContinue} className="w-full py-5 bg-slate-900 text-white font-bold rounded-2xl flex items-center justify-center gap-3">
               Continue to Onboarding <ArrowRight className="w-5 h-5" />
             </button>
           </div>
         )}
 
-        {/* --- STEP 2: CALENDLY POPUP --- */}
-        <PopupModal
-          url="https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg"
-          onModalClose={proceedToShipping}
-          open={isCalendlyOpen}
-          rootElement={document.getElementById("root")!}
-        />
-
-        {/* --- STEP 3: SHIPPING MODAL --- */}
         {funnelStep === 'shipping' && (
           <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
-            <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl animate-in fade-in scale-95 duration-300">
-              <div className="w-16 h-16 bg-amber-50 rounded-xl flex items-center justify-center mb-6">
-                <Truck className="w-8 h-8 text-[#F59E0B]" />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2 font-serif">Claim Your Signed Book</h2>
-              <p className="text-slate-600 mb-6 text-sm">
-                Bruce would like to mail you a signed copy of <strong>The Wright Exit Strategy</strong>. Enter your details below.
-              </p>
+            <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl">
+              <Gift className="w-12 h-12 text-amber-500 mb-4" />
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Shipping Details</h2>
+              <p className="text-slate-600 mb-6 text-sm">Where should Bruce send your signed copy of the book?</p>
               <form onSubmit={handleShippingSubmit} className="space-y-4">
-                <input 
-                  type="text" placeholder="Your Full Name" required
-                  className="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-[#F59E0B]"
-                  value={shippingData.name} onChange={(e) => setShippingData({...shippingData, name: e.target.value})}
-                />
-                <textarea 
-                  placeholder="Full Mailing Address..." required rows={3}
-                  className="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-[#F59E0B]"
-                  value={shippingData.address} onChange={(e) => setShippingData({...shippingData, address: e.target.value})}
-                />
-                <button className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all">
-                  {isSubmitting ? 'Saving...' : 'Send My Book'}
-                </button>
-                <button type="button" onClick={() => setFunnelStep('share')} className="w-full text-slate-400 text-sm hover:text-slate-600">No thanks, I'll pass</button>
+                <input type="text" placeholder="Full Name" required className="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none"
+                  value={shippingData.name} onChange={(e) => setShippingData({...shippingData, name: e.target.value})} />
+                <textarea placeholder="Mailing Address..." required rows={3} className="w-full px-5 py-3 rounded-xl border border-slate-200 outline-none"
+                  value={shippingData.address} onChange={(e) => setShippingData({...shippingData, address: e.target.value})} />
+                <button className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl">{isSubmitting ? 'Saving...' : 'Claim My Signed Book'}</button>
+                <button type="button" onClick={() => setFunnelStep('share')} className="w-full text-slate-400 text-sm">I'll pass</button>
               </form>
             </div>
           </div>
         )}
 
-        {/* --- STEP 4: SHARE MODAL --- */}
         {funnelStep === 'share' && (
           <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
             <div className="bg-white rounded-[2rem] p-10 max-w-md w-full text-center shadow-2xl">
-              <div className="w-16 h-16 bg-amber-50 rounded-xl flex items-center justify-center mb-6 mx-auto">
-                <Share2 className="w-8 h-8 text-[#F59E0B]" />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2 font-serif">Share the Mastery</h2>
-              <p className="text-slate-600 mb-8 text-sm">
-                Know another advisor ready to transcend the ordinary? Send them this offer.
-              </p>
-              <div className="flex gap-2 mb-6">
-                <input 
-                  type="email" placeholder="Colleague's Email" 
-                  className="flex-1 px-4 py-3 rounded-xl border border-slate-200 outline-none"
-                  value={shareEmail} onChange={(e) => setShareEmail(e.target.value)}
-                />
-                <button onClick={handleFinalRedirect} className="px-6 py-3 bg-amber-500 text-slate-900 font-bold rounded-xl hover:bg-amber-400">Share</button>
-              </div>
+              <Share2 className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Share the Opportunity</h2>
+              <p className="text-slate-600 mb-8 text-sm">Know a colleague who belongs in this cohort? Enter their email below.</p>
+              <input type="email" placeholder="Colleague's Email" className="w-full px-4 py-3 rounded-xl border border-slate-200 mb-4 outline-none"
+                value={shareEmail} onChange={(e) => setShareEmail(e.target.value)} />
+              <button onClick={handleFinalRedirect} className="w-full py-4 bg-amber-500 text-slate-900 font-bold rounded-xl mb-4">Send Invite</button>
               <button onClick={handleFinalRedirect} className="text-slate-400 text-sm">Skip & Finish</button>
             </div>
           </div>
         )}
 
-        {/* --- STEP 5: FINAL THANK YOU --- */}
         {funnelStep === 'complete' && (
-          <div className="fixed inset-0 bg-slate-900 z-[10000] flex flex-col items-center justify-center text-center p-6">
-             <div className="w-24 h-24 border-2 border-amber-500 rounded-full flex items-center justify-center mb-8 animate-bounce">
-                <CheckCircle2 className="w-12 h-12 text-amber-500" />
-             </div>
-             <h2 className="text-4xl font-bold text-white mb-4 font-serif">Thank You!</h2>
-             <p className="text-amber-500 uppercase tracking-widest font-black text-sm">Redirecting to Mastery Portal...</p>
+          <div className="fixed inset-0 bg-slate-950 z-[10000] flex flex-col items-center justify-center text-center p-6">
+             <CheckCircle2 className="w-16 h-16 text-amber-500 mb-6 animate-pulse" />
+             <h2 className="text-4xl font-bold text-white mb-4">Thank You!</h2>
+             <p className="text-amber-500 uppercase tracking-widest font-black text-sm">Redirecting to Landing Page...</p>
           </div>
         )}
-
       </div>
     </div>
   );
