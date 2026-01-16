@@ -144,7 +144,7 @@ const LandingPage: React.FC = () => {
               The Transcendent <span className="gradient-gold">Heroic Advisor</span>
             </h1>
             <p className="max-w-3xl mx-auto text-xl text-slate-300 leading-relaxed mb-10">
-            Become the Transcendent Heroic Advisor high-net-worth individuals need. We go beyond theory to SHOW you exactly how to implement multi-dimensional solutions, methods, and frameworks that make you naturally compelling and deeply trusted by high-net-worth individuals.  
+           Welcome to our Quantum Mind Mastery Course for advisors and their associates. Each lesson goes beyond theory to SHOW you exactly how to implement multi-dimensional solutions, methods, and frameworks that make you naturally compelling and deeply trusted by high-net-worth individuals. 
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/purchase" className="w-full sm:w-auto px-10 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center group">
