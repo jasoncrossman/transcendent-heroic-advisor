@@ -1,58 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ShieldCheck, ChevronLeft, Star, PlayCircle, Truck } from 'lucide-react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ShieldCheck, ChevronLeft, Star, PlayCircle } from 'lucide-react';
 
 const PurchasePage: React.FC = () => {
-  const navigate = useNavigate();
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [shippingAddress, setShippingAddress] = useState('');
-
-  // Detect Stripe Success Parameter
-  useEffect(() => {
-    if (window.location.href.includes('payment_success=true')) {
-      setShowSuccessModal(true);
-    }
-  }, []);
-
-  const handleShippingSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Pure navigation: No Zapier, no MemberSpace redirects.
-    navigate('/congratulations?payment_success=true');
-  };
-
   return (
     <div className="bg-slate-50 min-h-screen py-16">
-      {/* SHIPPING MODAL */}
-      {showSuccessModal && (
-        <div className="fixed inset-0 bg-[#0f172a]/95 backdrop-blur-md z-[100000] flex items-center justify-center p-4">
-          <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="w-20 h-20 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 mx-auto">
-              <Truck className="w-10 h-10 text-[#F59E0B]" />
-            </div>
-            <h2 className="text-3xl font-bold text-slate-900 mb-3 font-serif text-center">Payment Confirmed</h2>
-            <p className="text-slate-600 mb-8 text-center leading-relaxed">
-              Bruce would like to mail you a <strong>signed copy</strong> of <span className="italic">The Wright Exit Strategy</span>. Where should he send it?
-            </p>
-            <form onSubmit={handleShippingSubmit} className="space-y-4">
-              <textarea 
-                required 
-                className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-[#F59E0B]" 
-                placeholder="Full Shipping Address..." 
-                rows={3} 
-                value={shippingAddress} 
-                onChange={(e) => setShippingAddress(e.target.value)} 
-              />
-              <button 
-                type="submit" 
-                className="w-full py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-lg"
-              >
-                Claim My Signed Book
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link to="/" className="inline-flex items-center text-slate-500 hover:text-slate-900 mb-10 font-medium group">
           <ChevronLeft className="mr-1 w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Details
