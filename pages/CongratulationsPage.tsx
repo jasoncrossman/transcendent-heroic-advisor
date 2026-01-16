@@ -1,39 +1,53 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Mail, Truck, Calendar, CheckCircle, ArrowRight } from 'lucide-react';
 
 const CongratulationsPage: React.FC = () => {
-  // 1. Settled page first. No popups on mount.
+  const location = useLocation();
   const [step, setStep] = useState<'letter' | 'shipping' | 'calendar' | 'final'>('letter');
   const [formData, setFormData] = useState({ name: '', address: '', referral: '' });
 
-  // --- GHOST BUSTER: Only active on THIS page ---
+  // --- 1. STRIPE SUCCESS LISTENER ---
   useEffect(() => {
-    const hideMemberSpaceGhost = () => {
-      // Targets MemberSpace's specific widget and modal classes
-      const selectors = ['.ms-widget', '#memberspace-widget', '.ms-modal-container', '[id^="memberspace"]'];
+    const params = new URLSearchParams(location.search);
+    if (params.get('payment_success') === 'true') {
+      console.log("Payment Success Detected via URL Listener");
+      // You can trigger specific logic here if needed, 
+      // but by default, it starts the user at the 'letter' step.
+    }
+  }, [location]);
+
+  // --- 2. MEMBERSPACE BYPASS LOGIC (The Ghost Buster) ---
+  useEffect(() => {
+    const bypassMemberSpace = () => {
+      const selectors = [
+        '.ms-widget', 
+        '#memberspace-widget', 
+        '.ms-modal-container', 
+        '[id^="memberspace"]',
+        '.ms-overlay'
+      ];
+      
       selectors.forEach(selector => {
         const elements = document.querySelectorAll(selector);
         elements.forEach(el => {
           (el as HTMLElement).style.setProperty('display', 'none', 'important');
           (el as HTMLElement).style.setProperty('opacity', '0', 'important');
+          (el as HTMLElement).style.setProperty('visibility', 'hidden', 'important');
           (el as HTMLElement).style.setProperty('pointer-events', 'none', 'important');
         });
       });
     };
 
-    // Run immediately
-    hideMemberSpaceGhost();
-
-    // Watch for late-loading injections
-    const observer = new MutationObserver(hideMemberSpaceGhost);
+    bypassMemberSpace();
+    const observer = new MutationObserver(bypassMemberSpace);
     observer.observe(document.body, { childList: true, subtree: true });
 
-    return () => observer.disconnect(); // Disconnect when leaving the page
+    return () => observer.disconnect();
   }, []);
 
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Progress to Step 3 (Calendly)
     setStep('calendar');
   };
 
@@ -41,8 +55,7 @@ const CongratulationsPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50 py-12 px-4 relative">
       <div className="max-w-3xl mx-auto">
         
-        {/* STEP 1: THE SETTLED PAGE (Base Layer) */}
-        {/* This is the welcome message. It blurs slightly only when the popups are active. */}
+        {/* STEP 1: SETTLED LETTER (Base Layer) */}
         <div className={`bg-white rounded-[2.5rem] p-10 md:p-16 shadow-xl border border-slate-100 transition-all duration-500 ${step !== 'letter' ? 'opacity-20 blur-sm pointer-events-none' : 'opacity-100'}`}>
           <h1 className="text-3xl font-bold text-slate-900 mb-8 font-serif leading-tight">
             Welcome to The Transcendent Heroic Advisor Mastery Course
@@ -85,12 +98,12 @@ const CongratulationsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* POPUP OVERLAY SYSTEM (Steps 2, 3, and 4) */}
+        {/* CUSTOM OVERLAY FLOW (Bypassing MemberSpace UI) */}
         {step !== 'letter' && (
           <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
             <div className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
               
-              {/* STEP 2: SHIPPING & REFERRALS */}
+              {/* STEP 2: ADDRESS COLLECTION */}
               {step === 'shipping' && (
                 <div className="p-10">
                   <div className="flex items-center gap-4 mb-6">
@@ -102,17 +115,17 @@ const CongratulationsPage: React.FC = () => {
                   <form onSubmit={handleShippingSubmit} className="space-y-4">
                     <input 
                       type="text" placeholder="Full Name" required
-                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500"
                       value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
                     />
                     <textarea 
                       placeholder="Mailing Address (Street, City, State, Zip)" required rows={3}
-                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition-all"
+                      className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500"
                       value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})}
                     />
                     <div className="pt-6 mt-2 border-t border-slate-100">
                       <p className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-amber-600" /> Pay it forward: Send a copy to a colleague?
+                        <Mail className="w-4 h-4 text-amber-600" /> Send a copy to a colleague?
                       </p>
                       <input 
                         type="email" placeholder="Colleague's Email Address (Optional)"
@@ -124,7 +137,7 @@ const CongratulationsPage: React.FC = () => {
                       <button type="submit" className="flex-[2] py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg">
                         Submit & Book Call
                       </button>
-                      <button type="button" onClick={() => setStep('calendar')} className="flex-1 py-4 text-slate-400 font-medium hover:text-slate-600">
+                      <button type="button" onClick={() => setStep('calendar')} className="flex-1 py-4 text-slate-400 font-medium hover:text-slate-600 text-center">
                         Skip
                       </button>
                     </div>
@@ -132,17 +145,14 @@ const CongratulationsPage: React.FC = () => {
                 </div>
               )}
 
-              {/* STEP 3: CALENDLY EMBED */}
+              {/* STEP 3: CALENDLY BYPASS */}
               {step === 'calendar' && (
                 <div className="h-[700px] flex flex-col relative">
                   <div className="p-4 border-b flex justify-between items-center bg-white sticky top-0 z-10">
                     <h2 className="font-bold flex items-center gap-2 text-slate-900">
-                      <Calendar className="w-5 h-5 text-amber-600" /> Schedule Your Strategic Call
+                      <Calendar className="w-5 h-5 text-amber-600" /> Book Strategic Call
                     </h2>
-                    <button 
-                      onClick={() => setStep('final')} 
-                      className="text-xs font-bold text-amber-600 hover:text-amber-700 bg-amber-50 px-3 py-2 rounded-lg"
-                    >
+                    <button onClick={() => setStep('final')} className="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
                       I've Booked / Skip
                     </button>
                   </div>
@@ -155,14 +165,14 @@ const CongratulationsPage: React.FC = () => {
                 </div>
               )}
 
-              {/* STEP 4: FINAL THANK YOU & REDIRECT */}
+              {/* STEP 4: FINAL REDIRECT */}
               {step === 'final' && (
                 <div className="p-16 text-center animate-in fade-in zoom-in duration-500">
                   <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
                     <CheckCircle className="w-12 h-12 text-green-500" />
                   </div>
                   <h2 className="text-3xl font-bold mb-4 font-serif text-slate-900">Congratulations</h2>
-                  <p className="text-slate-600 text-lg mb-10 max-w-md mx-auto">
+                  <p className="text-slate-600 text-lg mb-10 max-w-md mx-auto leading-relaxed">
                     Thanks for joining Transcendent Heroic Advisors! We are excited to start this journey with you.
                   </p>
                   <button 
