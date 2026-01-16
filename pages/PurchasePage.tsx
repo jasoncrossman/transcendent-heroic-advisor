@@ -18,6 +18,7 @@ const PurchasePage: React.FC = () => {
     };
 
     try {
+      // 1. Send data to your Zapier hook first
       await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
         method: "POST",
         mode: "no-cors",
@@ -27,13 +28,19 @@ const PurchasePage: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
+      // 2. Redirect to Stripe with the email pre-filled
+      // The ?prefilled_email= part tells Stripe to use the email from your form
+      const stripeLink = `https://buy.stripe.com/cNi00cemBbl44Na5bu2go00?prefilled_email=${encodeURIComponent(email)}`;
+      
+      // We use a tiny delay to ensure the fetch completes, then redirect
       setTimeout(() => {
-        window.location.assign("https://zippi.link/exitstrategy");
+        window.location.assign(stripeLink);
       }, 100);
       
     } catch (error) {
       console.error("Submission error:", error);
-      window.location.assign("https://zippi.link/exitstrategy");
+      // Fallback: send to Stripe anyway so you don't lose the sale
+      window.location.assign("https://buy.stripe.com/cNi00cemBbl44Na5bu2go00");
     }
   };
 
@@ -45,7 +52,7 @@ const PurchasePage: React.FC = () => {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Order Summary */}
+          {/* LEFT COLUMN: Order Summary */}
           <div className="lg:col-span-7 space-y-8">
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
               <h1 className="text-3xl font-bold text-slate-900 mb-6 font-serif">Secure Your Place in the Mastery Course</h1>
@@ -81,22 +88,22 @@ const PurchasePage: React.FC = () => {
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>(4) Free Lessons From The Best Selling The Wright Exit Strategy; Wealth - How to Create It, Keep It, and Use It Advisory Training</span>
+                      <span>(4) Free Lessons From The Best Selling The Wright Exit Strategy</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>The Wright Exit Strategy; Wealth - How to Create It, Keep It, and Use It Book</span>
+                      <span>The Wright Exit Strategy; Wealth - Book</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                      <span>Transcendent Thought and Market Leadership 1.0; How to Lead Any Profession, Anywhere in the World Book</span>
+                      <span>Transcendent Thought and Market Leadership 1.0 - Book</span>
                     </li>
                     <li className="flex items-start gap-3">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                       <span>Macro Strategic Planning® Your Life and Business (workbook)</span>
                     </li>
                     
-                    {/* Quadrupled space using mt-40 */}
+                    {/* The 2-hour blue box with quadruple space above it */}
                     <li className="mt-40 p-6 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
                       <div className="flex items-start gap-4">
                         <div className="bg-amber-500 p-2 rounded-lg shrink-0">
@@ -108,7 +115,7 @@ const PurchasePage: React.FC = () => {
                             Receive our 2-hour "Magnetic 30-Second Message" course one week before the official February 15th launch.
                           </p>
                           <p className="text-slate-300 text-xs leading-relaxed font-medium">
-                            You’ll learn how to clearly communicate your true value in a way that attracts higher-quality clients, sparks immediate curiosity, and positions you as the obvious choice—without sounding salesy or generic. The result: better conversations, more qualified referrals, and a message that keeps working for you long after the introduction ends.
+                            You’ll learn how to clearly communicate your true value in a way that attracts higher-quality clients and positions you as the obvious choice.
                           </p>
                         </div>
                       </div>
@@ -125,7 +132,7 @@ const PurchasePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Checkout Form Sidebar */}
+          {/* RIGHT COLUMN: Checkout Form */}
           <div className="lg:col-span-5">
             <div className="bg-white p-8 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 sticky top-24">
               <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
@@ -181,7 +188,7 @@ const PurchasePage: React.FC = () => {
                 </button>
                 
                 <p className="text-center text-xs text-slate-400 mt-4">
-                  Secure 256-bit encrypted checkout. No hidden fees.
+                  Secure 256-bit encrypted checkout.
                 </p>
               </form>
             </div>
