@@ -9,8 +9,12 @@ const PurchasePage: React.FC = () => {
 
   // 1. Detect the Stripe Redirect to show the "Signed Book" Modal
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    if (query.get('payment_success')) {
+    // This checks both the standard URL and the "Hash" part of the URL 
+    // to ensure HashRouter doesn't hide the success flag.
+    const searchParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.split('?')[1]);
+    
+    if (searchParams.get('payment_success') === 'true' || hashParams.get('payment_success') === 'true') {
       setShowSuccessModal(true);
     }
   }, []);
@@ -34,14 +38,14 @@ const PurchasePage: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
-      // After 1.5 seconds, send them to the final destination internal page
+      // Redirect to the internal Congratulations Page after 1.5s
       setTimeout(() => {
         window.location.assign("/#/congratulations");
       }, 1500);
       
     } catch (error) {
       console.error("Error saving address:", error);
-      // Even if the save fails, ensure the user moves to the onboarding page
+      // Ensure user moves to onboarding even if the Zapier hook fails
       window.location.assign("/#/congratulations");
     }
   };
