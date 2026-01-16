@@ -7,7 +7,8 @@ import {
   PlayCircle,
   Clock,
   Info,
-  Star
+  Star,
+  ExternalLink
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
@@ -97,7 +98,7 @@ const FreeResourcesPage: React.FC = () => {
     };
   }, []);
 
-  // --- PLAYER INITIALIZATION & LOCK LOGIC (Locking deactivated for now) ---
+  // --- PLAYER INITIALIZATION & LOCK LOGIC (Locking deactivated) ---
   useEffect(() => {
     if (!activeVideo) return;
     const currentVideo = globalSparksVideos.find(v => v.id === activeVideo);
@@ -108,16 +109,7 @@ const FreeResourcesPage: React.FC = () => {
       if (iframe && (window as any).Vimeo) {
         const player = new (window as any).Vimeo.Player(iframe);
         vimeoPlayerRef.current = player;
-        
-        /* LOCK LOGIC SUSPENDED:
-        player.on('play', () => { if (!selectedVideoId) setSelectedVideoId(activeVideo); });
-        player.on('timeupdate', (data: { seconds: number }) => {
-          if (selectedVideoId && selectedVideoId !== activeVideo && data.seconds >= 30) {
-            player.pause();
-            setLockedVideoId(activeVideo);
-          }
-        });
-        */
+        /* LOCK LOGIC SUSPENDED */
       }
     };
 
@@ -125,22 +117,7 @@ const FreeResourcesPage: React.FC = () => {
       if ((window as any).YT && (window as any).YT.Player && document.getElementById(`yt-${activeVideo}`)) {
         ytPlayerRef.current = new (window as any).YT.Player(`yt-${activeVideo}`, {
           events: {
-            'onStateChange': (event: any) => {
-              /* LOCK LOGIC SUSPENDED:
-              if (event.data === (window as any).YT.PlayerState.PLAYING) {
-                if (!selectedVideoId) setSelectedVideoId(activeVideo);
-                if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
-                checkIntervalRef.current = setInterval(() => {
-                  const currentTime = event.target.getCurrentTime();
-                  if (selectedVideoId && selectedVideoId !== activeVideo && currentTime >= 30) {
-                    event.target.pauseVideo();
-                    setLockedVideoId(activeVideo);
-                    if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
-                  }
-                }, 500);
-              }
-              */
-            }
+            'onStateChange': (event: any) => { /* LOCK LOGIC SUSPENDED */ }
           }
         });
       } else {
@@ -206,28 +183,26 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. VAULT SECTION (INSTRUCTIONS MOVED HERE) */}
+      {/* 3. VAULT SECTION */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Instructions Box */}
           <div className="mb-12 flex items-start gap-4 bg-white border border-amber-200 p-8 rounded-3xl shadow-sm max-w-4xl mx-auto">
             <Info className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
             <div>
               <h3 className="text-slate-900 font-bold text-xl mb-2 font-serif uppercase tracking-tight">Welcome to your Resource Vault</h3>
               <p className="text-slate-600 text-lg leading-relaxed">
-                Your first selected video is available for full viewing. 
-                <span className="text-amber-600 font-bold"> Subsequent lessons</span> are preview-only until you reserve your seat.
+                Explore these foundational lessons at your own pace. These resources introduce you to the principles of Macro Strategic Planning®.
               </p>
             </div>
           </div>
 
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold font-serif uppercase tracking-widest mb-2">Mastery Through Video</h2>
-            <p className="text-slate-500 font-medium italic">Select one lesson for full access; preview the rest.</p>
+            <p className="text-slate-500 font-medium italic">Complimentary insights from the Architect of Transcendence.</p>
           </div>
           
           {/* 4. VIDEO GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
             {globalSparksVideos.map((v) => (
               <div 
                 key={v.id} 
@@ -273,34 +248,27 @@ const FreeResourcesPage: React.FC = () => {
                         <PlayCircle className="w-5 h-5" /> Play Lesson
                       </button>
                     </div>
-                    
-                    <div className="absolute top-4 right-4">
-                      {selectedVideoId === v.id ? (
-                        <span className="bg-green-600 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg">
-                          <CheckCircle2 className="w-3 h-3"/> Unlocked
-                        </span>
-                      ) : selectedVideoId && (
-                        <span className="bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-[10px] font-bold uppercase flex items-center gap-1 shadow-lg">
-                          <Clock className="w-3 h-3"/> Preview
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {lockedVideoId === v.id && (
-                  <div className="absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center text-center p-8">
-                    <Lock className="w-12 h-12 text-amber-500 mb-4" />
-                    <h3 className="text-white text-xl font-bold mb-2 font-serif">Full Lesson Locked</h3>
-                    <p className="text-slate-400 text-sm mb-6 max-w-xs">Reserve your place to unlock the full library.</p>
-                    <button onClick={goToReservePage} className="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-full hover:bg-amber-400 transition-all shadow-xl">
-                      Unlock Full Access
-                    </button>
                   </div>
                 )}
               </div>
             ))}
           </div>
+
+          {/* COMPACT GLOBAL SPARKS LINK (Smaller, centered beneath grid) */}
+          <div className="max-w-2xl mx-auto text-center px-4">
+            <p className="text-slate-500 text-sm leading-relaxed mb-2">
+              These videos are segments from Bruce Wright's course, <strong className="text-slate-700 font-bold">WRIGHT EXIT STRATEGY: Wealth - How to Create it, Keep it, Use it.</strong>
+            </p>
+            <a 
+              href="https://globalsparks.com/index.php/search-everything/academies/teachme-academy1/guruprograms/18-teach-me/656-the-wright-exit-strategy-special-edition-wealth-how-to-create-it-keep-it-use-it-with-expert-bruce-wright"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-600 font-bold hover:text-amber-700 transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Click here to learn more about this course <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+
         </div>
       </section>
 
