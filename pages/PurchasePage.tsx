@@ -34,14 +34,15 @@ const PurchasePage: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
-      // After 2 seconds, send them to the final destination
+      // After 1.5 seconds, send them to the final destination internal page
       setTimeout(() => {
-        window.location.assign("https://zippi.link/exitstrategy");
+        window.location.assign("/#/congratulations");
       }, 1500);
       
     } catch (error) {
       console.error("Error saving address:", error);
-      window.location.assign("https://zippi.link/exitstrategy");
+      // Even if the save fails, ensure the user moves to the onboarding page
+      window.location.assign("/#/congratulations");
     }
   };
 
@@ -86,7 +87,7 @@ const PurchasePage: React.FC = () => {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* LEFT: COURSE DETAILS (Full Text) */}
+          {/* LEFT: COURSE DETAILS */}
           <div className="lg:col-span-7 space-y-10">
             <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
               <h1 className="text-4xl font-bold text-slate-900 mb-8 font-serif leading-tight">Secure Your Place in the Mastery Course</h1>
@@ -114,7 +115,7 @@ const PurchasePage: React.FC = () => {
                     </li>
                     <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
                       <ShieldCheck className="w-6 h-6 text-[#F59E0B] shrink-0" />
-                      <span className="text-sm font-medium">Ten Steps to Creating Your Dynamic & Magnetic 30-Second Marketing Message (workbook)</span>
+                      <span className="text-sm font-medium">Ten Steps to Creating Your Magnetic 30-Second Marketing Message (workbook)</span>
                     </li>
                     <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
                       <ShieldCheck className="w-6 h-6 text-[#F59E0B] shrink-0" />
@@ -125,7 +126,6 @@ const PurchasePage: React.FC = () => {
                       <span className="text-sm font-medium">Macro Strategic Planning® Your Life and Business (workbook)</span>
                     </li>
                     
-                    {/* VIDEO HIGHLIGHT BOX */}
                     <li className="mt-8 p-8 bg-slate-900 rounded-[2rem] border-2 border-[#F59E0B] shadow-2xl relative overflow-hidden group">
                       <div className="relative z-10 flex items-start gap-6">
                         <div className="bg-[#F59E0B] p-3 rounded-xl shrink-0 shadow-lg shadow-[#F59E0B]/20">
@@ -148,7 +148,7 @@ const PurchasePage: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT: THE STRIPE PRICING TABLE EMBED */}
+          {/* RIGHT: STRIPE EMBED */}
           <div className="lg:col-span-5">
             <div className="bg-white p-2 rounded-[2.5rem] shadow-2xl shadow-slate-200 border border-slate-100 sticky top-12 overflow-hidden">
                <div className="p-6 text-center border-b border-slate-50">
