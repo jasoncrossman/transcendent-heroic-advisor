@@ -159,7 +159,7 @@ const PurchasePage: React.FC = () => {
                 {/* @ts-ignore */}
                 <stripe-pricing-table 
                   pricing-table-id="prctbl_1Sq3zc4qZAoEhXfslOVzOlXK"
-                  publishable-key="pk_live_4QZHow0uzfALujwLcvSBXSPK"
+                  publishable-key="pk_test_4QZHow0uzfALujwLcvSBXSPK"
                 >
                 {/* @ts-ignore */}
                 </stripe-pricing-table>
