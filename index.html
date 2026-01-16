@@ -14,6 +14,13 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* --- 3D FLIP UTILITIES --- */
+        .perspective-1000 { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .transition-transform-700 { transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
     <script type="importmap">
     {
@@ -28,16 +35,16 @@
     </script>
     <link rel="stylesheet" href="/index.css">
 
-   <script>
-  window.MemberSpace = window.MemberSpace || {};
-  window.MemberSpace.siteId = "7a6e1694-8255-4467-8975-29f1b95f877d";
-  (function(d){
-    var s = d.createElement('script');
-    s.src = "https://cdn.memberspace.com/scripts/widgets.js";
-    var f = d.getElementsByTagName('script')[0];
-    f.parentNode.insertBefore(s, f);
-  }(document));
-</script>
+    <script>
+        window.MemberSpace = window.MemberSpace || {};
+        window.MemberSpace.siteId = "7a6e1694-8255-4467-8975-29f1b95f877d";
+        (function(d){
+            var s = d.createElement('script');
+            s.src = "https://cdn.memberspace.com/scripts/widgets.js";
+            var f = d.getElementsByTagName('script')[0];
+            f.parentNode.insertBefore(s, f);
+        }(document));
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
