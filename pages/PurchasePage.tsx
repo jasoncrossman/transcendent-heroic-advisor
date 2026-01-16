@@ -1,8 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShieldCheck, ChevronLeft, Star, PlayCircle } from 'lucide-react';
 
 const PurchasePage: React.FC = () => {
+  const navigate = useNavigate();
+
+  // THE LISTENER: Detects Stripe success and moves the user immediately
+  useEffect(() => {
+    if (window.location.href.includes('payment_success=true')) {
+      // No pop-up here anymore. We send them straight to the onboarding flow.
+      navigate('/congratulations?payment_success=true');
+    }
+  }, [navigate]);
+
   return (
     <div className="bg-slate-50 min-h-screen py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,6 +36,7 @@ const PurchasePage: React.FC = () => {
                     <span className="inline-block mt-3 px-3 py-1 bg-amber-100 text-amber-800 text-[10px] font-black rounded-full uppercase tracking-widest">Early Riser Special</span>
                   </div>
                 </div>
+                
                 <div className="space-y-6 pt-4">
                   <h4 className="font-bold text-slate-900 text-lg uppercase tracking-tight">Your Enrollment Includes:</h4>
                   <div className="space-y-4">
@@ -40,6 +51,7 @@ const PurchasePage: React.FC = () => {
                         <span className="text-sm font-medium text-slate-600">{item}</span>
                       </div>
                     ))}
+                    
                     <div className="mt-8 p-8 bg-slate-900 rounded-[2rem] border-2 border-[#F59E0B] shadow-2xl relative overflow-hidden">
                       <div className="relative z-10 flex items-start gap-6">
                         <div className="bg-[#F59E0B] p-3 rounded-xl shrink-0">
