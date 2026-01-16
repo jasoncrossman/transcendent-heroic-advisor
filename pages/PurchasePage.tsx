@@ -91,13 +91,14 @@ const PurchasePage: React.FC = () => {
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                       <span>Transcendent Thought and Market Leadership 1.0; How to Lead Any Profession, Anywhere in the World Book</span>
                     </li>
-                    <li className="flex items-start gap-3">
+                    {/* Added mb-10 here to create white space below the last text item */}
+                    <li className="flex items-start gap-3 mb-10">
                       <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
                       <span>Macro Strategic Planning® Your Life and Business (workbook)</span>
                     </li>
                     
-                    {/* Highlighted Video Course Item with doubled top margin (mt-20) */}
-                    <li className="mt-20 p-6 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
+                    {/* Adjusted mt-10 here for balanced symmetry */}
+                    <li className="mt-10 p-6 bg-slate-900 rounded-2xl border-2 border-amber-500 shadow-xl transform hover:scale-[1.02] transition-transform">
                       <div className="flex items-start gap-4">
                         <div className="bg-amber-500 p-2 rounded-lg shrink-0">
                           <PlayCircle className="w-6 h-6 text-slate-900" />
