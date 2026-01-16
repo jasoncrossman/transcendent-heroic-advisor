@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Truck, Calendar, CheckCircle, ArrowRight } from 'lucide-react';
 
 const CongratulationsPage: React.FC = () => {
+  // 1. Settled page first. No popups on mount.
   const [step, setStep] = useState<'letter' | 'shipping' | 'calendar' | 'final'>('letter');
   const [formData, setFormData] = useState({ name: '', address: '', referral: '' });
-  const [loading, setLoading] = useState(false);
 
-  // --- MEMBERSPACE GHOST SUPPRESSION ---
+  // --- GHOST BUSTER: Only active on THIS page ---
   useEffect(() => {
     const hideMemberSpaceGhost = () => {
+      // Targets MemberSpace's specific widget and modal classes
       const selectors = ['.ms-widget', '#memberspace-widget', '.ms-modal-container', '[id^="memberspace"]'];
       selectors.forEach(selector => {
         const elements = document.querySelectorAll(selector);
@@ -20,53 +21,42 @@ const CongratulationsPage: React.FC = () => {
       });
     };
 
+    // Run immediately
     hideMemberSpaceGhost();
+
+    // Watch for late-loading injections
     const observer = new MutationObserver(hideMemberSpaceGhost);
     observer.observe(document.body, { childList: true, subtree: true });
 
-    return () => observer.disconnect();
+    return () => observer.disconnect(); // Disconnect when leaving the page
   }, []);
 
-  const handleShippingSubmit = async (e: React.FormEvent) => {
+  const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      await fetch("https://hooks.zapier.com/hooks/catch/18380285/uwqwyud/", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-          ...formData,
-          target_email: "mmordue@macrostrategicdesign.com",
-          type: "Mastery Onboarding - Book & Referral",
-          timestamp: new Date().toISOString()
-        }),
-      });
-      setStep('calendar');
-    } catch (err) {
-      setStep('calendar');
-    }
-    setLoading(false);
+    // Progress to Step 3 (Calendly)
+    setStep('calendar');
   };
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 relative">
       <div className="max-w-3xl mx-auto">
         
-        {/* STEP 1: SETTLED PAGE (Base Letter - No Popups) */}
+        {/* STEP 1: THE SETTLED PAGE (Base Layer) */}
+        {/* This is the welcome message. It blurs slightly only when the popups are active. */}
         <div className={`bg-white rounded-[2.5rem] p-10 md:p-16 shadow-xl border border-slate-100 transition-all duration-500 ${step !== 'letter' ? 'opacity-20 blur-sm pointer-events-none' : 'opacity-100'}`}>
           <h1 className="text-3xl font-bold text-slate-900 mb-8 font-serif leading-tight">
             Welcome to The Transcendent Heroic Advisor Mastery Course
           </h1>
           <div className="space-y-6 text-slate-600 leading-relaxed text-lg">
             <p>You’ve officially secured your place in our February 15th cohort, and I am honored to have you with us.</p>
-            <p>First things first: I’ll be personally signing and mailing your copy of <em>The Wright Exit Strategy</em> this week. Enter your preferred mailing address and keep an eye on your mailbox! You will also be receiving an email with your workbooks.</p>
+            <p>First things first: I’ll be personally signing and mailing your copy of <em>The Wright Exit Strategy</em> this week. Enter your preferred mailing address on the next screen and keep an eye on your mailbox!</p>
             
             <div className="bg-slate-50 p-8 rounded-2xl border-l-4 border-amber-500 my-8">
               <h3 className="font-bold text-slate-900 mb-4">What happens next?</h3>
               <ul className="space-y-4 text-base">
                 <li className="flex gap-3">
                   <span className="font-bold text-amber-600 shrink-0">February 8th:</span> 
-                  I will send you Early Access to our "Magnetic 30-Second Message" video course.
+                  Early Access to our "Magnetic 30-Second Message" video course.
                 </li>
                 <li className="flex gap-3">
                   <span className="font-bold text-amber-600 shrink-0">February 15th:</span> 
@@ -74,7 +64,7 @@ const CongratulationsPage: React.FC = () => {
                 </li>
                 <li className="flex gap-3">
                   <span className="font-bold text-amber-600 shrink-0">Onboarding Call:</span> 
-                  My team will reach out shortly to schedule your first Confidential 45-minute Strategic Call.
+                  My team will reach out shortly for your first Strategic Call.
                 </li>
               </ul>
             </div>
@@ -88,19 +78,19 @@ const CongratulationsPage: React.FC = () => {
 
             <button 
               onClick={() => setStep('shipping')}
-              className="w-full mt-10 py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-3 group shadow-xl shadow-slate-200"
+              className="w-full mt-10 py-5 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all flex items-center justify-center gap-3 group shadow-xl"
             >
               Continue <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
 
-        {/* MODAL OVERLAY FOR STEPS 2, 3, AND 4 */}
+        {/* POPUP OVERLAY SYSTEM (Steps 2, 3, and 4) */}
         {step !== 'letter' && (
           <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
             <div className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
               
-              {/* STEP 2: SHIPPING & REFERRAL */}
+              {/* STEP 2: SHIPPING & REFERRALS */}
               {step === 'shipping' && (
                 <div className="p-10">
                   <div className="flex items-center gap-4 mb-6">
@@ -132,10 +122,10 @@ const CongratulationsPage: React.FC = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-3 pt-6">
                       <button type="submit" className="flex-[2] py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg">
-                        {loading ? 'Saving...' : 'Submit & Book Call'}
+                        Submit & Book Call
                       </button>
                       <button type="button" onClick={() => setStep('calendar')} className="flex-1 py-4 text-slate-400 font-medium hover:text-slate-600">
-                        I'll do this later
+                        Skip
                       </button>
                     </div>
                   </form>
@@ -165,14 +155,14 @@ const CongratulationsPage: React.FC = () => {
                 </div>
               )}
 
-              {/* STEP 4: FINAL THANK YOU REVEAL */}
+              {/* STEP 4: FINAL THANK YOU & REDIRECT */}
               {step === 'final' && (
                 <div className="p-16 text-center animate-in fade-in zoom-in duration-500">
                   <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
                     <CheckCircle className="w-12 h-12 text-green-500" />
                   </div>
                   <h2 className="text-3xl font-bold mb-4 font-serif text-slate-900">Congratulations</h2>
-                  <p className="text-slate-600 text-lg mb-10 leading-relaxed max-w-md mx-auto">
+                  <p className="text-slate-600 text-lg mb-10 max-w-md mx-auto">
                     Thanks for joining Transcendent Heroic Advisors! We are excited to start this journey with you.
                   </p>
                   <button 
