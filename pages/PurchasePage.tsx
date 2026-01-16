@@ -7,9 +7,43 @@ const PurchasePage: React.FC = () => {
   const [shippingAddress, setShippingAddress] = useState('');
   const [isSubmittingAddress, setIsSubmittingAddress] = useState(false);
 
-  // --- TRIPLE-CHECKED TRIGGER ---
+  // --- 1. MEMBERSPACE GHOST SUPPRESSION (FULL AUDIT) ---
   useEffect(() => {
-    // This looks at the raw URL string to catch the flag regardless of HashRouter behavior
+    // Only suppress if the payment was successful to avoid breaking MemberSpace elsewhere
+    if (window.location.href.includes('payment_success=true')) {
+      const suppressMemberSpace = () => {
+        const selectors = [
+          '.ms-widget', 
+          '#memberspace-widget', 
+          '.ms-modal-container', 
+          '[id^="memberspace"]', 
+          '.ms-overlay'
+        ];
+        
+        selectors.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(el => {
+            (el as HTMLElement).style.setProperty('display', 'none', 'important');
+            (el as HTMLElement).style.setProperty('opacity', '0', 'important');
+            (el as HTMLElement).style.setProperty('visibility', 'hidden', 'important');
+            (el as HTMLElement).style.setProperty('pointer-events', 'none', 'important');
+          });
+        });
+      };
+
+      // Run immediately
+      suppressMemberSpace();
+
+      // Continually watch for MemberSpace trying to "pop up" during the success flow
+      const observer = new MutationObserver(suppressMemberSpace);
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  // --- 2. TRIGGER SUCCESS MODAL ---
+  useEffect(() => {
     if (window.location.href.includes('payment_success=true')) {
       setShowSuccessModal(true);
     }
@@ -33,7 +67,7 @@ const PurchasePage: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
-      // Redirect to the internal hash route
+      // Redirect to the internal hash route for the final welcome letter
       setTimeout(() => {
         window.location.assign("/#/congratulations");
       }, 1500);
@@ -47,9 +81,9 @@ const PurchasePage: React.FC = () => {
   return (
     <div className="bg-slate-50 min-h-screen py-16 animate-in fade-in duration-700">
       
-      {/* SHIPPING ADDRESS MODAL */}
+      {/* SHIPPING ADDRESS MODAL (The z-[99999] ensures it stays above everything) */}
       {showSuccessModal && (
-        <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[9999] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[99999] flex items-center justify-center p-4">
           <div className="bg-white rounded-[2rem] p-8 max-w-md w-full shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-300">
             <div className="w-20 h-20 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 mx-auto">
               <Truck className="w-10 h-10 text-[#F59E0B]" />
