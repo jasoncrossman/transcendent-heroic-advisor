@@ -97,7 +97,7 @@ const FreeResourcesPage: React.FC = () => {
     };
   }, []);
 
-  // --- PLAYER INITIALIZATION & LOCK LOGIC ---
+  // --- PLAYER INITIALIZATION & LOCK LOGIC (Locking deactivated for now) ---
   useEffect(() => {
     if (!activeVideo) return;
     const currentVideo = globalSparksVideos.find(v => v.id === activeVideo);
@@ -108,6 +108,8 @@ const FreeResourcesPage: React.FC = () => {
       if (iframe && (window as any).Vimeo) {
         const player = new (window as any).Vimeo.Player(iframe);
         vimeoPlayerRef.current = player;
+        
+        /* LOCK LOGIC SUSPENDED:
         player.on('play', () => { if (!selectedVideoId) setSelectedVideoId(activeVideo); });
         player.on('timeupdate', (data: { seconds: number }) => {
           if (selectedVideoId && selectedVideoId !== activeVideo && data.seconds >= 30) {
@@ -115,6 +117,7 @@ const FreeResourcesPage: React.FC = () => {
             setLockedVideoId(activeVideo);
           }
         });
+        */
       }
     };
 
@@ -123,6 +126,7 @@ const FreeResourcesPage: React.FC = () => {
         ytPlayerRef.current = new (window as any).YT.Player(`yt-${activeVideo}`, {
           events: {
             'onStateChange': (event: any) => {
+              /* LOCK LOGIC SUSPENDED:
               if (event.data === (window as any).YT.PlayerState.PLAYING) {
                 if (!selectedVideoId) setSelectedVideoId(activeVideo);
                 if (checkIntervalRef.current) clearInterval(checkIntervalRef.current);
@@ -135,6 +139,7 @@ const FreeResourcesPage: React.FC = () => {
                   }
                 }, 500);
               }
+              */
             }
           }
         });
@@ -204,7 +209,7 @@ const FreeResourcesPage: React.FC = () => {
       {/* 3. VAULT SECTION (INSTRUCTIONS MOVED HERE) */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Instructions Box: Now contextually linked to the videos below */}
+          {/* Instructions Box */}
           <div className="mb-12 flex items-start gap-4 bg-white border border-amber-200 p-8 rounded-3xl shadow-sm max-w-4xl mx-auto">
             <Info className="w-8 h-8 text-amber-600 flex-shrink-0 mt-1" />
             <div>
