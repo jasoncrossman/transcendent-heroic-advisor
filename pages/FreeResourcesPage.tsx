@@ -4,7 +4,6 @@ import {
   PlayCircle, 
   Info, 
   Star, 
-  ExternalLink,
   RotateCcw
 } from 'lucide-react';
 
@@ -23,17 +22,17 @@ const FreeResourcesPage: React.FC = () => {
     {
       title: "The Wright Exit Strategy",
       image: "/assets/images/book1.jpg",
-      backText: "Since 1989, Bruce Wright has provided unbiased, client-centered vision, advice and solutions. Because Bruce and his companies do not sell or provide investments, insurance, money management or any related products, his unbiased perspective is valued by discerning, action oriented people everywhere. Bruce's inventions, systems and cutting-edge solutions have helped many people achieve tangible, measurable results in their lives and business ventures. Bruce's unique way of helping people see and achieve an exit from their current business and life into something better is found herein. You will read stories of success, failure, hope and courage. If you read this book assertively, you will discover new possibilities for living your Ideal Life and Perfect Calendar™ on your own terms. If you value uncommon wisdom and the dynamic execution of critical details, you will read this book more than once. Please note Bruce's emphasis on tangible, measurable results, rather than well-intentioned concepts."
+      backText: "Discover how to achieve a tangible exit from your current business into your 'Ideal Life.' Bruce Wright provides the unbiased systems needed to secure measurable results and claim your Perfect Calendar™."
     },
     {
       title: "Transcendent Thought and Market Leadership",
       image: "/assets/images/book2.jpg",
-      backText: "Transcending the status quo and ambiguity that separates you from greater cash flow, equity value, and significance is possible. This book teaches you how to think and act in ways that transcend the competition and the baby steps that people mistakenly call innovation."
+      backText: "Transcending the status quo and ambiguity that separates you from greater cash flow and significance is possible. This book teaches you how to think and act in ways that transcend the competition."
     },
     {
       title: "30-Second Marketing Message",
       image: "/assets/images/book3.jpg",
-      backText: "You’ll learn how to clearly communicate your true value in a way that attracts higher-quality clients, sparks immediate curiosity, and positions you as the obvious choice—without sounding salesy or generic. The result: better conversations, more qualified referrals, and a message that keeps working for you long after the introduction ends."
+      backText: "Learn to communicate your true value to attract higher-quality clients and position yourself as the obvious choice. Create a message that sparks curiosity and works for you long after the introduction."
     }
   ];
 
@@ -63,6 +62,7 @@ const FreeResourcesPage: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen font-sans text-slate-900">
+      {/* 1. HERO SECTION */}
       <section className="bg-slate-900 py-20 lg:py-32 text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -80,7 +80,7 @@ const FreeResourcesPage: React.FC = () => {
               </span>
               <h1 className="text-4xl md:text-5xl font-bold font-serif mb-8">About Bruce Raymond Wright</h1>
               <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
-                <p className="font-semibold text-white text-xl">Bruce Raymond Wright isn’t just an advisor; he is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.</p>
+                <p className="font-semibold text-white text-xl">Bruce Raymond Wright is a serial innovator and the inventor of the world’s first Macro Strategic Planning® methodology.</p>
                 <p>Decades ago, Bruce realized the financial world was built on "minimum standards" and "conflicted interests." He chose a different path: <span className="text-amber-400 font-bold italic">Transcendence.</span></p>
               </div>
             </div>
@@ -88,31 +88,32 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
+      {/* 2. BOOK LIBRARY */}
       <section className="py-24 bg-white px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-16 font-serif uppercase tracking-widest">The Professional Library</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {books.map((book, i) => (
-              <div key={i} className="flex flex-col items-center">
+              <div key={i} className="flex flex-col items-center text-center">
                 <div 
                   className="perspective-1000 w-full h-[500px] cursor-pointer group"
                   onClick={() => toggleBookFlip(i)}
                 >
                   <div className={`relative w-full h-full transition-transform-700 preserve-3d ${flippedBooks[i] ? 'rotate-y-180' : ''}`}>
+                    {/* Front: Now using object-contain and padding to fix the cropping issue */}
                     <div className="absolute inset-0 backface-hidden">
-                      <div className="w-full h-full bg-slate-50 rounded-lg shadow-lg overflow-hidden border border-slate-100 p-4 flex items-center justify-center">
-                        <img src={book.image} alt={book.title} className="w-full h-full object-cover rounded shadow-md" />
+                      <div className="w-full h-full bg-slate-50 rounded-lg shadow-lg overflow-hidden border border-slate-100 p-10 flex items-center justify-center">
+                        <img src={book.image} alt={book.title} className="max-w-full max-h-full object-contain rounded shadow-sm" />
                         <div className="absolute bottom-4 right-4 bg-slate-900/80 p-2 rounded-full text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
                           <RotateCcw className="w-5 h-5" />
                         </div>
                       </div>
                     </div>
+                    {/* Back */}
                     <div className="absolute inset-0 backface-hidden rotate-y-180">
                       <div className="w-full h-full bg-slate-900 text-white rounded-lg shadow-2xl p-8 flex flex-col items-center justify-center text-center border-2 border-amber-500/30">
                         <h4 className="text-amber-500 font-bold mb-4 uppercase tracking-widest text-xs">Summary</h4>
-                        <div className="overflow-y-auto pr-2">
-                          <p className="text-slate-200 text-sm leading-relaxed italic">"{book.backText}"</p>
-                        </div>
+                        <p className="text-slate-200 text-sm leading-relaxed italic">"{book.backText}"</p>
                         <p className="mt-6 text-amber-500/50 font-bold text-[10px] uppercase tracking-widest flex items-center gap-2">
                           <RotateCcw className="w-3 h-3" /> Click to flip back
                         </p>
@@ -121,13 +122,14 @@ const FreeResourcesPage: React.FC = () => {
                   </div>
                 </div>
                 <h3 className="font-bold text-lg mt-6 mb-1">{book.title}</h3>
-                <p className="text-amber-600 font-black text-sm uppercase tracking-widest">Free</p>
+                <p className="text-amber-600 font-black text-[10px] uppercase tracking-widest">Free With Enrollment</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* 3. VAULT SECTION */}
       <section className="py-24 bg-slate-50 border-t border-slate-200 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 flex items-start gap-4 bg-white border border-amber-200 p-8 rounded-3xl shadow-sm max-w-4xl mx-auto">
@@ -171,6 +173,7 @@ const FreeResourcesPage: React.FC = () => {
         </div>
       </section>
 
+      {/* 4. FOOTER */}
       <section className="py-24 bg-slate-900 text-white text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-4xl font-bold mb-10 font-serif">Reserve Your Place</h2>
