@@ -5,49 +5,19 @@ import { Mail, Truck, Calendar, CheckCircle, ArrowRight } from 'lucide-react';
 const CongratulationsPage: React.FC = () => {
   const location = useLocation();
   const [step, setStep] = useState<'letter' | 'shipping' | 'calendar' | 'final'>('letter');
-  const [formData, setFormData] = useState({ name: '', address: '', referral: '' });
+  const [formData, setFormData] = useState({ name: '', address: '' });
 
-  // --- 1. STRIPE SUCCESS LISTENER ---
+  // Detect Stripe Success
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('payment_success') === 'true') {
-      console.log("Payment Success Detected via URL Listener");
-      // You can trigger specific logic here if needed, 
-      // but by default, it starts the user at the 'letter' step.
+      console.log("Payment Success Verified");
     }
   }, [location]);
 
-  // --- 2. MEMBERSPACE BYPASS LOGIC (The Ghost Buster) ---
-  useEffect(() => {
-    const bypassMemberSpace = () => {
-      const selectors = [
-        '.ms-widget', 
-        '#memberspace-widget', 
-        '.ms-modal-container', 
-        '[id^="memberspace"]',
-        '.ms-overlay'
-      ];
-      
-      selectors.forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(el => {
-          (el as HTMLElement).style.setProperty('display', 'none', 'important');
-          (el as HTMLElement).style.setProperty('opacity', '0', 'important');
-          (el as HTMLElement).style.setProperty('visibility', 'hidden', 'important');
-          (el as HTMLElement).style.setProperty('pointer-events', 'none', 'important');
-        });
-      });
-    };
-
-    bypassMemberSpace();
-    const observer = new MutationObserver(bypassMemberSpace);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => observer.disconnect();
-  }, []);
-
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Direct progression: No Zapier, No MemberSpace
     setStep('calendar');
   };
 
@@ -55,14 +25,14 @@ const CongratulationsPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50 py-12 px-4 relative">
       <div className="max-w-3xl mx-auto">
         
-        {/* STEP 1: SETTLED LETTER (Base Layer) */}
+        {/* STEP 1: WELCOME LETTER */}
         <div className={`bg-white rounded-[2.5rem] p-10 md:p-16 shadow-xl border border-slate-100 transition-all duration-500 ${step !== 'letter' ? 'opacity-20 blur-sm pointer-events-none' : 'opacity-100'}`}>
           <h1 className="text-3xl font-bold text-slate-900 mb-8 font-serif leading-tight">
             Welcome to The Transcendent Heroic Advisor Mastery Course
           </h1>
           <div className="space-y-6 text-slate-600 leading-relaxed text-lg">
             <p>You’ve officially secured your place in our February 15th cohort, and I am honored to have you with us.</p>
-            <p>First things first: I’ll be personally signing and mailing your copy of <em>The Wright Exit Strategy</em> this week. Enter your preferred mailing address on the next screen and keep an eye on your mailbox!</p>
+            <p>First things first: I’ll be personally signing and mailing your copy of <em>The Wright Exit Strategy</em> this week. Enter your preferred mailing address on the next screen!</p>
             
             <div className="bg-slate-50 p-8 rounded-2xl border-l-4 border-amber-500 my-8">
               <h3 className="font-bold text-slate-900 mb-4">What happens next?</h3>
@@ -98,7 +68,7 @@ const CongratulationsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* CUSTOM OVERLAY FLOW (Bypassing MemberSpace UI) */}
+        {/* ONBOARDING OVERLAY FLOW */}
         {step !== 'letter' && (
           <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
             <div className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
@@ -123,16 +93,6 @@ const CongratulationsPage: React.FC = () => {
                       className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500"
                       value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})}
                     />
-                    <div className="pt-6 mt-2 border-t border-slate-100">
-                      <p className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-amber-600" /> Send a copy to a colleague?
-                      </p>
-                      <input 
-                        type="email" placeholder="Colleague's Email Address (Optional)"
-                        className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500"
-                        value={formData.referral} onChange={e => setFormData({...formData, referral: e.target.value})}
-                      />
-                    </div>
                     <div className="flex flex-col sm:flex-row gap-3 pt-6">
                       <button type="submit" className="flex-[2] py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg">
                         Submit & Book Call
@@ -145,7 +105,7 @@ const CongratulationsPage: React.FC = () => {
                 </div>
               )}
 
-              {/* STEP 3: CALENDLY BYPASS */}
+              {/* STEP 3: CALENDLY */}
               {step === 'calendar' && (
                 <div className="h-[700px] flex flex-col relative">
                   <div className="p-4 border-b flex justify-between items-center bg-white sticky top-0 z-10">
@@ -165,7 +125,7 @@ const CongratulationsPage: React.FC = () => {
                 </div>
               )}
 
-              {/* STEP 4: FINAL REDIRECT */}
+              {/* STEP 4: FINAL */}
               {step === 'final' && (
                 <div className="p-16 text-center animate-in fade-in zoom-in duration-500">
                   <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
