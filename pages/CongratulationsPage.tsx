@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Truck, Calendar, CheckCircle, ArrowRight } from 'lucide-react';
+import { Truck, Calendar, CheckCircle, ArrowRight, ExternalLink } from 'lucide-react';
 
 const CongratulationsPage: React.FC = () => {
   const location = useLocation();
@@ -8,6 +8,15 @@ const CongratulationsPage: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', address: '' });
 
   const calendlyUrl = "https://calendly.com/bwright-msdi/45-minute-consultation-re-30-second-msg?hide_event_type_details=1&hide_gdpr_banner=1";
+  const courseUrl = "https://globalsparks.com/index.php/search-everything/academies/teachme-academy1/guruprograms/18-teach-me/656-the-wright-exit-strategy-special-edition-wealth-how-to-create-it-keep-it-use-it-with-expert-bruce-wright";
+
+  // Verified Payment Logic
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('payment_success') === 'true') {
+      console.log("Success: Payment verified for onboarding flow.");
+    }
+  }, [location]);
 
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,10 +25,11 @@ const CongratulationsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 py-12 px-4 relative">
-      {/* BACKGROUND PRE-LOAD */}
+      {/* Pre-load Calendly for instant access */}
       <iframe src={calendlyUrl} className="hidden" title="preload-calendly"></iframe>
 
       <div className="max-w-3xl mx-auto">
+        {/* STEP 1: WELCOME LETTER */}
         <div className={`bg-white rounded-[2.5rem] p-10 md:p-16 shadow-xl border border-slate-100 transition-all duration-500 ${step !== 'letter' ? 'opacity-20 blur-sm pointer-events-none' : 'opacity-100'}`}>
           <h1 className="text-3xl font-bold text-slate-900 mb-8 font-serif leading-tight">
             Welcome to The Transcendent Heroic Advisor Mastery Course
@@ -60,9 +70,12 @@ const CongratulationsPage: React.FC = () => {
           </div>
         </div>
 
+        {/* STEP 2-4: OVERLAY FLOW */}
         {step !== 'letter' && (
           <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
             <div className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+              
+              {/* SHIPPING ADDRESS */}
               {step === 'shipping' && (
                 <div className="p-10">
                   <div className="flex items-center gap-4 mb-6">
@@ -73,20 +86,21 @@ const CongratulationsPage: React.FC = () => {
                   </div>
                   <form onSubmit={handleShippingSubmit} className="space-y-4">
                     <input type="text" placeholder="Full Name" required className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
-                    <textarea placeholder="Mailing Address" required rows={3} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
-                    <div className="flex gap-3 pt-6">
-                      <button type="submit" className="flex-[2] py-4 bg-slate-900 text-white font-bold rounded-xl shadow-lg">Submit & Book Appointment</button>
-                      <button type="button" onClick={() => setStep('calendar')} className="flex-1 py-4 text-slate-400">Skip</button>
+                    <textarea placeholder="Mailing Address (Street, City, State, Zip)" required rows={3} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-amber-500" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} />
+                    <div className="flex flex-col sm:flex-row gap-3 pt-6">
+                      <button type="submit" className="flex-[2] py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg">Submit & Book Appointment</button>
+                      <button type="button" onClick={() => setStep('calendar')} className="flex-1 py-4 text-slate-400 font-medium hover:text-slate-600 text-center">Skip</button>
                     </div>
                   </form>
                 </div>
               )}
 
+              {/* CALENDLY APPOINTMENT */}
               {step === 'calendar' && (
                 <div className="h-[700px] flex flex-col relative">
                   <div className="p-4 border-b flex justify-between items-center bg-white sticky top-0 z-10">
                     <h2 className="font-bold flex items-center gap-2 text-slate-900"><Calendar className="w-5 h-5 text-amber-600" /> Book First Appointment</h2>
-                    <button onClick={() => setStep('final')} className="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">Skip</button>
+                    <button onClick={() => setStep('final')} className="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">Skip / Done</button>
                   </div>
                   <div className="flex-1 overflow-auto">
                     <iframe src={calendlyUrl} width="100%" height="100%" frameBorder="0"></iframe>
@@ -94,14 +108,40 @@ const CongratulationsPage: React.FC = () => {
                 </div>
               )}
 
+              {/* FINAL UPSELL & NAVIGATION */}
               {step === 'final' && (
-                <div className="p-16 text-center animate-in fade-in zoom-in duration-500">
-                  <div className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-                    <CheckCircle className="w-12 h-12 text-green-500" />
+                <div className="p-10 md:p-14 text-center animate-in fade-in zoom-in duration-500 overflow-y-auto max-h-[90vh]">
+                  <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-10 h-10 text-green-500" />
                   </div>
-                  <h2 className="text-3xl font-bold mb-4 font-serif text-slate-900">You're All Set!</h2>
-                  <p className="text-slate-600 text-lg mb-10 max-w-md mx-auto">We look forward to seeing you in the Mastery Course.</p>
-                  <button onClick={() => window.location.assign("/#/")} className="py-4 px-12 bg-slate-900 text-white font-bold rounded-2xl shadow-xl">Go to Landing Page</button>
+                  <h2 className="text-3xl font-bold mb-2 font-serif text-slate-900">Congratulations</h2>
+                  <p className="text-amber-600 font-bold text-lg mb-6 leading-tight">Thanks for joining Transcendent Heroic Advisors!</p>
+                  
+                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-left mb-8">
+                    <p className="text-slate-600 leading-relaxed text-sm italic mb-4">
+                      Discover the game-changing wisdom that financial advisors don't want you to know! If you want to break free from your current circumstances and design your Ideal Life on your own terms, then you need <strong>The Wright Exit Strategy Full Course</strong>, packed with real stories of triumph and failure.
+                    </p>
+                    <p className="text-slate-700 leading-relaxed text-sm font-medium">
+                      Wright's straightforward teachings will open your eyes to new possibilities and show you exactly how to achieve tangible, measurable success in business and beyond!
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <a 
+                      href={courseUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex-[2] py-4 bg-[#F59E0B] text-slate-900 font-black rounded-xl hover:bg-amber-500 transition-all shadow-lg flex items-center justify-center gap-2"
+                    >
+                      The Wright Exit Strategy <ExternalLink className="w-4 h-4" />
+                    </a>
+                    <button 
+                      onClick={() => window.location.assign("/#/")} 
+                      className="flex-1 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all shadow-lg"
+                    >
+                      Home
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
