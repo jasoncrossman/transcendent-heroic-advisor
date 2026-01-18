@@ -100,7 +100,7 @@ const FreeResourcesPage: React.FC = () => {
                   onClick={() => toggleBookFlip(i)}
                 >
                   <div className={`relative w-full h-full transition-transform-700 preserve-3d ${flippedBooks[i] ? 'rotate-y-180' : ''}`}>
-                    {/* Front: Now using object-contain and padding to fix the cropping issue */}
+                    {/* Front */}
                     <div className="absolute inset-0 backface-hidden">
                       <div className="w-full h-full bg-slate-50 rounded-lg shadow-lg overflow-hidden border border-slate-100 p-10 flex items-center justify-center">
                         <img src={book.image} alt={book.title} className="max-w-full max-h-full object-contain rounded shadow-sm" />
@@ -143,7 +143,7 @@ const FreeResourcesPage: React.FC = () => {
             <h2 className="text-3xl font-bold font-serif uppercase tracking-widest mb-2">Mastery Through Video</h2>
             <p className="text-slate-500 font-medium italic">Complimentary insights from the Architect of Transcendence.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
             {globalSparksVideos.map((v) => (
               <div 
                 key={v.id} 
@@ -170,6 +170,23 @@ const FreeResourcesPage: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {/* ADDED LINK SECTION */}
+          <div className="max-w-4xl mx-auto text-center px-4">
+            <p className="text-slate-600 text-lg leading-relaxed">
+              Wright's straightforward teachings will open your eyes to new possibilities and show you exactly how to achieve tangible, measurable success in business and beyond!
+              <br />
+              <a 
+                href="https://globalsparks.com/index.php/search-everything/academies/teachme-academy1/guruprograms/18-teach-me/656-the-wright-exit-strategy-special-edition-wealth-how-to-create-it-keep-it-use-it-with-expert-bruce-wright?atid=133&tmpl=component" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-amber-500 font-bold hover:text-amber-400 transition-colors inline-block mt-4"
+              >
+                The Wright Exit Strategy
+              </a>
+            </p>
+          </div>
+
         </div>
       </section>
 
