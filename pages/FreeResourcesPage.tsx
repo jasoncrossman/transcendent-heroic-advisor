@@ -4,7 +4,8 @@ import {
   PlayCircle, 
   Info, 
   Star, 
-  RotateCcw
+  RotateCcw,
+  ExternalLink
 } from 'lucide-react';
 
 const FreeResourcesPage: React.FC = () => {
@@ -171,7 +172,7 @@ const FreeResourcesPage: React.FC = () => {
             ))}
           </div>
 
-          {/* ADDED LINK SECTION */}
+          {/* ADDED LINK SECTION WITH ICON */}
           <div className="max-w-4xl mx-auto text-center px-4">
             <p className="text-slate-600 text-lg leading-relaxed">
               Wright's straightforward teachings will open your eyes to new possibilities and show you exactly how to achieve tangible, measurable success in business and beyond!
@@ -180,9 +181,9 @@ const FreeResourcesPage: React.FC = () => {
                 href="https://globalsparks.com/index.php/search-everything/academies/teachme-academy1/guruprograms/18-teach-me/656-the-wright-exit-strategy-special-edition-wealth-how-to-create-it-keep-it-use-it-with-expert-bruce-wright?atid=133&tmpl=component" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-amber-500 font-bold hover:text-amber-400 transition-colors inline-block mt-4"
+                className="text-amber-500 font-bold hover:text-amber-400 transition-colors inline-flex items-center gap-2 mt-4"
               >
-                The Wright Exit Strategy
+                The Wright Exit Strategy <ExternalLink className="w-4 h-4" />
               </a>
             </p>
           </div>
